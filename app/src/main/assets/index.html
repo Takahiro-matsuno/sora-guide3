@@ -26,11 +26,12 @@
   <script src="project.js"></script>
 	</head>
   <body>
+  <!-- TODO ボタンを画像認識用のオブジェクトに変更する -->
   <input type="button" id="hana1" value="hana1" onclick='sakuraAtsume.add("hana1")'/>
   <input type="button" id="hana2" value="hana2" onclick='sakuraAtsume.add("hana2")'/>
   <input type="button" id="hana3" value="hana3" onclick='sakuraAtsume.add("hana3")'/>
   <h3 id="sakuraTag" onclick="sakuraAtsume.sakuraAnimationChange()">さくら</h3>
-  <canvas id="cvs" width="800px" height="500px">
+  <canvas id="cvs">
   <!--
    -->
   <!-- div showed when project is loaded -->

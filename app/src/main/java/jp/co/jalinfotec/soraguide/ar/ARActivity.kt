@@ -24,7 +24,8 @@ class ARActivity : AppCompatActivity() {
         val config = ArchitectStartupConfiguration()
         config.licenseKey = Constants.wikitudeLicenseKey
         architectView.onCreate(config)
-        architectView.callJavascript("setSakura('" + "" + "')")
+        // todo javascriptへのインターフェース
+        // architectView.callJavascript("sakuraAtsume.setSakura('" + "" + "')")
 
         architectView.addArchitectJavaScriptInterfaceListener {
             // todo javascriptからのコールバック処理
