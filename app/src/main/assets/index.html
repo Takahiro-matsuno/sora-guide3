@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="">
+<html lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
@@ -26,7 +26,13 @@
   <script src="project.js"></script>
 	</head>
   <body>
-
+  <input type="button" id="hana1" value="hana1" onclick='sakuraAtsume.add("hana1")'/>
+  <input type="button" id="hana2" value="hana2" onclick='sakuraAtsume.add("hana2")'/>
+  <input type="button" id="hana3" value="hana3" onclick='sakuraAtsume.add("hana3")'/>
+  <h3 id="sakuraTag" onclick="sakuraAtsume.sakuraAnimationChange()">さくら</h3>
+  <canvas id="cvs" width="800px" height="500px">
+  <!--
+   -->
   <!-- div showed when project is loaded -->
   <div class="loadingDiv" id="loading" style="display: none">
     <div class="indicatorDiv">
@@ -41,7 +47,7 @@
     </div>
   </div>
 
-  <!-- dialog showed on error -->
+  <!-- dialog showed on error
   <div class="overlay" id="error" style="display: none" >
       <div class="dialog">
           <div class="dialog_content">
@@ -53,6 +59,7 @@
           </div>
       </div>
   </div>
+  -->
 
   <!-- button to reset extended tracking -->
   <div id="disableExtendedTracking" class="disableExtendedTracking" style="display: none">
@@ -73,6 +80,9 @@
         </div>
 
     </div>
+  </canvas>
+  <!--
+  -->
     <!-- 桜吹雪 https://www.otwo.jp/blog/canvas_sakura/ -->
 
     <script src="scripts/vendor.js"></script>
@@ -82,6 +92,9 @@
     <script src="scripts/tools.js"></script>
 
     <script src="scripts/template.js"></script>
+
+    <script src="scripts/sakura-atsume.js"></script>
+    <script src="scripts/sakura-fubuki.js"></script>
 
   </body>
 
