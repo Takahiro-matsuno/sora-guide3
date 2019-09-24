@@ -6,6 +6,45 @@ var projectJSONOffline =
     "name": "sakura-atsume",
     "targets": [
         {
+            "name": "hana3",
+            "augmentations": [
+                {
+                    "type": "Button",
+                    "height": 0.3,
+                    "uri": "augmentation-assets/99044679_hana3/5d8969ae12f4091273f02825/image.png",
+                    "targetId": "5d7b527435b59c098ede9383",
+                    "minSDK": "6.1.0",
+                    "modDat": 1569286596540,
+                    "creDat": 1569286574865,
+                    "properties": {
+                        "clickUrl": "http://google.com",
+                        "name": "button_1",
+                        "forceNativeBrowser": "false",
+                        "ignoreInAR": false,
+                        "opacity": 0.872,
+                        "rotate": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "scale": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        },
+                        "translate": {
+                            "x": 0.021062664625869698,
+                            "y": -0.30674738616356384,
+                            "z": 0.458265542106777
+                        },
+                        "zOrder": 0
+                    },
+                    "fileSize": 12588,
+                    "id": "5d8969ae12f4091273f02825"
+                }
+            ]
+        },
+        {
             "name": "hana4",
             "augmentations": [
                 {
@@ -80,45 +119,6 @@ var projectJSONOffline =
                     },
                     "fileSize": 12588,
                     "id": "5d89690912f4091273f02811"
-                }
-            ]
-        },
-        {
-            "name": "hana3",
-            "augmentations": [
-                {
-                    "type": "Button",
-                    "height": 0.3,
-                    "uri": "augmentation-assets/99044679_hana3/5d8969ae12f4091273f02825/image.png",
-                    "targetId": "5d7b527435b59c098ede9383",
-                    "minSDK": "6.1.0",
-                    "modDat": 1569286596540,
-                    "creDat": 1569286574865,
-                    "properties": {
-                        "clickUrl": "http://google.com",
-                        "name": "button_1",
-                        "forceNativeBrowser": "false",
-                        "ignoreInAR": false,
-                        "opacity": 0.872,
-                        "rotate": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "scale": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 1
-                        },
-                        "translate": {
-                            "x": 0.021062664625869698,
-                            "y": -0.30674738616356384,
-                            "z": 0.458265542106777
-                        },
-                        "zOrder": 0
-                    },
-                    "fileSize": 12588,
-                    "id": "5d8969ae12f4091273f02825"
                 }
             ]
         }

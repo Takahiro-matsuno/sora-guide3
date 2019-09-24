@@ -1203,7 +1203,6 @@ var AugmentationConverter = function() {
         // generate the default options that will be passed to the ImageDrawable
         var options = generateDrawable2DOptions(image);
 
-        // クリックイベントの追加
         if (image.properties.clickUrl && image.properties.clickUrl !== "") {
             // set the click function
             var forceNativeBrowser = image.properties.clickUrl.substring(0, 6) === 'mailto'
