@@ -1,33 +1,35 @@
 var sakuraAtsume = null;
 var sakuraIcon = document.getElementById("sakuraIcon");
-var hanaBtn1 = document.getElementById("hana3");
-var hanaBtn2 = document.getElementById("hana4");
-var hanaBtn3 = document.getElementById("hana5");
+var hanaBtn3 = document.getElementById("hana3");
+var hanaBtn4 = document.getElementById("hana4");
+var hanaBtn5 = document.getElementById("hana5");
 
 var SakuraAtsume = {
     sakuras: { hana3: false, hana4: false, hana5: false },
     sakuraAnimeFlg: false,
     // 初期化処理
     // 桜コレクションを初期化する
-    init: function(hana3, hana4, hana5) {
-        if (hana3 !== undefined) {
-            this.sakuras.hana3 = true;
-            hanaBtn1.style.visibility = "hidden";
-        }
-        if (hana4 !== undefined) {
-            this.sakuras.hana4 = true;
-            hanaBtn1.style.visibility = "hidden";
-        }
-        if (hana5 !== undefined) {
-            this.sakuras.hana5 = true;
-            hanaBtn1.style.visibility = "hidden";
-        }
-
-        this.sakuraAnimeFlg = false;
-
-        // 桜タグ表示の切り替え
+    init: function() {
+        console.log("桜集め初期化")
         this.sakuraIconChange();
         return this;
+    },
+
+    set: function(hana3, hana4, hana5) {
+        console.log("配列初期化")
+        if (hana3) {
+            this.sakuras.hana3 = true;
+            hanaBtn3.style.visibility = "hidden";
+        }
+        if (hana4) {
+            this.sakuras.hana4 = true;
+            hanaBtn4.style.visibility = "hidden";
+        }
+        if (hana5) {
+            this.sakuras.hana5 = true;
+            hanaBtn5.style.visibility = "hidden";
+        }
+        this.sakuraIconChange();
     },
 
     // 桜発見時に追加
@@ -36,15 +38,48 @@ var SakuraAtsume = {
         switch (hana) {
             case "hana3" :
                 this.sakuras.hana3 = true;
-                hanaBtn1.style.visibility = "hidden";
+                hanaBtn3.style.visibility = "hidden";
+
+                // データバインディング
+                var data = new Object();
+                data.hanaName = "hana3";
+                data.hanaFlg = true;
+
+                var obj = new Object();
+                obj.type = "hanaCollection";
+                obj.data = data;
+
+                AR.platform.sendJSONObject(obj);
                 break;
             case "hana4" :
                 this.sakuras.hana4 = true;
-                hanaBtn2.style.visibility = "hidden";
+                hanaBtn4.style.visibility = "hidden";
+
+                // データバインディング
+                var data = new Object();
+                data.hanaName = "hana4";
+                data.hanaFlg = true;
+
+                var obj = new Object();
+                obj.type = "hanaCollection";
+                obj.data = data;
+
+                AR.platform.sendJSONObject(obj);
                 break;
             case "hana5" :
                 this.sakuras.hana5 = true;
-                hanaBtn3.style.visibility = "hidden";
+                hanaBtn5.style.visibility = "hidden";
+
+                // データバインディング
+                var data = new Object();
+                data.hanaName = "hana5";
+                data.hanaFlg = true;
+
+                var obj = new Object();
+                obj.type = "hanaCollection";
+                obj.data = data;
+
+                AR.platform.sendJSONObject(obj);
                 break;
         }
 

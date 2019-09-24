@@ -2,33 +2,40 @@ package jp.co.jalinfotec.soraguide.ar
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.wikitude.architect.ArchitectStartupConfiguration
 import jp.co.jalinfotec.soraguide.Constants
 import jp.co.jalinfotec.soraguide.R
 import kotlinx.android.synthetic.main.activity_ar.*
+import org.json.JSONObject
 import java.io.IOException
 
 class ARActivity : AppCompatActivity() {
 
+    private val logTag = this::class.java.simpleName
     private var toast: Toast? = null
+    private val hanaCollection = mutableMapOf<String, Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ar)
 
-        // Android6対応。権限をアプリで実装しないとエラーになる。SDKのターゲットを23にしちゃうと必要。
-        // requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CAMERA}, 0);
+        loadHanaCollection()
 
-        //wikitude初期設定
+        // wikitude初期設定
         val config = ArchitectStartupConfiguration()
         config.licenseKey = Constants.wikitudeLicenseKey
         architectView.onCreate(config)
-        // todo javascriptへのインターフェース
-        // architectView.callJavascript("sakuraAtsume.setSakura('" + "" + "')")
 
-        architectView.addArchitectJavaScriptInterfaceListener {
-            // todo javascriptからのコールバック処理
+        architectView.addArchitectJavaScriptInterfaceListener { jObj ->
+            when (jObj.getString("type")) {
+                "hanaCollection" -> {
+                    val data = jObj.getJSONObject("data")
+                    updateHanaCollection(data)
+                }
+                else -> {}
+            }
         }
     }
 
@@ -48,13 +55,20 @@ class ARActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        var args = ""
+        for (hana in hanaCollection.values) {
+            args += if (args != "") ", $hana" else "$hana"
+        }
+        architectView.callJavascript("sakuraAtsume.set($args)")
         this.architectView?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
         this.architectView?.onPause()
+        saveHanaCollection()
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -68,5 +82,24 @@ class ARActivity : AppCompatActivity() {
     private fun showToast(msg: String, length: Int) {
         toast = Toast.makeText(this, msg, length)
         toast!!.show()
+    }
+
+    private fun loadHanaCollection() {
+        Log.d(logTag, "loadHanaCollection")
+        hanaCollection["hana3"] = false
+        hanaCollection["hana4"] = true
+        hanaCollection["hana5"] = false
+    }
+
+    private fun updateHanaCollection(data: JSONObject) {
+        Log.d(logTag, "updateHanaCollection")
+        val key = data.getString("hanaName")
+        val value = data.getBoolean("hanaFlg")
+        hanaCollection[key] = value
+    }
+
+    private fun saveHanaCollection() {
+        Log.d(logTag, "saveHanaCollection")
+        hanaCollection
     }
 }
