@@ -11,9 +11,9 @@ Kotlin-JavaScriptでのデータ受け渡し又は、コールバック処理。
 - kotlin-javascript
     - kotlin
         ```kotlin
-            var architectView = findViewById<ArchitectView>(R.id.architectView)
-            // 関数名、引数を文字列で指定（String型は「']で囲む
-            architectView.callJavascript("func('hoge', true)")
+        var architectView = findViewById<ArchitectView>(R.id.architectView)
+        // 関数名、引数を文字列で指定（String型は「']で囲む
+        architectView.callJavascript("func('hoge', true)")
         ``` 
     - javascript     
         ```javascript
