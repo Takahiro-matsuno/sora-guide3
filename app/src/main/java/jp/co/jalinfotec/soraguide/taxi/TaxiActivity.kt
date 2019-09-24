@@ -58,26 +58,21 @@ class TaxiActivity :
     }
 
     private fun initWebViewSetting() {
-
+        // todo check https://appkitbox.com/knowledge/android/20130819-84
         webView.settings.javaScriptEnabled = true
-        //webView.webViewClient = WebViewClient()
-        //webView.webChromeClient = WebChromeClient()
-
+        webView.webViewClient = WebViewClient() // loadURLをwebViewで表示
         // cookieの有効化
-        /*
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            // V21未満ではブラウザのCookieと動機が必要
             CookieSyncManager.createInstance(applicationContext)
             CookieSyncManager.getInstance().startSync()
         }
-         */
-        val cookieManager = CookieManager.getInstance()
+        cookieManager = CookieManager.getInstance()
         cookieManager.setAcceptCookie(true)
 
         // user-agent
         webView.settings.userAgentString += Constants.taxiUserAgent
-
         // webアクセス
         webView.loadUrl(Constants.taxiUrl)
-
     }
 }

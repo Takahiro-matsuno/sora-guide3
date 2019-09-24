@@ -11,6 +11,9 @@ import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.taxi.TaxiActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 
+/**
+ * Left Navigation抽象クラス
+ */
 abstract class BaseNavigationActivity:
     AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener
