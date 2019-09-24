@@ -8,7 +8,7 @@ var ProjectConverter = function(SignalListener){
     this.lastTargetName = null;
     this.signal = new Signal();
 
-    var _this = this; // ProjectConverter
+    var _this = this;
     var DEFAULT_CLOUD_INTERVAL_MS = 3000;
 
     var SIGNAL_TYPES = {
@@ -27,7 +27,6 @@ var ProjectConverter = function(SignalListener){
         "STARTED": "STARTED"
     };
 
-    // todo check シグナルリスナー
     var createSignal = function() {
         var signal = new Signal();
         signal.TYPE = SIGNAL_TYPES;
@@ -127,7 +126,6 @@ var ProjectConverter = function(SignalListener){
 
         _this.projectUrl = projectUrl;
 
-        // ライブラリ、プロジェクト構成の可否
         if(typeof AR === 'undefined') {
             deferred.reject(new Error("ARLibraryNotFound"));
             return deferred.promise();
@@ -143,10 +141,9 @@ var ProjectConverter = function(SignalListener){
             return deferred.promise();
         }
 
-        // HTML上にローディング中を表示
         $("#loading").show();
 
-        _this.signal = createSignal(); // todo よくわからないのでチェック
+        _this.signal = createSignal();
 
         // kill all existing AR components
         AR.context.destroyAll();
@@ -154,7 +151,7 @@ var ProjectConverter = function(SignalListener){
         // disable sensors to save processing power
         AR.hardware.sensors.enabled = false;
 
-        var initializeProjectJSON = function(projectJSON) { // project.jsの中身
+        var initializeProjectJSON = function(projectJSON) {
 
             try {
                 _this.projectInfo = projectJSON;
@@ -183,7 +180,6 @@ var ProjectConverter = function(SignalListener){
                         _this.arTracker = createObjectTracker(_this.projectInfo, _this.onTrackerLoadedFn);
                         _this.createObjectTrackable();
                     } else {
-                        // project.jsの内容からARTrackerを作成する
                         _this.arTracker = _this.projectInfo.isCloud ? createCloudTracker(_this.projectInfo, _this.onTrackerLoadedFn) : createClientTracker(_this.projectInfo, _this.onTrackerLoadedFn);
                         _this.createTrackable(_this.projectInfo.enableExtendedTracking);
                     }
@@ -242,7 +238,6 @@ var ProjectConverter = function(SignalListener){
         Logger.info("RESTART EXPERIENCE - APPLIED");
     };
 
-    // Worldから呼び出される
     this.start = function(projectUrl) {
         _this.convert(projectUrl).then(
             // success-callback
@@ -1208,6 +1203,7 @@ var AugmentationConverter = function() {
         // generate the default options that will be passed to the ImageDrawable
         var options = generateDrawable2DOptions(image);
 
+        // クリックイベントの追加
         if (image.properties.clickUrl && image.properties.clickUrl !== "") {
             // set the click function
             var forceNativeBrowser = image.properties.clickUrl.substring(0, 6) === 'mailto'
@@ -1282,8 +1278,8 @@ var World = {
             projectUrl = projectUrl.replace('http:', 'https:');
         }
         this.projectUrl = projectUrl;
-        this.projectConverter = new ProjectConverter(); // プロジェクトコンバータインスタンス作成
-        this.projectConverter.start(projectUrl); //
+        this.projectConverter = new ProjectConverter();
+        this.projectConverter.start(projectUrl);
     },
     restart: function() {
         World.projectConverter.restartExperienceAndHideErrorDiv();
@@ -1296,12 +1292,12 @@ function stopExtendedTracking() {
     } else {
         Logger.error("Unexpected execution of stopExtendedTracking");
     }
+
 }
 
-// HTMLドキュメントを読み込んだら実行
 $(document).ready(function(){
     var projectUrl = getUrlParameter("j");
-    World.init(projectUrl); // ワールド初期化
+    World.init(projectUrl);
 });
 
 

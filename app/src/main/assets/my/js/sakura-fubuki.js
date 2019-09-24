@@ -15,7 +15,7 @@ var task = null;
 
 // 画像の読み込み
 var img = new Image();
-img.src = "./fonts/images/sakura.png";
+img.src = "./my/img/sakura.png";
 
 // 画像のパラメーターを設定
 function setImagas(){
