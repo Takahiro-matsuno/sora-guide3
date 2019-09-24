@@ -21,6 +21,7 @@ class ARActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ar)
 
+        //
         loadHanaCollection()
 
         // wikitude初期設定
@@ -28,6 +29,7 @@ class ARActivity : AppCompatActivity() {
         config.licenseKey = Constants.wikitudeLicenseKey
         architectView.onCreate(config)
 
+        //
         architectView.addArchitectJavaScriptInterfaceListener { jObj ->
             when (jObj.getString("type")) {
                 "hanaCollection" -> {
@@ -73,10 +75,7 @@ class ARActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         toast?.cancel()
-        // call mandatory live-cycle method of architectView
-        if (this.architectView != null) {
-            this.architectView.onDestroy()
-        }
+        this.architectView?.onDestroy()
     }
 
     private fun showToast(msg: String, length: Int) {
@@ -85,6 +84,7 @@ class ARActivity : AppCompatActivity() {
     }
 
     private fun loadHanaCollection() {
+        // todo load from SharedPreference
         Log.d(logTag, "loadHanaCollection")
         hanaCollection["hana3"] = false
         hanaCollection["hana4"] = true
@@ -99,6 +99,7 @@ class ARActivity : AppCompatActivity() {
     }
 
     private fun saveHanaCollection() {
+        // todo save to SharedPreference
         Log.d(logTag, "saveHanaCollection")
         hanaCollection
     }
