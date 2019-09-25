@@ -29,10 +29,19 @@ var World = {
 			opacity: 1.0,   // 不透明
 			// クリック時処理
 			onClick : function() {
+			    // Kotlinに送信
+			    sendKotlin("collectStamp", "red");
 				// アニメーション開始
       			elevatorAnimation.start();
     		}
     	});
+
+    	var sendKotlin = function(type, data) {
+    	    var obj = new Object();
+    	    obj.type = type;
+    	    obj.data = data;
+    	    AR.platform.sendJSONObject(obj);
+    	}
 
 		// 回転。アニメーションを定義(１秒間に360度回転)。click時に実行してる
     	var elevatorAnimation = new AR.PropertyAnimation(
