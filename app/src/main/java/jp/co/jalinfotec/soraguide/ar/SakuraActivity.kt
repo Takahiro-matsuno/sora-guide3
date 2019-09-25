@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_ar.*
 import org.json.JSONObject
 import java.io.IOException
 
-class ARActivity : AppCompatActivity() {
+class SakuraActivity : AppCompatActivity() {
 
     private val logTag = this::class.java.simpleName
     private var toast: Toast? = null

@@ -39,7 +39,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ar.ARActivity">
+        <activity android:name=".ar.SakuraActivity">
         </activity>
         <activity android:name=".TopMenuActivity">
             <intent-filter>
