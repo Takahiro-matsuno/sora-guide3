@@ -3,7 +3,7 @@ package jp.co.jalinfotec.soraguide
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import jp.co.jalinfotec.soraguide.ar.SakuraActivity
+import jp.co.jalinfotec.soraguide.ar.StampRallyActivity
 import kotlinx.android.synthetic.main.activity_top_menu.*
 
 class TopMenuActivity : AppCompatActivity() {
@@ -12,6 +12,6 @@ class TopMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_menu)
 
-        ar_btn.setOnClickListener { startActivity(Intent(this, SakuraActivity::class.java)) }
+        ar_btn.setOnClickListener { startActivity(Intent(this, StampRallyActivity::class.java)) }
     }
 }

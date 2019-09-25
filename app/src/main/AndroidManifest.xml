@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:dist="http://schemas.android.com/apk/distribution"
-          xmlns:tools="http://schemas.android.com/tools" package="jp.co.jalinfotec.soraguide">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="jp.co.jalinfotec.soraguide">
 
-    <dist:module dist:instant="true"/>
-
-    <!-- 必要な権限 -->
+    <dist:module dist:instant="true"/> <!-- 必要な権限 -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -13,8 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_GPS"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- 必要な端末の機能 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- 必要な端末の機能 -->
     <uses-feature
             android:name="android.hardware.camera"
             android:required="true"/>
@@ -39,7 +37,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ar.SakuraActivity">
+        <activity android:name=".ar.StampRallyActivity">
         </activity>
         <activity android:name=".TopMenuActivity">
             <intent-filter>
