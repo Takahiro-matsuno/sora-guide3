@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "jp.co.jalinfotec.soraguide"
         minSdkVersion 19
@@ -32,4 +32,21 @@ dependencies {
     testImplementation("junit:junit:4.12")
     androidTestImplementation("androidx.test:runner:1.3.0-alpha02")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0-alpha02")
+
+
+    // ここから斎藤が追加
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0' // Retrofit2 (通信用ライブラリ)
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0' // Gson (Json<->Javaクラス変換ライブラリ)
+
+    implementation 'com.github.bumptech.glide:glide:4.8.0' // Glide (画像用ライブラリ)
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0' // Glide (画像用ライブラリ)
+
+    //追加　Picassoを扱う
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Admob：アフィリエイト用
+    implementation 'com.google.android.gms:play-services-ads:18.2.0'
+
+    // ここまでを追加
+
 }
