@@ -4,6 +4,7 @@ import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.wikitude.architect.ArchitectStartupConfiguration
 import com.wikitude.architect.ArchitectView
@@ -12,6 +13,7 @@ import jp.co.jalinfotec.soraguide.ar.base.ArchitectViewHolderInterface
 import jp.co.jalinfotec.soraguide.ar.base.BaseARActivity
 import jp.co.jalinfotec.soraguide.ar.base.LocationProvider
 import kotlinx.android.synthetic.main.activity_ar.*
+import org.json.JSONObject
 import java.io.IOException
 
 class StampRallyActivity : BaseARActivity() {
@@ -74,8 +76,15 @@ class StampRallyActivity : BaseARActivity() {
             override fun onProviderDisabled(p0: String?) {}
         })
 
-        architectView.addArchitectJavaScriptInterfaceListener {
-            // todo javascriptからのコールバック処理
+        architectView.addArchitectJavaScriptInterfaceListener { jsonObj ->
+            when (jsonObj.getString("type")) {
+                "collectStamp" -> {
+                    saveData(jsonObj.getString("data"))
+                }
+                else -> {
+                    Log.d(logTag, "不正なJSONを受け取りました")
+                }
+            }
         }
     }
 
@@ -137,6 +146,18 @@ class StampRallyActivity : BaseARActivity() {
         }
     }
 
+    // todo 端末内のデータを取得する
+    private fun loadData(): String {
+        return ""
+    }
+
+    //
+    private fun saveData(data: String) {
+        // 保存処理を実装
+        Log.d(logTag, "データを保存しました:$data")
+    }
+
+    //
     private fun showToast(msg: String, length: Int) {
         toast = Toast.makeText(this, msg, length)
         toast!!.show()
