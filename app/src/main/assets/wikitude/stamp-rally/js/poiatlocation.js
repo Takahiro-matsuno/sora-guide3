@@ -15,54 +15,20 @@ var World = {
         World.markerList = [];
 
         for (var cnt = 0; cnt < poiData.length; cnt++) {
-            /*
-                  The example Image Recognition already explained how images are loaded and displayed in the augmented reality view. This sample loads an AR.ImageResource when the World variable was defined. It will be reused for each marker that we will create afterwards.
-            */
-            // 画像
-            var markerDrawable = new AR.ImageResource("assets/" + poiData[cnt].resource, {
-                onError: World.onError
-            });
 
-            /*
-                For creating the marker a new object AR.GeoObject will be created at the specified geolocation. An AR.GeoObject connects one or more AR.GeoLocations with multiple AR.Drawables. The AR.Drawables can be defined for multiple targets. A target can be the camera, the radar or a direction indicator. Both the radar and direction indicators will be covered in more detail in later examples.
-            */
-            // 位置情報
-            var markerLocation = new AR.GeoLocation(poiData[cnt].latitude, poiData[cnt].longitude, poiData[cnt].altitude);
 
-            // 描画情報.８は８倍のサイズ
-            var markerImageDrawable = new AR.ImageDrawable(markerDrawable, 8, {
-                zOrder: 0,  // 表示順
-                opacity: 1.0,   // 不透明
-                // クリック時処理
-                onClick : function() {
-                    // Kotlinに送信
-                    // sendKotlin("collectStamp", this.poiData[cnt].id);
-                    // アニメーション開始
-                    // todo アニメーションを変更する
-                    elevatorAnimation.start();
-                }
-            });
+            //
+            var singlePoi = {
+                "id": poiData[cnt].id,
+                "latitude": poiData[cnt].latitude,
+                "longitude": poiData[cnt].longitude,
+                "altitude": poiData[cnt].altitude,
+                "resource": poiData[cnt].resource
+            };
 
-            // クリック時のアニメーション
-            var elevatorAnimation = new AR.PropertyAnimation(
-                markerImageDrawable, //the object geoLocation1 holds the animated property
-                "rotation", // the property altitude will be animated
-                0, // the start value of the animation
-                360, // the resulting value of the animation
-                1000, // the duration of the elevator climb is 10 seconds (10000 miliseconds)
-                {type: AR.CONST.EASING_CURVE_TYPE.EASE_IN_OUT_QUAD}
-            );
+            //
+            World.markerList.push(new Maker(singlePoi));
 
-            World.markerList.push(markerImageDrawable)
-
-            // create GeoObject
-            // AR上に配置
-            var markerObject = new AR.GeoObject(
-                markerLocation,
-                {
-                    drawables: { cam: markerImageDrawable }
-                }
-            );
         }
 
         // Updates status message as a user feedback that everything was loaded properly.
@@ -118,14 +84,6 @@ var World = {
         alert(error);
     }
 };
-
-// Kotlinへのインタフェース関数
-var sendKotlin = function (type, data) {
-    var obj = new Object();
-    obj.type = type;
-    obj.data = data;
-    AR.platform.sendJSONObject(obj);
-}
 
 /* 
 	Set a custom function where location changes are forwarded to. There is also a possibility to set AR.context.onLocationChanged to null. In this case the function will not be called anymore and no further location updates will be received. 
