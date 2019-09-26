@@ -110,7 +110,7 @@ class TopMenuActivity : AppCompatActivity() {
                     Log.d("TAG", position.toString())
                     val intent = Intent(Intent.ACTION_VIEW)
                     //topicsに設定されているURLのページへ遷移
-                    intent.data = Uri.parse(topics[position].topic_image)
+                    intent.data = Uri.parse(topics[position].topic_url)
                     startActivity(intent)
                 }
 
