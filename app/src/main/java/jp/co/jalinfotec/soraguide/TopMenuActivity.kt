@@ -1,28 +1,33 @@
 package jp.co.jalinfotec.soraguide
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings
 import android.util.Log
 import android.widget.ImageButton
-import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.AdRequest
 import com.squareup.picasso.Picasso
+import jp.co.jalinfotec.soraguide.topMenu.GetTopicsApiService
 import jp.co.jalinfotec.soraguide.topMenu.Topic
 import kotlinx.android.synthetic.main.activity_top_menu.*
+import jp.co.jalinfotec.soraguide.util.Constants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.concurrent.timer
-import jp.co.jalinfotec.soraguide.topMenu.GetTopicsApiService
-
 
 class TopMenuActivity : AppCompatActivity() {
 
@@ -40,9 +45,16 @@ class TopMenuActivity : AppCompatActivity() {
     //Topicsを格納する変数
     var topics:MutableList<Topic> = mutableListOf()
 
+
+    private val permissionRequestCode = 1
+    private val logTag = this::class.java.simpleName
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_menu)
+
+        // 権限リクエスト
+        requestPermission()
 
         //Admobの設定　ここから
 
@@ -169,5 +181,60 @@ class TopMenuActivity : AppCompatActivity() {
             .centerInside()
             .into(imageView)
 
+    }
+
+    // アプリの権限リクエスト
+    private fun requestPermission () {
+        val permList = ArrayList<String>()
+        // Here, thisActivity is the current activity
+        for (permission in Constants.permissionMap) {
+            // 許可がない場合
+            if (ContextCompat.checkSelfPermission(this, permission.key) != PackageManager.PERMISSION_GRANTED) {
+                permList.add(permission.key)
+                /*
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission.key)) {
+                    // リクエスト済みではない場合
+                }
+                */
+
+            }
+        }
+        // 許可されていない権限をリクエスト
+        if (permList.any()) {
+            ActivityCompat.requestPermissions(this, permList.toTypedArray(), permissionRequestCode)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray
+    ) {
+        when (requestCode) {
+            permissionRequestCode -> {
+                if (grantResults.contains(-1)) {
+                    // 権限が許可されなかった場合、注意メッセージを表示する
+                    val  builder =  AlertDialog.Builder(this)
+                    builder.setMessage(
+                        """
+                            アプリの権限により使用できる機能が制限されます。
+                            
+                            権限の追加は[設定]->[アプリ]->[そらガイド]->[権限]から行えます。
+                        """.trimIndent())
+                    builder.setPositiveButton("追加しない", DialogInterface.OnClickListener() { dialog, _ ->
+                            dialog.dismiss()
+                    })
+                    builder.setNegativeButton("追加する", DialogInterface.OnClickListener() { dialog, _ ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        intent.data = Uri.parse("package:jp.co.jalinfotec.soraguide")
+                        startActivity(intent)
+                        dialog.dismiss()
+                    })
+                    builder.show()
+                }
+            }
+            // Add other 'when' lines to check for other
+            // permissions this app might request.
+            else -> {} // Ignore all other requests.
+        }
     }
 }
