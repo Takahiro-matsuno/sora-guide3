@@ -1,5 +1,4 @@
-// implementation of AR-Experience (aka "World")
-// Worldにロジックを記述する。
+// AR Worldの定義
 var World = {
 	// true once data was fetched
 	initiallyLoadedData: false,
@@ -8,16 +7,15 @@ var World = {
 	markerList : [],
 
 	// called to inject new POI data。
-	// マーカーを設置する。
+	// Markerを設置する
 	loadPoisFromJsonData: function loadPoisFromJsonDataFn(poiData) {
 
-	    /* Empty list of visible markers. */
+	    // Marker保持配列
         World.markerList = [];
 
+        // Json配列分Markerを作成する
         for (var cnt = 0; cnt < poiData.length; cnt++) {
-
-
-            //
+            // Marker用にJsonを再定義
             var singlePoi = {
                 "id": poiData[cnt].id,
                 "latitude": poiData[cnt].latitude,
@@ -25,24 +23,19 @@ var World = {
                 "altitude": poiData[cnt].altitude,
                 "resource": poiData[cnt].resource
             };
-
-            //
+            // Markerを作成し、配列に追加
             World.markerList.push(new Marker(singlePoi));
-
         }
 
-        // Updates status message as a user feedback that everything was loaded properly.
-        // メッセージ
+        // Marker作成完了後のWorldStatusメッセージ
         World.updateStatusMessage(World.markerList.length + ' place loaded');
 	},
 
 	// updates status message shon in small "i"-button aligned bottom center
 	// index.htmlのメッセージやアイコンに状態を表示する
 	updateStatusMessage: function updateStatusMessageFn(message, isWarning) {
-
 		var themeToUse = isWarning ? "e" : "c";
 		var iconToUse = isWarning ? "alert" : "info";
-
 		$("#status-message").html(message);
 		$("#popupInfoButton").buttonMarkup({
 			theme: themeToUse
@@ -52,16 +45,15 @@ var World = {
 		});
 	},
 
-	// 位置が変化した時の処理。メインルーチンみたいになる。
-	// location updates, fired every time you call architectView.setLocation() in native environment
+    // ネイティブ環境でarchitectView.setLocationを呼び出すたびに起動される場所の更新
 	locationChanged: function locationChangedFn(lat, lon, alt, acc) {
 
-		/*
-			The custom function World.onLocationChanged checks with the flag World.initiallyLoadedData if the function was already called. With the first call of World.onLocationChanged an object that contains geo information will be created which will be later used to create a marker using the World.loadPoisFromJsonData function.
-		*/
-		//　最初だけマーカーの位置を作成する。
+        /**
+         * カスタム関数World.onLocationChangedは、関数が既に呼び出されているかどうかをフラグWorld.initiallyLoadedDataでチェックします。
+         * World.onLocationChangedの最初の呼び出しで、地理情報を含むオブジェクトが作成され、後でWorld.loadPoisFromJsonData関数を使用してマーカーを作成するために使用されます。
+         */
 		if (!World.initiallyLoadedData) {
-			// creates a poi object with a random location near the user's location
+			// Worldを初期化し、Marker用のJSON
 			var resources = ["stamp_red.png", "stamp_blue.png", "stamp_green.png"];
 			var poiData = [];
 			var id = 1;
@@ -75,18 +67,12 @@ var World = {
                 });
             }
             World.loadPoisFromJsonData(poiData);
-			//　１回だけのフラグを立てる
 			World.initiallyLoadedData = true;
 		}
 	},
-
 	onError: function onErrorFn(error) {
         alert(error);
     }
 };
-
-/* 
-	Set a custom function where location changes are forwarded to. There is also a possibility to set AR.context.onLocationChanged to null. In this case the function will not be called anymore and no further location updates will be received. 
-*/
-// 位置情報が変化した時の処理。これがメインルーチンみたいになる。
+// 位置情報が変化にトリガーして実行される
 AR.context.onLocationChanged = World.locationChanged;

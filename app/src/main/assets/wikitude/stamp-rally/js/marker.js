@@ -1,3 +1,4 @@
+// マーカーオブジェクトの定義
 function Marker(poiData) {
     /*
      *   For creating the marker a new object AR.GeoObject will be created at the specified geolocation. An
@@ -10,13 +11,13 @@ function Marker(poiData) {
     /*
      *  The example Image Recognition already explained how images are loaded and displayed in the augmented reality view. This sample loads an AR.ImageResource when the World variable was defined. It will be reused for each marker that we will create afterwards.
      */
-    // 画像
+    // 画像を取得
     var markerDrawable = new AR.ImageResource("assets/" + this.poiData.resource, {
         onError: World.onError
     });
 
     /* Create the AR.GeoLocation from the poi data. */
-    // 位置情報
+    // 位置情報を設定
     var markerLocation = new AR.GeoLocation(
         this.poiData.latitude,
         this.poiData.longitude,
