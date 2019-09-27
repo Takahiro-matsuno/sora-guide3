@@ -5,14 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import jp.co.jalinfotec.soraguide.R
 import kotlinx.android.synthetic.main.activity_ar.*
 
-open class BaseARActivity: AppCompatActivity() {
+abstract class BaseARActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ar)
     }
 
-    fun callJavaScript(funcName: String, vararg args: Any = arrayOf()) {
+    abstract fun loadArData()
+
+    abstract fun updateArData(data: String)
+
+    abstract fun saveArData()
+
+    // 端末内データのアプリへの通知
+    fun noticeJavaScript(funcName: String, vararg args: Any = arrayOf()) {
         var argStr = ""
         for (a in args) {
             // String型のときは「'」をつける

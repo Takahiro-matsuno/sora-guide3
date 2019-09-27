@@ -2,11 +2,11 @@
  * Worldに表示するARObjectの定義
  */
 function Marker(poiData) {
-    /*
-     *   For creating the marker a new object AR.GeoObject will be created at the specified geolocation. An
-     *   AR.GeoObject connects one or more AR.GeoLocations with multiple AR.Drawables. The AR.Drawables can be
-     *   defined for multiple targets. A target can be the camera, the radar or a direction indicator. Both the
-     *   radar and direction indicators will be covered in more detail in later examples.
+    /**
+     * マーカーを作成するために、新しいオブジェクトAR.GeoObjectが指定された地理位置に作成されます。
+     * AR.GeoObjectは、1つ以上のAR.GeoLocationsと複数のAR.Drawableを接続します。
+     * AR.Drawablesは複数のターゲットに対して定義できます。ターゲットは、カメラ、レーダー、または方向インジケーターです。
+     * レーダーと方向インジケータの両方については、後の例で詳しく説明します。
      */
     this.poiData = poiData;
 
@@ -54,23 +54,3 @@ function Marker(poiData) {
 
     return this;
 }
-
-Marker.prototype.getOnClickTrigger = function(marker) {
-
-    return function() {
-
-        if (marker.isSelected) {
-
-            Marker.prototype.setDeselected(marker);
-
-        } else {
-            Marker.prototype.setSelected(marker);
-            try {
-                World.onMarkerSelected(marker);
-            } catch (err) {
-                alert(err);
-            }
-        }
-        return true;
-    };
-};

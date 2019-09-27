@@ -29,17 +29,21 @@ class StampRallyActivity : BaseARActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // wikitude初期設定
+        // TODO 権限がない場合の処理を実装する
+
+        // Wikitudeの初期設定
         val config = ArchitectStartupConfiguration()
         config.licenseKey = Constants.wikitudeLicenseKey
         architectView.onCreate(config)
+
+        // TODO JSへ通知する実装方式を検討する
         loadArData()
-        // Todo JSへ通知する実装方式を検討する
-        // callJavaScript("funcName", )
-        // 方位のトラッキングのリスナークラス。wikitudeのクラス。
+        // noticeJavaScript("funcName", )
+
+        // 方位トラッキングリスナー
         this.sensorAccuracyListener = this.getSensorAccuracyListener()
 
-        // 位置情報のリスナー
+        // 位置情報トラッキングリスナー
         this.locationProvider = LocationProvider(this, object: LocationListener {
             // 位置情報が変更された時
             override fun onLocationChanged(location: Location?) {
@@ -77,6 +81,7 @@ class StampRallyActivity : BaseARActivity() {
             override fun onProviderDisabled(p0: String?) {}
         })
 
+        // JSからの通知
         architectView.addArchitectJavaScriptInterfaceListener { jsonObj ->
             when (jsonObj.getString("type")) {
                 "collectStamp" -> {
@@ -96,8 +101,6 @@ class StampRallyActivity : BaseARActivity() {
         architectView.onPostCreate()
         try {
             architectView.load(Constants.wikitudeStampResourcePath)
-            // 50km以内のものだけ表示
-            this.architectView.cullingDistance = (50 * 1000).toFloat()
         } catch (ex: IOException) {
             ex.printStackTrace()
             showToast("index.htmlの読み込みでエラーが発生しました", Toast.LENGTH_SHORT)
@@ -105,9 +108,11 @@ class StampRallyActivity : BaseARActivity() {
         }
     }
 
+    // 画面表示時に実行
     override fun onResume() {
         super.onResume()
 
+        // TODO 画面の非表示からの復帰時のMarkerの状態を確認する(初期化されていないか)
         this.architectView?.onResume()
         if (this.sensorAccuracyListener != null) {
             this.architectView?.registerSensorAccuracyChangeListener(this.sensorAccuracyListener)
@@ -115,6 +120,7 @@ class StampRallyActivity : BaseARActivity() {
         this.locationProvider?.onResume()
     }
 
+    // 画面停止前に実行
     override fun onPause() {
         super.onPause()
 
@@ -123,8 +129,11 @@ class StampRallyActivity : BaseARActivity() {
             this.architectView?.unregisterSensorAccuracyChangeListener(this.sensorAccuracyListener)
         }
         this.locationProvider?.onPause()
+
+        saveArData()
     }
 
+    // Activity破棄前に実行
     override fun onDestroy() {
         super.onDestroy()
         toast?.cancel()
@@ -148,22 +157,22 @@ class StampRallyActivity : BaseARActivity() {
     }
 
     // 端末内からAR用JSONデータを取得
-    private fun loadArData() {
-        // Todo SharedPreferenceから端末内データを取得する
+    override fun loadArData() {
+        // TODO SharedPreferenceから端末内データを取得する
     }
 
     // AR用のJSONデータを更新
-    private fun updateArData(data: String) {
+    override fun updateArData(data: String) {
         Log.d(logTag, "データを更新しました:$data")
         this.arData = data
     }
 
     // 端末内へAR用JSONデータを保存
-    private fun saveArData() {
-        // Todo SharedPreferenceへデータを保存する
+    override fun saveArData() {
+        // TODO SharedPreferenceへデータを保存する
     }
 
-    //
+    // トーストの表示
     private fun showToast(msg: String, length: Int) {
         toast = Toast.makeText(this, msg, length)
         toast!!.show()

@@ -92,6 +92,7 @@ var World = {
 	// コンプリート処理
 	completeMarker: function completeMarker() {
 	    console.log("complete");
+	    // TODO クーポン画像を表示する。
 	},
 
 	onError: function onErrorFn(error) {
