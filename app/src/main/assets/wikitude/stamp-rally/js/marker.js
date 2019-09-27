@@ -1,4 +1,6 @@
-// マーカーオブジェクトの定義
+/**
+ * Worldに表示するARObjectの定義
+ */
 function Marker(poiData) {
     /*
      *   For creating the marker a new object AR.GeoObject will be created at the specified geolocation. An
@@ -6,7 +8,7 @@ function Marker(poiData) {
      *   defined for multiple targets. A target can be the camera, the radar or a direction indicator. Both the
      *   radar and direction indicators will be covered in more detail in later examples.
      */
-    this.poiData = poiData
+    this.poiData = poiData;
 
     /*
      *  The example Image Recognition already explained how images are loaded and displayed in the augmented reality view. This sample loads an AR.ImageResource when the World variable was defined. It will be reused for each marker that we will create afterwards.
@@ -32,7 +34,11 @@ function Marker(poiData) {
             zOrder: 0,
             opacity: 1.0,
             onClick: function() {
+                console.log("marker id:" + poiData.id + "取得");
                 window.alert("スタンプ獲得！！");
+                // マーカーを取得済みにする
+                World.getMarker(poiData.id);
+                // マーカーを削除
                 markerDrawable.destroy();
             }
         }
@@ -51,15 +57,6 @@ function Marker(poiData) {
 
 Marker.prototype.getOnClickTrigger = function(marker) {
 
-    /*
-        The setSelected and setDeselected functions are prototype Marker functions.
-        Both functions perform the same steps but inverted, hence only one function (setSelected) is covered in
-        detail. Three steps are necessary to select the marker. First the state will be set appropriately. Second
-        the background drawable will be enabled and the standard background disabled. This is done by setting the
-        opacity property to 1.0 for the visible state and to 0.0 for an invisible state. Third the onClick function
-        is set only for the background drawable of the selected marker.
-    */
-
     return function() {
 
         if (marker.isSelected) {
@@ -73,38 +70,7 @@ Marker.prototype.getOnClickTrigger = function(marker) {
             } catch (err) {
                 alert(err);
             }
-
         }
         return true;
     };
 };
-
-Marker.prototype.setSelected = function(marker) {
-
-    marker.isSelected = true;
-
-    marker.markerDrawableIdle.opacity = 0.0;
-    marker.markerDrawableSelected.opacity = 1.0;
-    marker.markerDrawableIdle.onClick = null;
-    marker.markerDrawableSelected.onClick = Marker.prototype.getOnClickTrigger(marker);
-};
-
-Marker.prototype.setDeselected = function(marker) {
-
-    marker.isSelected = false;
-
-    marker.markerDrawableIdle.opacity = 1.0;
-    marker.markerDrawableSelected.opacity = 0.0;
-
-    marker.markerDrawableIdle.onClick = Marker.prototype.getOnClickTrigger(marker);
-    marker.markerDrawableSelected.onClick = null;
-};
-
-
-// Kotlinへのインタフェース関数
-var sendKotlin = function (type, data) {
-    var obj = new Object();
-    obj.type = type;
-    obj.data = data;
-    AR.platform.sendJSONObject(obj);
-}

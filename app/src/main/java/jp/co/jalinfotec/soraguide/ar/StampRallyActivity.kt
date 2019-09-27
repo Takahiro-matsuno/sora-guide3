@@ -13,13 +13,13 @@ import jp.co.jalinfotec.soraguide.ar.base.ArchitectViewHolderInterface
 import jp.co.jalinfotec.soraguide.ar.base.BaseARActivity
 import jp.co.jalinfotec.soraguide.ar.base.LocationProvider
 import kotlinx.android.synthetic.main.activity_ar.*
-import org.json.JSONObject
 import java.io.IOException
 
 class StampRallyActivity : BaseARActivity() {
 
     private val logTag = this::class.java.simpleName
     private var toast: Toast? = null
+    private var arData: String? = null  // AR用JSONデータ
 
     private var sensorAccuracyListener: ArchitectView.SensorAccuracyChangeListener? = null
     private var lastKnownLocation: Location? = null
@@ -33,8 +33,9 @@ class StampRallyActivity : BaseARActivity() {
         val config = ArchitectStartupConfiguration()
         config.licenseKey = Constants.wikitudeLicenseKey
         architectView.onCreate(config)
-        // todo call javascript
-        //  callJavaScript("funcName", "arg1", 2, true)
+        loadArData()
+        // Todo JSへ通知する実装方式を検討する
+        // callJavaScript("funcName", )
         // 方位のトラッキングのリスナークラス。wikitudeのクラス。
         this.sensorAccuracyListener = this.getSensorAccuracyListener()
 
@@ -79,7 +80,7 @@ class StampRallyActivity : BaseARActivity() {
         architectView.addArchitectJavaScriptInterfaceListener { jsonObj ->
             when (jsonObj.getString("type")) {
                 "collectStamp" -> {
-                    saveData(jsonObj.getString("data"))
+                    updateArData(jsonObj.getString("data"))
                 }
                 else -> {
                     Log.d(logTag, "不正なJSONを受け取りました")
@@ -146,15 +147,20 @@ class StampRallyActivity : BaseARActivity() {
         }
     }
 
-    // todo 端末内のデータを取得する
-    private fun loadData(): String {
-        return ""
+    // 端末内からAR用JSONデータを取得
+    private fun loadArData() {
+        // Todo SharedPreferenceから端末内データを取得する
     }
 
-    //
-    private fun saveData(data: String) {
-        // 保存処理を実装
-        Log.d(logTag, "データを保存しました:$data")
+    // AR用のJSONデータを更新
+    private fun updateArData(data: String) {
+        Log.d(logTag, "データを更新しました:$data")
+        this.arData = data
+    }
+
+    // 端末内へAR用JSONデータを保存
+    private fun saveArData() {
+        // Todo SharedPreferenceへデータを保存する
     }
 
     //

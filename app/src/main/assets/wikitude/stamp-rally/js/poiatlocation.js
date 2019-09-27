@@ -1,10 +1,13 @@
-// AR Worldの定義
+/**
+  * AR Worldの定義
+  */
 var World = {
 	// true once data was fetched
 	initiallyLoadedData: false,
 
 	// POI-Marker list
 	markerList : [],
+	markerGetList: [],
 
 	// called to inject new POI data。
 	// Markerを設置する
@@ -12,9 +15,12 @@ var World = {
 
 	    // Marker保持配列
         World.markerList = [];
+        World.markerGetList = [];
 
         // Json配列分Markerを作成する
         for (var cnt = 0; cnt < poiData.length; cnt++) {
+            World.markerGetList[cnt] = false;
+
             // Marker用にJsonを再定義
             var singlePoi = {
                 "id": poiData[cnt].id,
@@ -70,6 +76,24 @@ var World = {
 			World.initiallyLoadedData = true;
 		}
 	},
+	// マーカー取得
+	getMarker: function getMarkerFn(id) {
+	    // 取得済みリストの更新
+	    World.markerGetList[id - 1] = true;
+	    // Kotlinへ通知
+	    sendKotlin("collectStamp", World.markerGetList)
+
+	    // コンプリート判定
+	    if (World.markerGetList.indexOf(false) == -1) {
+	        completeMarker();
+	    }
+	},
+
+	// コンプリート処理
+	completeMarker: function completeMarker() {
+	    console.log("complete");
+	},
+
 	onError: function onErrorFn(error) {
         alert(error);
     }
