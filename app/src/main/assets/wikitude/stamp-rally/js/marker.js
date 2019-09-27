@@ -31,7 +31,10 @@ function Marker(poiData) {
         {
             zOrder: 0,
             opacity: 1.0,
-            onClick: Marker.prototype.getOnClickTrigger(this)
+            onClick: function() {
+                window.alert("スタンプ獲得！！");
+                markerDrawable.destroy();
+            }
         }
     );
 
