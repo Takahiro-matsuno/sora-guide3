@@ -27,7 +27,7 @@ var World = {
             };
 
             //
-            World.markerList.push(new Maker(singlePoi));
+            World.markerList.push(new Marker(singlePoi));
 
         }
 
