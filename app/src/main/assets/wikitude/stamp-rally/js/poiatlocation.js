@@ -94,12 +94,12 @@ var World = {
 
 	    // コンプリート判定
 	    if (acquiredList.indexOf(false) == -1) {
-	        completeMarker();
+	        this.completeMarker();
 	    }
 	},
 
 	// コンプリート処理
-	completeMarker: function completeMarker() {
+	completeMarker: function completeMarkerFn() {
 	    console.log("complete");
 	    // TODO クーポン画像を表示する。
 	},

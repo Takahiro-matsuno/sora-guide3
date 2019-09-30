@@ -20,12 +20,14 @@ class StampRallyActivity : BaseARActivity() {
 
     private val logTag = this::class.java.simpleName
     private var toast: Toast? = null
-    private var arData: String? = null  // AR用JSONデータ
 
     private var sensorAccuracyListener: ArchitectView.SensorAccuracyChangeListener? = null
     private var lastKnownLocation: Location? = null
     private var locationProvider: ArchitectViewHolderInterface.ILocationProvider? = null
     private var lastCalibrationToastShownTimeMillis = System.currentTimeMillis()
+
+    private val collectStampKey = "COLLECT_STAMP"
+    private var arData: String? = null  // AR用JSONデータ
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +86,7 @@ class StampRallyActivity : BaseARActivity() {
         // JSからの通知
         architectView.addArchitectJavaScriptInterfaceListener { jsonObj ->
             when (jsonObj.getString("type")) {
-                "collectStamp" -> {
+                collectStampKey -> {
                     updateArData(jsonObj.getString("data"))
                 }
                 else -> {
@@ -160,7 +162,7 @@ class StampRallyActivity : BaseARActivity() {
     override fun loadArData() {
         //SharedPreferenceから端末内データを取得する
         val data = getSharedPreferences("DataSave", Context.MODE_PRIVATE)
-        this.arData = data.getString("collectStamp","[false, false, false]")
+        this.arData = data.getString(collectStampKey,"[false, false, false]")
     }
 
     // AR用のJSONデータを更新
@@ -174,7 +176,7 @@ class StampRallyActivity : BaseARActivity() {
         //SharedPreferenceへデータを保存する
         val data = getSharedPreferences("DataSave", Context.MODE_PRIVATE)
         val editor = data.edit()
-        editor.putString("collectStamp",this.arData)
+        editor.putString(collectStampKey ,this.arData)
         editor.apply()
     }
 
