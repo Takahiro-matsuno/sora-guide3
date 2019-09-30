@@ -38,7 +38,7 @@ class StampRallyActivity : BaseARActivity() {
 
         // TODO JSへ通知する実装方式を検討する
         loadArData()
-        noticeJavaScript("updateListFn",arData!!)
+        noticeJavaScript("setAcquiredListFn",arData!!)
 
         // 方位トラッキングリスナー
         this.sensorAccuracyListener = this.getSensorAccuracyListener()

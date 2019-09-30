@@ -13,7 +13,7 @@ var World = {
 	// called to inject new POI data。
 	// Markerを設置する
 	loadPoisFromJsonData: function loadPoisFromJsonDataFn(poiData) {
-	    console.log("初期化開始", markerGetList);
+	    console.log("初期化開始", acquiredList);
 	    // Marker保持配列
         World.markerList = [];
         //World.markerGetList = [];
@@ -69,6 +69,10 @@ var World = {
 			var poiData = [];
 			var id = 1;
             for (var cnt = 0; cnt < resources.length; cnt++) {
+                 //すでに取得済みのスタンプの場合
+                if(acquiredList[cnt]) {
+                     continue;
+                 }
                 poiData.push({
                     "id": id + cnt,
                     "longitude": (lon + (Math.random() / 5 - 0.1)),
@@ -109,7 +113,7 @@ AR.context.onLocationChanged = World.locationChanged;
 
 //Kotlinから取得済みリストを取得する
 setAcquiredList: function setAcquiredListFn(jStr) {
-    var jArray = JSON.parse("jStr");
+    var jArray = JSON.parse(jStr);
     for (var cnt = 0; cnt < jArray.length; cnt++) {
         acquiredList[cnt] = jArray[cnt];
     }
