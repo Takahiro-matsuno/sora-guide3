@@ -1,26 +1,28 @@
 /**
   * AR Worldの定義
   */
+var acquiredList = [];
 var World = {
 	// true once data was fetched
 	initiallyLoadedData: false,
 
 	// POI-Marker list
 	markerList : [],
-	markerGetList: [],
+	//markerGetList: [],
 
 	// called to inject new POI data。
 	// Markerを設置する
 	loadPoisFromJsonData: function loadPoisFromJsonDataFn(poiData) {
-
+	    console.log("初期化開始", markerGetList);
 	    // Marker保持配列
         World.markerList = [];
-        World.markerGetList = [];
+        //World.markerGetList = [];
 
         // Json配列分Markerを作成する
         for (var cnt = 0; cnt < poiData.length; cnt++) {
-            World.markerGetList[cnt] = false;
+            //World.markerGetList[cnt] = false;
 
+            console.log("loadPoisFromJsonDataFn_id:", poiData[cnt].id)
             // Marker用にJsonを再定義
             var singlePoi = {
                 "id": poiData[cnt].id,
@@ -29,12 +31,15 @@ var World = {
                 "altitude": poiData[cnt].altitude,
                 "resource": poiData[cnt].resource
             };
+
             // Markerを作成し、配列に追加
             World.markerList.push(new Marker(singlePoi));
         }
 
         // Marker作成完了後のWorldStatusメッセージ
         World.updateStatusMessage(World.markerList.length + ' place loaded');
+        console.log("処理終了", acquiredList);
+
 	},
 
 	// updates status message shon in small "i"-button aligned bottom center
@@ -79,12 +84,12 @@ var World = {
 	// マーカー取得
 	getMarker: function getMarkerFn(id) {
 	    // 取得済みリストの更新
-	    World.markerGetList[id - 1] = true;
+	    acquiredList[id - 1] = true;
 	    // Kotlinへ通知
-	    sendKotlin("collectStamp", World.markerGetList)
+	    sendKotlin("collectStamp", JSON.stringify(acquiredList));
 
 	    // コンプリート判定
-	    if (World.markerGetList.indexOf(false) == -1) {
+	    if (acquiredList.indexOf(false) == -1) {
 	        completeMarker();
 	    }
 	},
@@ -103,13 +108,9 @@ var World = {
 AR.context.onLocationChanged = World.locationChanged;
 
 //Kotlinから取得済みリストを取得する
-updateList: function updateList(arData) {
-
-    console.log("updateList:");
-
-    console.log(arData);
-    console.log(World.markerGetList);
-    World.markerGetList = arData;
-
-    console.log(World.markerGetList);
+setAcquiredList: function setAcquiredListFn(jStr) {
+    var jArray = JSON.parse("jStr");
+    for (var cnt = 0; cnt < jArray.length; cnt++) {
+        acquiredList[cnt] = jArray[cnt];
+    }
 }

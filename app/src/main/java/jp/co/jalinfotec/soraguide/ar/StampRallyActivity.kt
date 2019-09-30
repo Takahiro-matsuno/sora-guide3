@@ -31,7 +31,6 @@ class StampRallyActivity : BaseARActivity() {
         super.onCreate(savedInstanceState)
 
         // TODO 権限がない場合の処理を実装する
-
         // Wikitudeの初期設定
         val config = ArchitectStartupConfiguration()
         config.licenseKey = Constants.wikitudeLicenseKey
@@ -39,7 +38,7 @@ class StampRallyActivity : BaseARActivity() {
 
         // TODO JSへ通知する実装方式を検討する
         loadArData()
-        noticeJavaScript("updateList",arData!!)
+        noticeJavaScript("updateListFn",arData!!)
 
         // 方位トラッキングリスナー
         this.sensorAccuracyListener = this.getSensorAccuracyListener()
@@ -113,9 +112,6 @@ class StampRallyActivity : BaseARActivity() {
     override fun onResume() {
         super.onResume()
 
-        loadArData()
-        noticeJavaScript("updateList",arData!!)
-
         // TODO 画面の非表示からの復帰時のMarkerの状態を確認する(初期化されていないか)
         this.architectView?.onResume()
         if (this.sensorAccuracyListener != null) {
@@ -164,7 +160,7 @@ class StampRallyActivity : BaseARActivity() {
     override fun loadArData() {
         //SharedPreferenceから端末内データを取得する
         val data = getSharedPreferences("DataSave", Context.MODE_PRIVATE)
-        this.arData = data.getString("collectStamp","false,false,false")
+        this.arData = data.getString("collectStamp","[false, false, false]")
     }
 
     // AR用のJSONデータを更新
