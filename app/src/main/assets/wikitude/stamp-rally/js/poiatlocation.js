@@ -101,3 +101,15 @@ var World = {
 };
 // 位置情報が変化にトリガーして実行される
 AR.context.onLocationChanged = World.locationChanged;
+
+//Kotlinから取得済みリストを取得する
+updateList: function updateList(arData) {
+
+    console.log("updateList:");
+
+    console.log(arData);
+    console.log(World.markerGetList);
+    World.markerGetList = arData;
+
+    console.log(World.markerGetList);
+}

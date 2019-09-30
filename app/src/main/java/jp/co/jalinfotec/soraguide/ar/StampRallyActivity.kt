@@ -1,5 +1,6 @@
 package jp.co.jalinfotec.soraguide.ar
 
+import android.content.Context
 import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationListener
@@ -38,7 +39,7 @@ class StampRallyActivity : BaseARActivity() {
 
         // TODO JSへ通知する実装方式を検討する
         loadArData()
-        // noticeJavaScript("funcName", )
+        noticeJavaScript("updateList",arData!!)
 
         // 方位トラッキングリスナー
         this.sensorAccuracyListener = this.getSensorAccuracyListener()
@@ -112,6 +113,9 @@ class StampRallyActivity : BaseARActivity() {
     override fun onResume() {
         super.onResume()
 
+        loadArData()
+        noticeJavaScript("updateList",arData!!)
+
         // TODO 画面の非表示からの復帰時のMarkerの状態を確認する(初期化されていないか)
         this.architectView?.onResume()
         if (this.sensorAccuracyListener != null) {
@@ -158,7 +162,9 @@ class StampRallyActivity : BaseARActivity() {
 
     // 端末内からAR用JSONデータを取得
     override fun loadArData() {
-        // TODO SharedPreferenceから端末内データを取得する
+        //SharedPreferenceから端末内データを取得する
+        val data = getSharedPreferences("DataSave", Context.MODE_PRIVATE)
+        this.arData = data.getString("collectStamp","false,false,false")
     }
 
     // AR用のJSONデータを更新
@@ -169,7 +175,11 @@ class StampRallyActivity : BaseARActivity() {
 
     // 端末内へAR用JSONデータを保存
     override fun saveArData() {
-        // TODO SharedPreferenceへデータを保存する
+        //SharedPreferenceへデータを保存する
+        val data = getSharedPreferences("DataSave", Context.MODE_PRIVATE)
+        val editor = data.edit()
+        editor.putString("collectStamp",this.arData)
+        editor.apply()
     }
 
     // トーストの表示
