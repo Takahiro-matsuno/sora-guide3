@@ -35,7 +35,8 @@ function Marker(poiData) {
             opacity: 1.0,
             onClick: function() {
                 console.log("marker id:" + poiData.id + "取得");
-                window.alert("スタンプ獲得！！");
+                  $("#sample-dialog").dialog();
+                //window.alert("スタンプ獲得！！");
                 // マーカーを取得済みにする
                 /*
                 var jsFrame = new JSFrame();
