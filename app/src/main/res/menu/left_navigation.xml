@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_airport"
+                android:icon="@drawable/ic_info_outline_black_24dp"
+                android:title="@string/airport_navigation" />
+        <item
+                android:id="@+id/nav_flight"
+                android:icon="@drawable/ic_local_airport_black_24dp"
+                android:title="@string/flight_info" />
+        <item
+                android:id="@+id/nav_tourism"
+                android:icon="@drawable/ic_map_black_24dp"
+                android:title="@string/tourist_info" />
+        <item
+                android:id="@+id/nav_taxi"
+                android:icon="@drawable/ic_local_taxi_black_24dp"
+                android:title="@string/taxi_reservation" />
+    </group>
+</menu>
