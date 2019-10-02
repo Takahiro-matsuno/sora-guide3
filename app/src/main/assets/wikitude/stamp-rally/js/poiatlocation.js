@@ -68,11 +68,12 @@ var World = {
 			var resources = ["stamp_red.png", "stamp_blue.png", "stamp_green.png"];
 			var poiData = [];
 			var id = 1;
+			// TODO コンプリートの場合、completeMarkerを呼び出す
             for (var cnt = 0; cnt < resources.length; cnt++) {
                  //すでに取得済みのスタンプの場合
                 if(acquiredList[cnt]) {
                      continue;
-                 }
+                }
                 poiData.push({
                     "id": id + cnt,
                     "longitude": (lon + (Math.random() / 5 - 0.1)),
@@ -90,7 +91,7 @@ var World = {
 	    // 取得済みリストの更新
 	    acquiredList[id - 1] = true;
 	    // Kotlinへ通知
-	    sendKotlin("collectStamp", JSON.stringify(acquiredList));
+	    sendKotlin("COLLECT_STAMP", JSON.stringify(acquiredList));
 
 	    // コンプリート判定
 	    if (acquiredList.indexOf(false) == -1) {
@@ -112,7 +113,7 @@ var World = {
 AR.context.onLocationChanged = World.locationChanged;
 
 //Kotlinから取得済みリストを取得する
-setAcquiredList: function setAcquiredListFn(jStr) {
+function setAcquiredListFn(jStr) {
     var jArray = JSON.parse(jStr);
     for (var cnt = 0; cnt < jArray.length; cnt++) {
         acquiredList[cnt] = jArray[cnt];

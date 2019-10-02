@@ -35,13 +35,13 @@ function Marker(poiData) {
             opacity: 1.0,
             onClick: function() {
                 console.log("marker id:" + poiData.id + "取得");
-                  $("#sample-dialog").dialog();
+                $("#sample-dialog").dialog();
+                World.getMarker(poiData.id);
                 //window.alert("スタンプ獲得！！");
                 // マーカーを取得済みにする
                 /*
                 var jsFrame = new JSFrame();
                 jsFrame.showToast({ html: 'スタンプ獲得！！', align: 'bottom', duration: 2000});
-                World.getMarker(poiData.id);
                 */
                 // マーカーを削除
                 markerDrawable.destroy();

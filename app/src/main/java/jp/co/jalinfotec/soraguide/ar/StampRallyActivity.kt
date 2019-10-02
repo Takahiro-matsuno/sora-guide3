@@ -38,7 +38,6 @@ class StampRallyActivity : BaseARActivity() {
         config.licenseKey = Constants.wikitudeLicenseKey
         architectView.onCreate(config)
 
-        // TODO JSへ通知する実装方式を検討する
         loadArData()
         noticeJavaScript("setAcquiredListFn",arData!!)
 
@@ -114,7 +113,6 @@ class StampRallyActivity : BaseARActivity() {
     override fun onResume() {
         super.onResume()
 
-        // TODO 画面の非表示からの復帰時のMarkerの状態を確認する(初期化されていないか)
         this.architectView?.onResume()
         if (this.sensorAccuracyListener != null) {
             this.architectView?.registerSensorAccuracyChangeListener(this.sensorAccuracyListener)
@@ -145,7 +143,6 @@ class StampRallyActivity : BaseARActivity() {
             this.architectView.onDestroy()
         }
     }
-
 
     // センサーの精度が悪い時にワーニングを表示
     private fun getSensorAccuracyListener(): ArchitectView.SensorAccuracyChangeListener {
