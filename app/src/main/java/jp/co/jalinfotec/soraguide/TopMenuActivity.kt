@@ -13,5 +13,6 @@ class TopMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_top_menu)
 
         taxi_btn.setOnClickListener { startActivity(Intent(this, TaxiActivity::class.java)) }
+        kanko_btn.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
     }
 }
