@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import jp.co.jalinfotec.soraguide.R
+import jp.co.jalinfotec.soraguide.TopMenuActivity
 import jp.co.jalinfotec.soraguide.taxi.TaxiActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 
@@ -47,6 +48,10 @@ abstract class BaseNavigationActivity:
      */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.nav_home -> {
+                startActivity(Intent(this, TopMenuActivity::class.java))
+                finish()
+            }
             R.id.nav_airport -> { // todo 遷移先画面を設定する
                 //startActivity(Intent(this, Activity::class.java))
                 finish()

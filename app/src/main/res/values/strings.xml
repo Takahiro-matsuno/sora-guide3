@@ -1,6 +1,7 @@
 <resources>
     <!-- 共通 -->
     <string name="app_name">そらガイド</string>
+    <string name="top_menu">ホーム</string>
     <string name="airport_navigation">空港案内</string>
     <string name="flight_info">フライト情報</string>
     <string name="tourist_info">観光案内</string>
