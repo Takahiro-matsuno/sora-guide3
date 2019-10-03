@@ -61,7 +61,7 @@ abstract class BaseNavigationActivity:
                 //startActivity(Intent(this, Activity::class.java))
                 finish()
             }
-            R.id.nav_tourism -> { // todo 遷移先画面を設定する
+            R.id.nav_tourism -> {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
