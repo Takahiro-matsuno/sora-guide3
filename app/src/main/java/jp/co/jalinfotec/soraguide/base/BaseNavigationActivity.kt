@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
+import jp.co.jalinfotec.soraguide.MainActivity
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.TopMenuActivity
 import jp.co.jalinfotec.soraguide.taxi.TaxiActivity
@@ -61,7 +62,7 @@ abstract class BaseNavigationActivity:
                 finish()
             }
             R.id.nav_tourism -> { // todo 遷移先画面を設定する
-                //startActivity(Intent(this, Activity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
             R.id.nav_taxi -> {

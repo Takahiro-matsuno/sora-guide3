@@ -11,4 +11,12 @@
     <string name="action_settings">Settings</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- kanko -->
+    <string name="title_activity_maps">Map</string>
+    <string name="kankouti_colume">観光地名</string>
+    <string name="address_colume">住所</string>
+    <string name="open_end_colume">営業時間</string>
+    <string name="price_colume">料金情報</string>
+    <string name="overview_colume">概要</string>
 </resources>
