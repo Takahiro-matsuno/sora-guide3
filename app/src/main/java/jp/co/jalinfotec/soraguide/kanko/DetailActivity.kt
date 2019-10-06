@@ -39,12 +39,12 @@ class DetailActivity : AppCompatActivity() {
         } ?: IllegalAccessException("Toolbar cannot be null")
 
         //緯度、経度はAPIの生の値だと使えないので加工する
-        val ido_front = ido_notuse.substring(0..1)
-        val ido_back = ido_notuse.substring(2)
+        val ido_front = ido_notuse?.substring(0..1)
+        val ido_back = ido_notuse?.substring(2)
         val ido = ido_front + "." + ido_back
 
-        val keido_front = keido_notuse.substring(0..2)
-        val keido_back = keido_notuse.substring(3)
+        val keido_front = keido_notuse?.substring(0..2)
+        val keido_back = keido_notuse?.substring(3)
         val keido = keido_front + "." + keido_back
 
 

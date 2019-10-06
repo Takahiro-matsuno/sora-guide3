@@ -8,12 +8,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
-import androidx.databinding.DataBindingUtil
-
+import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -59,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
         //立ち寄り時間選択用プルダウン部分の部品
         val tachiyori_adapter = ArrayAdapter(
             applicationContext,
@@ -76,17 +72,16 @@ class MainActivity : AppCompatActivity() {
                 val tachiyoritime = tachiyoriParent.selectedItem as String
                 tachiyori = tachiyoritime
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                //TODO:プルダウンから選択されなかった処理・・・って必要？
             }
         }
         //キーボードでenterキー押されたら閉じる処理
         edit_text.setOnKeyListener(OnkeyListener())
 
         search_button.setOnClickListener {
-            if(ken == "------"){
-                //TODO:検索処理を行わないようにする。
+            if(ken == " "){
+                Toast.makeText(applicationContext,"検索するエリアを選択して下さい",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
             }
 
             //検索キーワードに入力された値のset
@@ -95,7 +90,6 @@ class MainActivity : AppCompatActivity() {
 
             //spinnerで選択された値をJISコードへ変換
             when(ken){
-                "------" -> {ken = ""}
                 "徳島県" -> {ken = "36"}
                 "香川県" -> {ken = "37"}
                 "愛媛県" -> {ken = "38"}
@@ -116,7 +110,6 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("tachiyori",tachiyori)
             startActivity(intent)
         }
-
     }
 
     //キーボード消すためのクラス。
@@ -129,7 +122,6 @@ class MainActivity : AppCompatActivity() {
             // キーボードを閉じる
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(editText.windowToken, 0)
-            var keyword = editText.text.toString()
             return true
         }
     }

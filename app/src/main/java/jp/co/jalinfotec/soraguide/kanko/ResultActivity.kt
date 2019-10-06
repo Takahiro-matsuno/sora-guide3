@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_result.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,13 +19,12 @@ class ResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
+
         setSupportActionBar(toolbar_result)
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeButtonEnabled(true)
         } ?: IllegalAccessException("Toolbar cannot be null")
-
-
 
         progress_bar.visibility = android.widget.ProgressBar.VISIBLE
 
@@ -54,7 +54,7 @@ class ResultActivity : AppCompatActivity() {
             keyword,
             ken,
             tachiyori,
-            50,
+            100,
             "json"
         ).request().url().toString()
 
@@ -69,7 +69,7 @@ class ResultActivity : AppCompatActivity() {
                 Log.d("Test","throwable:$t")
                 Log.d("GETかけたAPI：","$request")
             }
-            override fun onResponse(call: Call<List<ResponseData>>?, response: Response<List<ResponseData>>?) {
+            override fun onResponse(call: Call<List<ResponseData>>?, response: Response<List<ResponseData>>) {
                 //”検索中”を非表示へ
                 progress_bar.visibility = android.widget.ProgressBar.GONE
                 progress_text.visibility = android.widget.ProgressBar.GONE
@@ -77,45 +77,53 @@ class ResultActivity : AppCompatActivity() {
                 Log.d("TEST","取得せいこう！")
                 Log.d("TEST","取得したデータ：${response?.body()}")
                 Log.d("code値：","${response?.code()}")
-                Log.d("GETかけたAPI：","$request")
+                Log.d("GETかけたAPI：","$request?")
 
-                val res = response?.body()?:return
-                //ResponseAdapterへ渡すデータセットを作成
-                //TODO:取得データ全ページ分表示させる
-                //TODO:SwipeRefreshLayoutが使えるかも
-                val dataset = res[0].SightList.filterNotNull()
+                if (response.isSuccessful){
+                    val res = response?.body()?:return
+                    //ResponseAdapterへ渡すデータセットを作成
+                    //TODO:取得データ全ページ分表示させる
+                    //TODO:SwipeRefreshLayoutが使えるかも
+                    val dataset:List<Sight>? = res[0]?.SightList?.filterNotNull()
 
-                findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_list).apply() {
-                    //リストの罫線設定
-                    addItemDecoration(
-                        androidx.recyclerview.widget.DividerItemDecoration(
-                            this@ResultActivity,
-                            androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
-                        )
-                    )
-                    //生成したLinearLayoutManagerをセット
-                    layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@ResultActivity)
-                    //RecyclerViewの生成したResponseAdapter をセット
-                    adapter = ResponseAdapter(this@ResultActivity,dataset)
-                }
-                recycler_list.addOnItemTouchListener(RecyclerClickListener(this@ResultActivity,object :RecyclerClickListener.OnItemClickListener{
-                    override fun onItemClick(view: View, position: Int) {
-                        val intent = Intent(this@ResultActivity,DetailActivity::class.java)
-                        //渡す引数のセット
-//                        Log.d("mesh","resultのmeshの値は$dataset[position].Mesh.name")
-                        intent.putExtra("title",dataset[position].Title)
-                        intent.putExtra("address",dataset[position].Address)
-                        intent.putExtra("time",dataset[position].Time)
-                        intent.putExtra("image",dataset[position].PhotoList[0].URL)
-                        intent.putExtra("price",dataset[position].Price)
-                        intent.putExtra("summary",dataset[position].Summary)
-//                        intent.putExtra("mesh",dataset[position].Mesh.name)
-                        intent.putExtra("latitude",dataset[position].Latitude)
-                        intent.putExtra("Longitude",dataset[position].Longitude)
-
-                        startActivity(intent)
+                    if (dataset == null){
+                        Log.d("null対応","結果がnullだお")
+                        Toast.makeText(applicationContext,"結果がnullだよー",Toast.LENGTH_LONG).show()
+                        finish()
                     }
-                }))
+
+                    recycler_list.apply() {
+                        //リストの罫線設定
+                        addItemDecoration(
+                            androidx.recyclerview.widget.DividerItemDecoration(
+                                this@ResultActivity,
+                                androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
+                            )
+                        )
+                        //生成したLinearLayoutManagerをセット
+                        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@ResultActivity)
+                        //RecyclerViewの生成したResponseAdapter をセット
+                        adapter = dataset?.let { it1 -> ResponseAdapter(this@ResultActivity, it1) }
+                    }
+                    recycler_list.addOnItemTouchListener(RecyclerClickListener(this@ResultActivity,object :RecyclerClickListener.OnItemClickListener{
+                        override fun onItemClick(view: View, position: Int) {
+                            val intent = Intent(this@ResultActivity,DetailActivity::class.java)
+                            //渡す引数のセット
+                            Log.d("mesh","resultのmeshの値は$dataset[position].Mesh.name")
+                            intent.putExtra("title", dataset?.get(position)?.Title)
+                            intent.putExtra("address",dataset?.get(position)?.Address)
+                            intent.putExtra("time",dataset?.get(position)?.Time)
+                            intent.putExtra("image", dataset?.get(position)?.PhotoList?.get(0)?.URL)
+                            intent.putExtra("price",dataset?.get(position)?.Price)
+                            intent.putExtra("summary",dataset?.get(position)?.Summary)
+    //                        intent.putExtra("mesh",dataset[position].Mesh.name)
+                            intent.putExtra("latitude",dataset?.get(position)?.Latitude)
+                            intent.putExtra("Longitude",dataset?.get(position)?.Longitude)
+
+                            startActivity(intent)
+                        }
+                    }))
+                }
             }
         })
     }

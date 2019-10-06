@@ -6,12 +6,12 @@ import retrofit2.http.Query
 
 interface APIService {
     @GET("appif/sight")
-    fun getResponse(@Query("appid")appid:String,
-              @Query("keywords") keywords: String,
-              @Query("ken") ken:String,
-              @Query("SOC0") tachiyori:String,
-              @Query("pagecount") pagecount:Int,
-              @Query("responsetype") respnsetype: String):Call<List<ResponseData>>
+    fun getResponse(@Query("appid")appid:String?,
+              @Query("keywords") keywords: String?,
+              @Query("ken") ken:String?,
+              @Query("SOC0") tachiyori:String?,
+              @Query("pagecount") pagecount:Int?,
+              @Query("responsetype") respnsetype: String?):Call<List<ResponseData>>
 }
 //fun createService():APIService{
 //    val baseApiUrl = "https://www.j-jti.com/"
