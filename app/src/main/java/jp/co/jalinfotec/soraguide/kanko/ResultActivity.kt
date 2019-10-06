@@ -1,11 +1,13 @@
 package jp.co.jalinfotec.soraguide
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_result.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -75,9 +77,6 @@ class ResultActivity : AppCompatActivity() {
                 progress_text.visibility = android.widget.ProgressBar.GONE
 
                 Log.d("TEST","取得せいこう！")
-                Log.d("TEST","取得したデータ：${response?.body()}")
-                Log.d("code値：","${response?.code()}")
-                Log.d("GETかけたAPI：","$request?")
 
                 if (response.isSuccessful){
                     val res = response?.body()?:return
@@ -87,9 +86,18 @@ class ResultActivity : AppCompatActivity() {
                     val dataset:List<Sight>? = res[0]?.SightList?.filterNotNull()
 
                     if (dataset == null){
-                        Log.d("null対応","結果がnullだお")
-                        Toast.makeText(applicationContext,"結果がnullだよー",Toast.LENGTH_LONG).show()
-                        finish()
+                        Log.d("null対応","検索結果がnullだよ")
+                        AlertDialog.Builder(this@ResultActivity).apply {
+                            setTitle("検索結果が0件でした")
+                            setMessage("再検索をお願いします")
+                            setPositiveButton("OK",DialogInterface.OnClickListener { _, _ ->
+                                Toast.makeText(applicationContext,"検索画面に戻ります",Toast.LENGTH_SHORT).show()
+                                finish()
+                            })
+                            show()
+                        }
+                    }else {
+                        Toast.makeText(applicationContext,"検索結果は${res[0].TotalResults}件です",Toast.LENGTH_SHORT).show()
                     }
 
                     recycler_list.apply() {
