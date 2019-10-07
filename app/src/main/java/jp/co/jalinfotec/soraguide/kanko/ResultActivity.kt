@@ -1,13 +1,11 @@
 package jp.co.jalinfotec.soraguide
 
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import jp.co.jalinfotec.soraguide.kanko.ResultDialog
 import kotlinx.android.synthetic.main.activity_result.*
 import okhttp3.OkHttpClient
@@ -101,17 +99,6 @@ class ResultActivity : AppCompatActivity(),
                     if (dataset == null){
                             val dialog = ResultDialog().newInstance(this@ResultActivity, "再検索をお願いします")
                             dialog.show(supportFragmentManager, sampleTag)
-
-//                        Log.d("null対応","検索結果がnullだよ")
-//                        AlertDialog.Builder(this@ResultActivity).apply {
-//                            setTitle("検索結果が0件でした")
-//                            setMessage("再検索をお願いします")
-//                            setPositiveButton("OK",DialogInterface.OnClickListener { _, _ ->
-//                                Toast.makeText(applicationContext,"検索画面に戻ります",Toast.LENGTH_SHORT).show()
-//                                finish()
-//                            })
-//                            show()
-//                        }
                     }else {
                         Toast.makeText(applicationContext,"検索結果は${res[0].TotalResults}件です",Toast.LENGTH_SHORT).show()
                     }

@@ -16,7 +16,6 @@ class ResultDialog:BaseCallbackDialog<ResultDialog.CallbackListener>() {
      */
     interface CallbackListener {
         fun ok()
-//        fun cancel()
     }
 
     // インスタンスは必ず以下のクラスで生成
@@ -57,10 +56,6 @@ class ResultDialog:BaseCallbackDialog<ResultDialog.CallbackListener>() {
                 Toast.makeText(context,"検索画面に戻ります", Toast.LENGTH_SHORT).show()
                 getCallbackListener()?.ok()
             }
-//            .setNegativeButton("CANCEL") { dialog, _ ->
-//                dialog.dismiss()
-//                getCallbackListener()?.cancel()
-//            }
 
         return builder.create()
     }
