@@ -55,8 +55,12 @@ class ResultDialog:BaseCallbackDialog<ResultDialog.CallbackListener>() {
                 dialog.dismiss()
                 Toast.makeText(context,"検索画面に戻ります", Toast.LENGTH_SHORT).show()
                 getCallbackListener()?.ok()
+                finishActivity()
             }
 
         return builder.create()
+    }
+    fun finishActivity(){
+        activity?.finish()
     }
 }
