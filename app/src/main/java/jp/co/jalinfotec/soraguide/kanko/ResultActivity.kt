@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import jp.co.jalinfotec.soraguide.kanko.ResultDialog
 import kotlinx.android.synthetic.main.activity_result.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,7 +18,19 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class ResultActivity : AppCompatActivity() {
+class ResultActivity : AppCompatActivity(),
+    ResultDialog.CallbackListener {
+
+    private val logTag = this::class.java.simpleName
+    private val sampleTag = "RESULT_DIALOG"
+
+    /**
+     * ResultDialogのCallbackMethodを実装
+     */
+    override fun ok() {
+        Log.d(logTag,  "callback_ok")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
@@ -86,16 +99,19 @@ class ResultActivity : AppCompatActivity() {
                     val dataset:List<Sight>? = res[0]?.SightList?.filterNotNull()
 
                     if (dataset == null){
-                        Log.d("null対応","検索結果がnullだよ")
-                        AlertDialog.Builder(this@ResultActivity).apply {
-                            setTitle("検索結果が0件でした")
-                            setMessage("再検索をお願いします")
-                            setPositiveButton("OK",DialogInterface.OnClickListener { _, _ ->
-                                Toast.makeText(applicationContext,"検索画面に戻ります",Toast.LENGTH_SHORT).show()
-                                finish()
-                            })
-                            show()
-                        }
+                            val dialog = ResultDialog().newInstance(this@ResultActivity, "再検索をお願いします")
+                            dialog.show(supportFragmentManager, sampleTag)
+
+//                        Log.d("null対応","検索結果がnullだよ")
+//                        AlertDialog.Builder(this@ResultActivity).apply {
+//                            setTitle("検索結果が0件でした")
+//                            setMessage("再検索をお願いします")
+//                            setPositiveButton("OK",DialogInterface.OnClickListener { _, _ ->
+//                                Toast.makeText(applicationContext,"検索画面に戻ります",Toast.LENGTH_SHORT).show()
+//                                finish()
+//                            })
+//                            show()
+//                        }
                     }else {
                         Toast.makeText(applicationContext,"検索結果は${res[0].TotalResults}件です",Toast.LENGTH_SHORT).show()
                     }
