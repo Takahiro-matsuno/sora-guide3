@@ -2,6 +2,7 @@ package jp.co.jalinfotec.soraguide.kanko
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.Toast
 import jp.co.jalinfotec.soraguide.base.BaseCallbackDialog
@@ -56,6 +57,7 @@ class ResultDialog:BaseCallbackDialog<ResultDialog.CallbackListener>() {
                 dialog.dismiss()
                 Toast.makeText(context,"検索画面に戻ります", Toast.LENGTH_SHORT).show()
                 getCallbackListener()?.ok()
+                finishActivity()
             }
 //            .setNegativeButton("CANCEL") { dialog, _ ->
 //                dialog.dismiss()
@@ -63,5 +65,8 @@ class ResultDialog:BaseCallbackDialog<ResultDialog.CallbackListener>() {
 //            }
 
         return builder.create()
+    }
+    fun finishActivity(){
+        activity?.finish()
     }
 }
