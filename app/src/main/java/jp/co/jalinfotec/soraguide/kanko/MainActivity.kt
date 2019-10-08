@@ -1,5 +1,6 @@
 package jp.co.jalinfotec.soraguide
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import com.squareup.leakcanary.LeakCanary
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 /* ---------------------------------------------------------------------- */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        LeakCanary.install(Application())//メモリリーク調査用
+
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         supportActionBar?.let {

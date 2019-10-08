@@ -49,7 +49,7 @@ class ResultActivity : AppCompatActivity(),
         //retrofit用のパラメータ
         val baseApiUrl = "https://www.j-jti.com/"
         val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging).readTimeout(60,TimeUnit.SECONDS).connectTimeout(60,TimeUnit.SECONDS)
+        val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging).readTimeout(30,TimeUnit.SECONDS).connectTimeout(10,TimeUnit.SECONDS)
 
         //retrofitクライアント取得
         val retrofit = Retrofit.Builder()
@@ -72,7 +72,7 @@ class ResultActivity : AppCompatActivity(),
         ).request().url().toString()
 
         //引数でapiエンドポイント指定、リクエスト
-        api.getResponse("jtzY6LZYK8226ibN",keyword,ken,tachiyori,50,"json").enqueue(object :retrofit2.Callback<List<ResponseData>>{
+        api.getResponse("jtzY6LZYK8226ibN",keyword,ken,tachiyori,100,"json").enqueue(object :retrofit2.Callback<List<ResponseData>>{
             override fun onFailure(call: Call<List<ResponseData>>?, t: Throwable?) {
                 //”検索中”を非表示へ
                 progress_bar.visibility = android.widget.ProgressBar.GONE
@@ -81,6 +81,9 @@ class ResultActivity : AppCompatActivity(),
                 Log.d("TEST","取得失敗")
                 Log.d("Test","throwable:$t")
                 Log.d("GETかけたAPI：","$request")
+
+                val dialog = ResultDialog().newInstance(this@ResultActivity,"通信エラーです。\n通信環境が良い状態で再検索をお願いします。")
+                dialog.show(supportFragmentManager, sampleTag)
             }
             override fun onResponse(call: Call<List<ResponseData>>?, response: Response<List<ResponseData>>) {
                 //”検索中”を非表示へ
@@ -97,7 +100,7 @@ class ResultActivity : AppCompatActivity(),
                     val dataset:List<Sight>? = res[0]?.SightList?.filterNotNull()
 
                     if (dataset == null){
-                            val dialog = ResultDialog().newInstance(this@ResultActivity)
+                            val dialog = ResultDialog().newInstance(this@ResultActivity,"検索結果が0件でした。\n条件を変更し、再検索をお願いします。")
                             dialog.show(supportFragmentManager, sampleTag)
                     }else {
                         Toast.makeText(applicationContext,"検索結果は${res[0].TotalResults}件です",Toast.LENGTH_SHORT).show()
