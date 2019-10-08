@@ -16,30 +16,31 @@ var World = {
 	    console.log("初期化開始", acquiredList);
 	    // Marker保持配列
         World.markerList = [];
-        //World.markerGetList = [];
 
-        // Json配列分Markerを作成する
-        for (var cnt = 0; cnt < poiData.length; cnt++) {
-            //World.markerGetList[cnt] = false;
+        if (poiData.length != 0) {
+            // Json配列分Markerを作成する
+            for (var cnt = 0; cnt < poiData.length; cnt++) {
+                console.log("loadPoisFromJsonDataFn_id:", poiData[cnt].id)
+                // Marker用にJsonを再定義
+                var singlePoi = {
+                    "id": poiData[cnt].id,
+                    "latitude": poiData[cnt].latitude,
+                    "longitude": poiData[cnt].longitude,
+                    "altitude": poiData[cnt].altitude,
+                    "resource": poiData[cnt].resource
+                };
 
-            console.log("loadPoisFromJsonDataFn_id:", poiData[cnt].id)
-            // Marker用にJsonを再定義
-            var singlePoi = {
-                "id": poiData[cnt].id,
-                "latitude": poiData[cnt].latitude,
-                "longitude": poiData[cnt].longitude,
-                "altitude": poiData[cnt].altitude,
-                "resource": poiData[cnt].resource
-            };
-
-            // Markerを作成し、配列に追加
-            World.markerList.push(new Marker(singlePoi));
+                // Markerを作成し、配列に追加
+                World.markerList.push(new Marker(singlePoi));
+            }
+            // Marker作成完了後のWorldStatusメッセージ
+            World.updateStatusMessage(World.markerList.length + ' place loaded');
+        } else {
+            // コンプリートの場合はクーポンアイコンを表示
+            World.completeMarker();
         }
 
-        // Marker作成完了後のWorldStatusメッセージ
-        World.updateStatusMessage(World.markerList.length + ' place loaded');
-        console.log("処理終了", acquiredList);
-
+        console.log("初期化終了", acquiredList);
 	},
 
 	// updates status message shon in small "i"-button aligned bottom center
@@ -56,6 +57,49 @@ var World = {
 		});
 	},
 
+	// マーカー取得
+    getMarker: function getMarkerFn(id, src) {
+        console.log("come here")
+
+        /* 取得済みリストの更新 */
+        acquiredList[id - 1] = true;
+
+        /* Kotlinへ通知 */
+        sendKotlin("COLLECT_STAMP", JSON.stringify(acquiredList));
+
+        /* UI更新
+        // トースト表示
+        var jsFrame = new JSFrame();
+        jsFrame.showToast({ html: 'スタンプ獲得！！', align: 'bottom', duration: 2000});
+        */
+        // モーダル表示
+        World.showModal(src, 'スタンプを見つけました!!');
+        /* コンプリート判定 */
+        if (acquiredList.indexOf(false) == -1) {
+            World.completeMarker();
+        }
+    },
+
+    // コンプリート処理
+    completeMarker: function completeMarkerFn() {
+        // モーダル表示
+        World.showModal('assets/coupon.jpg', 'クーポンを獲得しました');
+        // WorldStatusメッセージ
+        World.updateStatusMessage('Marker Completed');
+        // アイコン表示
+        World.showCompleteIcon();
+    },
+
+    // モーダル表示
+    showModal: function showModalFn(src, message) {
+        $('#modal-img').attr('src', 'assets/' + src);
+        $('#modal-message').text(message);
+    },
+
+    // アイコン表示
+    showCompleteIcon: function showCompleteIconFn() {
+        // TODO アイコン表示
+    },
     // ネイティブ環境でarchitectView.setLocationを呼び出すたびに起動される場所の更新
 	locationChanged: function locationChangedFn(lat, lon, alt, acc) {
 
@@ -86,25 +130,7 @@ var World = {
 			World.initiallyLoadedData = true;
 		}
 	},
-	// マーカー取得
-	getMarker: function getMarkerFn(id) {
-	    // 取得済みリストの更新
-	    acquiredList[id - 1] = true;
-	    // Kotlinへ通知
-	    sendKotlin("COLLECT_STAMP", JSON.stringify(acquiredList));
-
-	    // コンプリート判定
-	    if (acquiredList.indexOf(false) == -1) {
-	        this.completeMarker();
-	    }
-	},
-
-	// コンプリート処理
-	completeMarker: function completeMarkerFn() {
-	    console.log("complete");
-	    // TODO クーポン画像を表示する。
-	},
-
+    // エラー表示
 	onError: function onErrorFn(error) {
         alert(error);
     }
@@ -119,3 +145,30 @@ function setAcquiredListFn(jStr) {
         acquiredList[cnt] = jArray[cnt];
     }
 }
+
+$(function() {
+   $('#open').on('click', function() {
+     $('#overlay, #modalWindow').fadeIn();
+   });
+
+   $('#close').on('click', function() {
+     $('#overlay, #modalWindow').fadeOut();
+   });
+
+   locateCenter();
+   $(window).resize(locateCenter);
+
+   function locateCenter() {
+     let w = $(window).width();
+     let h = $(window).height();
+
+     let cw = $('#modalWindow').outerWidth();
+     let ch = $('#modalWindow').outerHeight();
+
+     $('#modalWindow').css({
+       'left': ((w - cw) / 2) + 'px',
+       'top': ((h - ch) / 2) + 'px'
+     });
+   }
+});
+
