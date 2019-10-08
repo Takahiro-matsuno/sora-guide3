@@ -97,7 +97,7 @@ class ResultActivity : AppCompatActivity(),
                     val dataset:List<Sight>? = res[0]?.SightList?.filterNotNull()
 
                     if (dataset == null){
-                            val dialog = ResultDialog().newInstance(this@ResultActivity, "再検索をお願いします")
+                            val dialog = ResultDialog().newInstance(this@ResultActivity)
                             dialog.show(supportFragmentManager, sampleTag)
                     }else {
                         Toast.makeText(applicationContext,"検索結果は${res[0].TotalResults}件です",Toast.LENGTH_SHORT).show()
