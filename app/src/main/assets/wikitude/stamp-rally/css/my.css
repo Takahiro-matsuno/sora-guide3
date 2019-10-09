@@ -1,0 +1,42 @@
+/**
+ * Header
+ */
+
+/**
+ * Content
+ */
+
+
+/**
+ * Footer
+ */
+
+/**
+ * Other
+ */
+/* モーダル ダイアログ */
+#modal-dialog {
+    width: 50%;
+    height: 50%;
+    position: fixed;
+    border: 2px solid #D04255;
+    background-color: #FFF;
+    display: none;
+    z-index: 1000;
+}
+
+#modal-img {
+    max-width: 50%;
+    height: 50%;
+    margin: 0 auto;
+}
+#modal-msg {
+    text-align: center;
+}
+#modal-button {
+
+}
+button:hover {
+    background: #D04255;
+    color: #FFF;
+}

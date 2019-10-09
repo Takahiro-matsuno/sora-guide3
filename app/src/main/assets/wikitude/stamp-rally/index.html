@@ -16,6 +16,9 @@
         <!-- required to set background transparent & enable "click through" -->
         <link rel="stylesheet" href="jquery/jquery-mobile-transparent-ui-overlay.css" />
 
+        <!-- My CSS -->
+        <link rel="stylesheet" href="css/my.css" />
+
         <!-- jquery JS files -->
         <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="jquery/jquery.mobile-1.3.2.min.js"></script>
@@ -29,29 +32,40 @@
         <title>My ARchitect World</title>
     </head>
     <body>
-        <button onclick='hoge()'>ほげほげ</button>
-        <div data-role="page" id="page1" style="background: none;" >
-            <!-- TODO クーポン再表示用アイコンを表示する -->
-            <!-- TODO ダイアログ、インフォアイコンの位置ずれを修正する -->
-            <!-- TODO ダイアログがCloseを押しやすくする -->
-            <!-- MAIN PAGE CONTENT -->
-            <!-- transparent footer-->
+        <!-- モバイル向けページ -->
+        <div data-role="page" id="page1" style="background: none;">
+            <!--
+            <div data-role="header">
+                <h1>ヘッダー</h1>
+            </div>
+
+
+            <div data-role="content">
+                <h3>Content</h3>
+                <button data-role="button" onclick="World.showModal('stamp_blue.png', 'スタンプを見つけました!!!!!!')">OPEN</button>
+            </div>
+            -->
+            <!-- footer -->
             <div data-role="footer" class="ui-bar" data-theme="f" data-position="fixed" style="text-align:center;">
 
                 <!-- small status-button -->
-                <a style="text-align:right;" id="popupInfoButton" href="#popupInfo" data-rel="popup" data-role="button" class="ui-icon-alt" data-inline="true" data-transition="pop" data-icon="alert" data-theme="e" data-iconpos="notext">Log</a> </p>
+                <a style="text-align:right;" id="popupInfoButton" href="#popupInfo" data-rel="popup" data-role="button"
+                   class="ui-icon-alt" data-inline="true" data-transition="pop" data-icon="alert" data-theme="e"
+                   data-iconpos="notext">Log</a> </p>
 
-                <!-- popup displayed when button clicked 状態を表すアイコンiが位置情報をちゃんと取れてる-->
+                <!-- popup displayed when button clicked -->
                 <div data-role="popup" id="popupInfo" class="ui-content" data-theme="e" style="max-width:350px;">
                     <p style="text-align:right;" id="status-message">Trying to find out where you are</p>
                 </div>
+
             </div>
-            <div id="overlay"></div>
-            <div id="modal-window">
-                <img id="modal-img" />
+
+            <!-- other ui-->
+            <div id="modal-dialog" data-position="center" data-display="overlay" data-theme="c">
+                <img id="modal-img" data-position="center" src="assets/coupon.jpg">
                 <p id="modal-msg"></p>
-                <button id="modal-close">OK</button>
+                <button id="modal-close" data-role="button">OK</button>
             </div>
         </div>
-    </body>
+    </bodY>
 </html>

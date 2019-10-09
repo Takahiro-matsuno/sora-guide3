@@ -68,13 +68,13 @@ var World = {
 		/* Kotlinへ通知 */
 		sendKotlin("COLLECT_STAMP", JSON.stringify(acquiredList));
 
-		/* UI更新
+		/* UI更新 */
 		// トースト表示
 		var jsFrame = new JSFrame();
 		jsFrame.showToast({ html: 'スタンプ獲得！！', align: 'bottom', duration: 2000});
-		*/
+
 		// モーダル表示
-		World.showModal(src, 'スタンプを見つけました!!');
+		//World.showModal(src, 'スタンプを見つけました!!');
 		/* コンプリート判定 */
 		if (acquiredList.indexOf(false) == -1) {
 			World.completeMarker();
@@ -89,16 +89,19 @@ var World = {
 		// アイコン表示
 		World.showCompleteIcon();
 	},
-
 	// モーダル表示
-	showModal: function showModalFn(src, message) {
+	showModal: function showModalFn(rsc, msg) {
 		console.log('Show Modal');
 
-		$('#modal-img').attr('src', 'assets/' + src);
-		$('#modal-msg').text(message);
-		$('#overlay', '#modal-window').fadeIn();
-	},
+        $('#modal-img').attr('src', 'assets/' + rsc);
+		$('#modal-msg').text(msg);
+		$('#modal-dialog').fadeIn();
 
+		$('#modal-close').on('click', function() {
+		    console.log('Close Modal');
+		    $('#modal-dialog').fadeOut();
+		});
+	},
 	// アイコン表示
 	showCompleteIcon: function showCompleteIconFn() {
 		// WorldStatusメッセージ
