@@ -1,11 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
     <head>
         <!--  basic meta information -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="Content-Type" content="application/json; charset=utf-8">
-        <meta content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes" name="viewport">
+        <meta content="width=device-width, height=device-height, initial-scale=1,maximum-scale=5,user-scalable=yes" name="viewport">
 
         <!--Wikitudeのライブラリ -->
         <script src="architect://architect.js"></script>
@@ -34,20 +33,20 @@
     <body>
         <!-- モバイル向けページ -->
         <div data-role="page" id="page1" style="background: none;">
-            <!--
-            <div data-role="header">
-                <h1>ヘッダー</h1>
+
+            <div data-role="header" data-theme="f" class="ui-header" ui-bra="c" role="banner">
+                <!-- header -->
+                <h1 class="ui-title" role="heading" aria-level="1">スタンプラリー</h1>
+                <div data-icon="gear" data-iconpos="notext" data-direction="reverse" class="ui-btn-left ui-btn ui-btn-up-f ui-shadow ui-btn-corner-all ui-btn-icon-notext" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="f" title="Gear">
+                    <span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text"></span><span class="ui-icon ui-icon-home ui-icon-shadow">&nbsp;</span></span>
+                </div>
             </div>
-
-
             <div data-role="content">
-                <h3>Content</h3>
-                <button data-role="button" onclick="World.showModal('stamp_blue.png', 'スタンプを見つけました!!!!!!')">OPEN</button>
+                <!-- content -->
+                <img id="complete-icon" src="assets/icon.png" />
             </div>
-            -->
-            <!-- footer -->
             <div data-role="footer" class="ui-bar" data-theme="f" data-position="fixed" style="text-align:center;">
-
+                <!-- footer -->
                 <!-- small status-button -->
                 <a style="text-align:right;" id="popupInfoButton" href="#popupInfo" data-rel="popup" data-role="button"
                    class="ui-icon-alt" data-inline="true" data-transition="pop" data-icon="alert" data-theme="e"

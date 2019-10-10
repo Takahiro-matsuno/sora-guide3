@@ -2,9 +2,13 @@
  * Header
  */
 
+
 /**
  * Content
  */
+#complete-icon {
+    display: none;
+}
 
 
 /**
@@ -26,7 +30,7 @@
 }
 
 #modal-img {
-    max-width: 50%;
+    max-width: 80%;
     height: 50%;
     margin: 0 auto;
 }

@@ -74,7 +74,9 @@ var World = {
 		jsFrame.showToast({ html: 'スタンプ獲得！！', align: 'bottom', duration: 2000});
 
 		// モーダル表示
+		// TODO 画像が置き換わらない https://codeday.me/jp/qa/20190604/930209.html
 		//World.showModal(src, 'スタンプを見つけました!!');
+
 		/* コンプリート判定 */
 		if (acquiredList.indexOf(false) == -1) {
 			World.completeMarker();
@@ -107,7 +109,11 @@ var World = {
 		// WorldStatusメッセージ
 		World.updateStatusMessage('Marker Completed');
 		console.log('Show Complete Icon');
-		// TODO アイコン表示
+		$('#complete-icon').show();
+
+		$('#complete-icon').on('click', function() {
+		    World.showModal('coupon.jpg', 'クーポンを獲得しました');
+		});
 	},
 	// ネイティブ環境でarchitectView.setLocationを呼び出すたびに起動される場所の更新
 	locationChanged: function locationChangedFn(lat, lon, alt, acc) {
