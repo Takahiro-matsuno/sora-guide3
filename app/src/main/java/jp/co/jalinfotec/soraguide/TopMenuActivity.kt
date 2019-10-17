@@ -6,7 +6,6 @@ import android.os.Bundle
 import jp.co.jalinfotec.soraguide.taxi.TaxiActivity
 import jp.co.jalinfotec.soraguide.ar.ARCameraActivity
 import kotlinx.android.synthetic.main.activity_top_menu.*
-import jp.co.jalinfotec.soraguide.R
 
 class TopMenuActivity : AppCompatActivity() {
 

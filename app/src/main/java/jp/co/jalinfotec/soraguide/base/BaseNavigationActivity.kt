@@ -10,6 +10,7 @@ import com.google.android.material.navigation.NavigationView
 import jp.co.jalinfotec.soraguide.MainActivity
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.TopMenuActivity
+import jp.co.jalinfotec.soraguide.ar.ARCameraActivity
 import jp.co.jalinfotec.soraguide.taxi.TaxiActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 
@@ -67,6 +68,10 @@ abstract class BaseNavigationActivity:
             }
             R.id.nav_taxi -> {
                 startActivity(Intent(this, TaxiActivity::class.java))
+                finish()
+            }
+            R.id.nav_stamp_rally -> {
+                startActivity(Intent(this, ARCameraActivity::class.java))
                 finish()
             }
         }

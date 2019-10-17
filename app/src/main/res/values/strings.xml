@@ -6,6 +6,7 @@
     <string name="flight_info">フライト情報</string>
     <string name="tourist_info">観光案内</string>
     <string name="taxi_reservation">タクシー予約</string>
+    <string name="stamp_rally">スタンプラリー</string>
 
     <!-- toolbar -->
     <string name="action_settings">Settings</string>
