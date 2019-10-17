@@ -57,4 +57,12 @@ dependencies {
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.3'//メモリリーク調査用
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'//メモリリーク調査用
+    // wikitude
+    implementation(name: 'wikitudesdk', ext: 'aar')
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 }
