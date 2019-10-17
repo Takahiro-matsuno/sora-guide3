@@ -41,22 +41,22 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning"
     >
-        <activity android:name=".ar.ARCameraActivity"
-                  android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-        >
-        </activity>
+        <!-- TOP -->
         <activity android:name=".TopMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".taxi.TaxiActivity" android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".DetailActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ResultActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <!-- 観光案内 -->
         <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ResultActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".DetailActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <!-- タクシー -->
+        <activity android:name=".taxi.TaxiActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <!-- AR -->
+        <activity android:name=".ar.stamprally.StampRallyActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ar.ARCameraActivity" android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>
 

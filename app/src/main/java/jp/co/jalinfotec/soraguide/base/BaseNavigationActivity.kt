@@ -11,6 +11,7 @@ import jp.co.jalinfotec.soraguide.MainActivity
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.TopMenuActivity
 import jp.co.jalinfotec.soraguide.ar.ARCameraActivity
+import jp.co.jalinfotec.soraguide.ar.stamprally.StampRallyActivity
 import jp.co.jalinfotec.soraguide.taxi.TaxiActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 
@@ -71,7 +72,7 @@ abstract class BaseNavigationActivity:
                 finish()
             }
             R.id.nav_stamp_rally -> {
-                startActivity(Intent(this, ARCameraActivity::class.java))
+                startActivity(Intent(this, StampRallyActivity::class.java))
                 finish()
             }
         }
