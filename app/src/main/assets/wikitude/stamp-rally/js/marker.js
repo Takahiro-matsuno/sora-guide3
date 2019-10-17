@@ -34,7 +34,6 @@ function Marker(poiData) {
 			opacity: 1.0,
 			onClick: function() {
 				console.log('Marker onClick:', poiData.resource);
-
 				// Worldに通知
 				World.getMarker(poiData.id, poiData.resource);
 				// マーカーを削除

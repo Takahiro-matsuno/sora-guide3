@@ -18,6 +18,10 @@ import java.io.IOException
 
 class StampRallyActivity : BaseARActivity() {
 
+    companion object {
+        const val clearFlgKey = "CLEAR_FLG"
+    }
+
     private val logTag = this::class.java.simpleName
     private var toast: Toast? = null
 
@@ -29,8 +33,17 @@ class StampRallyActivity : BaseARActivity() {
     private val collectStampKey = "COLLECT_STAMP"
     private var arData: String? = null  // AR用JSONデータ
 
+
+    // todo リリース前に消す
+    private var clearFlg = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // todo リリース前に消す
+        if (savedInstanceState == null) {
+            clearFlg = intent.getBooleanExtra(clearFlgKey, false)
+        }
 
         // TODO 権限がない場合の処理を実装する
         // Wikitudeの初期設定
@@ -159,7 +172,9 @@ class StampRallyActivity : BaseARActivity() {
     override fun loadArData() {
         //SharedPreferenceから端末内データを取得する
         val data = getSharedPreferences("DataSave", Context.MODE_PRIVATE)
-        this.arData = data.getString(collectStampKey,"[false, false, false]")
+        this.arData =
+            if(clearFlg) "[false, false, false]" // todo リリース前に消す
+            else data.getString(collectStampKey, "[false, false, false]")
     }
 
     // AR用のJSONデータを更新

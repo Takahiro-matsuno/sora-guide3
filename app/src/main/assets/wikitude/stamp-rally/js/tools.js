@@ -13,5 +13,13 @@ var sendKotlin = function(type, data) {
 }
 
 function hoge() {
-	console.log("ほげ")
+    World.showModal('coupon.jpg', 'クーポンを獲得しました');
+}
+
+function piyo() {
+    alert("ターゲット数を出す");
+}
+
+function huga() {
+    alert("操作説明ダイアログを出す");
 }

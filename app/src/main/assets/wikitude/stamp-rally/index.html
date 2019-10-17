@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="jquery/jquery-mobile-transparent-ui-overlay.css" />
 
         <!-- My CSS -->
-        <link rel="stylesheet" href="css/my.css" />
+        <link rel="stylesheet" href="css/mycss.css" />
 
         <!-- jquery JS files -->
         <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
@@ -41,7 +41,7 @@
                     <span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text"></span><span class="ui-icon ui-icon-home ui-icon-shadow">&nbsp;</span></span>
                 </div>
             </div>
-            <div data-role="content">
+            <div data-role="content" role="main">
                 <!-- content -->
                 <img id="complete-icon" src="assets/icon.png" />
             </div>
@@ -60,10 +60,10 @@
             </div>
 
             <!-- other ui-->
-            <div id="modal-dialog" data-position="center" data-display="overlay" data-theme="c">
-                <img id="modal-img" data-position="center" src="assets/coupon.jpg">
-                <p id="modal-msg"></p>
-                <button id="modal-close" data-role="button">OK</button>
+            <div id="modal-window" class="modal" data-position="center" data-display="overlay" data-theme="c">
+                <img id="modal-img" class="modal" data-position="center" src="assets/coupon.jpg">
+                <p id="modal-msg" class="modal"></p>
+                <button id="modal-close" class="modal" data-role="button">OK</button>
             </div>
         </div>
     </bodY>

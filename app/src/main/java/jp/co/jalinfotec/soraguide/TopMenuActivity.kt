@@ -13,5 +13,11 @@ class TopMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_top_menu)
 
         ar_btn.setOnClickListener { startActivity(Intent(this, StampRallyActivity::class.java)) }
+        // todo リリース前に消す
+        arClear_btn.setOnClickListener {
+            val intent = Intent(this, StampRallyActivity::class.java)
+            intent.putExtra(StampRallyActivity.clearFlgKey, true)
+            startActivity(intent)
+        }
     }
 }
