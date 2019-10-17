@@ -1,13 +1,13 @@
-package jp.co.jalinfotec.soraguide.ar.base
+package jp.co.jalinfotec.soraguide.ar
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import jp.co.jalinfotec.soraguide.Constants
+import jp.co.jalinfotec.soraguide.ar.base.ArchitectViewHolderInterface
 
 
 class LocationProvider(
