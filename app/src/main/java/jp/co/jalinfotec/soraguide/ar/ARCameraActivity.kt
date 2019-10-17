@@ -16,7 +16,7 @@ import jp.co.jalinfotec.soraguide.ar.base.LocationProvider
 import kotlinx.android.synthetic.main.activity_ar.*
 import java.io.IOException
 
-class StampRallyActivity : BaseARActivity() {
+class ARCameraActivity : BaseARActivity() {
 
     companion object {
         const val clearFlgKey = "CLEAR_FLG"
@@ -65,20 +65,20 @@ class StampRallyActivity : BaseARActivity() {
                 if (location != null) {
                     // sore last location as member, in case it is needed somewhere (in e.g. your adjusted project)
                     // 位置をセット
-                    this@StampRallyActivity.lastKnownLocation = location
-                    if (this@StampRallyActivity.architectView != null) {
+                    this@ARCameraActivity.lastKnownLocation = location
+                    if (this@ARCameraActivity.architectView != null) {
                         // check if location has altitude at certain accuracy level & call right architect method (the one with altitude information)
                         // 誤差が7m未満の時.hasAltitudeは標高。
                         // 位置情報をARのビューの位置情報に設定。これでJavaScriptで設定した。AR.context.onLocationChangedの関数が動く。
                         if (location.hasAltitude() && location.hasAccuracy() && location.accuracy < 7) {
-                            this@StampRallyActivity.architectView.setLocation(
+                            this@ARCameraActivity.architectView.setLocation(
                                 location.latitude,
                                 location.longitude,
                                 location.altitude,
                                 location.accuracy
                             )
                         } else {
-                            this@StampRallyActivity.architectView.setLocation(
+                            this@ARCameraActivity.architectView.setLocation(
                                 location.latitude,
                                 location.longitude,
                                 if (location.hasAccuracy()) location.accuracy.toDouble() else 1000.0
@@ -161,9 +161,9 @@ class StampRallyActivity : BaseARActivity() {
     private fun getSensorAccuracyListener(): ArchitectView.SensorAccuracyChangeListener {
         return ArchitectView.SensorAccuracyChangeListener { accuracy ->
             /* UNRELIABLE = 0, LOW = 1, MEDIUM = 2, HIGH = 3 */
-            if (accuracy < SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM && !this@StampRallyActivity.isFinishing && System.currentTimeMillis() - this@StampRallyActivity.lastCalibrationToastShownTimeMillis > 5 * 1000) {
+            if (accuracy < SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM && !this@ARCameraActivity.isFinishing && System.currentTimeMillis() - this@ARCameraActivity.lastCalibrationToastShownTimeMillis > 5 * 1000) {
                 showToast("Please re-calibrate compass by waving your device in a figure 8 motion.", Toast.LENGTH_LONG)
-                this@StampRallyActivity.lastCalibrationToastShownTimeMillis = System.currentTimeMillis()
+                this@ARCameraActivity.lastCalibrationToastShownTimeMillis = System.currentTimeMillis()
             }
         }
     }

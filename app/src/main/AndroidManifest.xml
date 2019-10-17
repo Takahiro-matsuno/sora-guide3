@@ -37,7 +37,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ar.StampRallyActivity">
+        <activity android:name=".ar.ARCameraActivity"
+                  android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        >
         </activity>
         <activity android:name=".TopMenuActivity">
             <intent-filter>
@@ -47,5 +49,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
