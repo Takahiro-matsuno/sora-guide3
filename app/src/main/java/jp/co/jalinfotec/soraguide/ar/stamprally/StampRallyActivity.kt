@@ -18,6 +18,7 @@ class StampRallyActivity :
     StampRallyViewHolder.CallbackListener
 {
     private val logTag = this::class.java.simpleName
+    private lateinit var stampRallyRepository: StampRallyRepository
     private lateinit var stampRallyAdapter: StampRallyAdapter
 
     override fun setToolbarTitle() {
@@ -36,6 +37,7 @@ class StampRallyActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        stampRallyRepository = StampRallyRepository(this)
         stampRallyAdapter = StampRallyAdapter(this)
 
         stamp_rally_list.adapter = stampRallyAdapter
@@ -45,21 +47,23 @@ class StampRallyActivity :
         if (savedInstanceState == null) {
             setStampRallyData()
         }
+
+        setStampRallyData()
     }
 
     private fun setStampRallyData() {
-        val list = ArrayList<StampRallyEntity>()
-        list.add(StampRallyEntity(1L, "ほげほげを探せ！！！", Date() ,Date(), 3, 3))
-        list.add(StampRallyEntity(2L, "ぴよぴよを探せ！！！", Date() ,Date(), 3, 1))
-        list.add(StampRallyEntity(3L, "ふがふがを探せ！！！", Date() ,Date(), 3, 0))
-        stampRallyAdapter.appendMembers(list)
+        // TODO 仮のリポジトリ
+        val list = stampRallyRepository.getStampRallyData()
+        if (list != null && list.any()) {
+            stampRallyAdapter.appendMembers(list)
+        }
     }
 
     override fun itemTapped(data:StampRallyEntity?) {
         //val data = stampRallyAdapter.findById(id)
         if (data != null) {
             // TODO 権限がない場合の処理を実装する
-            Log.d(logTag, "アイテムタップ${data.name}")
+            Log.d(logTag, "アイテムタップ${data.stampRallyName}")
             val intent = Intent(this, ARCameraActivity::class.java)
             intent.putExtra(ARCameraActivity.arResourceKey, "")
             intent.putExtra(ARCameraActivity.completeKey, data.done >= data.num)
@@ -70,7 +74,7 @@ class StampRallyActivity :
     override fun couponTapped(data: StampRallyEntity?) {
         //val data = stampRallyAdapter.findById(id)
         if (data != null) {
-            Log.d(logTag, "クーポンタップ:${data.name}")
+            Log.d(logTag, "クーポンタップ:${data.stampRallyName}")
         }
 
     }

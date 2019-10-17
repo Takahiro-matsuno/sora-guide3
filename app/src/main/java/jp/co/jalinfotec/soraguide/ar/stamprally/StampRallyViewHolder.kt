@@ -34,8 +34,8 @@ class StampRallyViewHolder(view: View):
 
     @SuppressLint("SetTextI18n")
     fun bindData(data: StampRallyEntity) {
-        itemView.name_txt.text = data.name
-        itemView.period_txt.text = "期間：${sf.format(data.sta)}~${sf.format(data.end)}"
+        itemView.name_txt.text = data.stampRallyName
+        itemView.period_txt.text = "期間：${sf.format(data.startDate)}~${sf.format(data.endDate)}"
         itemView.achieve_txt.text = "達成度：${data.done} / ${data.num}"
         if (data.done < data.num) {
             itemView.coupon_btn.isEnabled = false

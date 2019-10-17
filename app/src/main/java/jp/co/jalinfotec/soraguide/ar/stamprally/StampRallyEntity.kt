@@ -3,17 +3,20 @@ package jp.co.jalinfotec.soraguide.ar.stamprally
 import java.util.*
 
 data class StampRallyEntity(
-    val id: Long,
-    val name: String,
-    val sta: Date,
-    val end: Date,
+    val stampRallyId: Long,
+    val stampRallyName: String,
+    val startDate: Date,
+    val endDate: Date,
     val num: Int,
-    val done: Int
+    val done: Int,
+    val couponResource: String,
+    val markers: List<Marker>
 ) {
-    /*
-    data class StampRallyData(
-        val stampId: Long,
-        val imageResource: String
+    data class Marker(
+        val markerId: Long,
+        val latitude: Double,
+        val longitude: Double,
+        val altitude: Double,
+        val markerResource: String
     )
-     */
 }
