@@ -19,12 +19,10 @@ class ARCameraActivity : BaseARActivity() {
 
     companion object {
         const val arResourceKey = "AR_RESOURCE"
-        const val completeKey = "COMPLETE"
     }
     private val logTag = this::class.java.simpleName
     // 遷移元取得データ
     private var arResource: String? = null
-    private var completeFlg = false
 
     /* AR 設定*/
     private var sensorAccuracyListener: ArchitectView.SensorAccuracyChangeListener? = null
@@ -41,7 +39,6 @@ class ARCameraActivity : BaseARActivity() {
         if (savedInstanceState == null) {
             // 遷移元からARデータを受け取る
             arResource = intent.getStringExtra(arResourceKey)
-            completeFlg = intent.getBooleanExtra(completeKey, false)
         }
 
 
@@ -173,9 +170,7 @@ class ARCameraActivity : BaseARActivity() {
     override fun loadArData() {
         //SharedPreferenceから端末内データを取得する
         val data = getSharedPreferences("DataSave", Context.MODE_PRIVATE)
-        this.arData =
-            if(completeFlg) "[false, false, false]" // todo リリース前に消す
-            else data.getString(Constants.arCollectedDataKey, "[false, false, false]")
+        this.arData = data.getString(Constants.arCollectedDataKey, "[false, false, false]")
     }
 
     // AR用のJSONデータを更新

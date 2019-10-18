@@ -34,17 +34,20 @@ class StampRallyViewHolder(view: View):
 
     @SuppressLint("SetTextI18n")
     fun bindData(data: StampRallyEntity) {
+        /* Viewのデータ設定 */
         itemView.name_txt.text = data.stampRallyName
         itemView.period_txt.text = "期間：${sf.format(data.startDate)}~${sf.format(data.endDate)}"
-        itemView.achieve_txt.text = "達成度：${data.done} / ${data.num}"
-        if (data.done < data.num) {
+        // コンプリート済みかで表記を変える
+        val markerNum = data.markers.size
+        itemView.achieve_txt.text = if (data.isCompleted) {
+            itemView.coupon_btn.isEnabled = true
+            "達成度：$markerNum / $markerNum"
+        } else {
             itemView.coupon_btn.isEnabled = false
+            "達成度：${data.getAcquiredNum()} / $markerNum"
         }
-        itemView.stamp_rally_layout.setOnClickListener {
-            cListener.itemTapped(data)
-        }
-        itemView.coupon_btn.setOnClickListener {
-            cListener.couponTapped(data)
-        }
+        /* Viewのクリックイベント */
+        itemView.stamp_rally_layout.setOnClickListener { cListener.itemTapped(data) }
+        itemView.coupon_btn.setOnClickListener { cListener.couponTapped(data) }
     }
 }
