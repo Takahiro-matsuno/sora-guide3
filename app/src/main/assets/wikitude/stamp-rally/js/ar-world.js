@@ -56,8 +56,8 @@ var World = {
 		});
 	},
 	// マーカー取得処理
-	getMarker: function getMarkerFn(id, rsc) {
-		console.log('Get Marker:', rsc);
+	getMarker: function getMarkerFn(id) {
+		console.log('Get Marker');
 
 		/* UI更新 */
         // トースト表示
@@ -84,14 +84,14 @@ var World = {
 	showCouponWindow: function showCouponWindowFn() {
 		console.log('Show Coupon Window');
 
-		$('#overlay').fadeIn();
-		$('#modal-window').fadeIn();
+		$('#stamp-rally-overlay').fadeIn();
+		$('#coupon-window').fadeIn();
 
-		$('#modal-close').on('click', function() {
+		$('#coupon-window-close').on('click', function() {
 		    console.log('Close Coupon Window');
 
-		    $('#modal-window').fadeOut();
-		    $('#overlay').fadeOut();
+		    $('#coupon-window').fadeOut();
+		    $('#stamp-rally-overlay').fadeOut();
 		});
 	},
 	// ネイティブ環境でarchitectView.setLocationを呼び出すたびに起動される場所の更新

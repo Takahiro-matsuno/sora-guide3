@@ -1,8 +1,36 @@
 /**
+ * Common
+ */
+.overlay {
+    position: fixed;
+    display: none;
+    background-color: #000;
+    opacity  : 0.5;
+}
+
+.modal-window {
+    border: 2px solid #D04255;
+    background-color: #FFF;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform : translate(-50%, -50%);
+    transform : translate(-50%, -50%);
+}
+
+.modal-msg {
+    text-align: center;
+}
+
+.img_block img{
+    display: block;
+    margin:auto;
+}
+
+/**
  * Page1
  */
-
-/* Page */
 #page1 {
     position: relative;
 }
@@ -14,45 +42,27 @@
 /* Footer */
 
 /* Other */
-#overlay {
+#stamp-rally-overlay {
     width: 100%;
     height: 100%;
-    position: fixed;
-    display: none;
-    background-color: none;
     z-index: 1000;
 }
 
-#modal-window {
+#coupon-window {
     width: 200px;
     height: 200px;
-    border: 2px solid #D04255;
-    background-color: #FFF;
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform : translate(-50%, -50%);
-    transform : translate(-50%, -50%);
     z-index: 1001;
 }
 
-.img_block img{
-    display: block;
-    margin:auto;
-}
-
-#modal-img {
+#coupon-img {
     width: 100px;
     height: 100px;
 }
-#modal-msg {
-    text-align: center;
-}
 
-#modal-close {
+#coupon-window-close {
     z-index: 1001;
 }
+
 button:hover {
     background: #D04255;
     color: #FFF;
