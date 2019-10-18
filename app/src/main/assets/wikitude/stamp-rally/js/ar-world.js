@@ -34,11 +34,10 @@ var World = {
 				// Markerを作成し、配列に追加
 				World.markerList.push(new Marker(singlePoi));
 			}
-			// Marker作成完了後のWorldStatusメッセージ
-			World.updateStatusMessage(World.markerList.length + ' place loaded');
 		} else {
 			// コンプリートの場合はクーポンアイコンを表示
-			World.showCompleteIcon();
+			// TODO コンプリート時の処理を検討する
+			World.showCouponWindow();
 		}
 		console.log('World Initialize END:');
 	},
@@ -77,37 +76,20 @@ var World = {
 
 		/* コンプリート判定 */
 		if (World.acquiredList.indexOf(false) == -1) {
-		    // モーダル表示を遅延実行
-		    window.setTimeout( function() {
-		        World.showModal('coupon.jpg', 'クーポンを獲得しました！！');
-                World.completeMarker();
-		     }, 2000 );
-
+		    // 遅延実行
+		    window.setTimeout( function() { World.showCouponWindow(); }, 2000 );
 		}
 	},
-	// コンプリート処理
-	completeMarker: function completeMarkerFn() {
-		console.log('Complete Marker');
-		// メッセージを変更
-		World.updateStatusMessage('Marker Completed!!');
-		// アイコン表示
-		$('#complete-icon').show();
-        $('#complete-icon').on('click', function() {
-            World.showModal('coupon.jpg', 'クーポンを獲得しました');
-        });
-	},
-	// モーダル表示
-	showModal: function showModalFn(rsc, msg) {
-		console.log('Show Modal');
+	// クーポンダイアログ表示
+	showCouponWindow: function showCouponWindowFn() {
+		console.log('Show Coupon Window');
 
 		$('#overlay').fadeIn();
-
-        $('#modal-img').attr('src', 'assets/' + rsc);
-		$('#modal-msg').text(msg);
 		$('#modal-window').fadeIn();
 
 		$('#modal-close').on('click', function() {
-		    console.log('Close Modal');
+		    console.log('Close Coupon Window');
+
 		    $('#modal-window').fadeOut();
 		    $('#overlay').fadeOut();
 		});

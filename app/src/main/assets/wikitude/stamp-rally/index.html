@@ -20,7 +20,7 @@
     <!-- jquery JS files -->
     <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="jquery/jquery.mobile-1.3.2.min.js"></script>
-    <script type="text/javascript" src="https://riversun.github.io/jsframe/jsframe.js"></script>
+    <script type="text/javascript" src="jquery/jsframe.js"></script>
 
     <!-- World logic　これがメインルーチン -->
     <script type="text/javascript" src="js/ar-world.js"></script>
@@ -31,38 +31,27 @@
 </head>
 <body>
 <!-- モバイル向けページ -->
-<div data-role="page" id="stamprally-page" style="background: none;">
+<div data-role="page" id="stamp-rally-page" style="background: none;">
     <div data-role="header">
         <!-- header -->
-        <h1>Stamp Rally</h1>
+        <button onclick="hoge()">マーカー</button>
+        <button onclick="hoge()">クーポン</button>
     </div>
     <div role="main" data-role="ui-content">
         <!-- content -->
     </div>
-    <div data-role="footer" class="ui-footer" data-position="fixed" data-tap-toggle="false" >
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer" >
         <!-- footer -->
-        <div data-role="navbar">
-            <ul>
-                <li><a href="#" onclick="hoge()">Coupon</a></li>
-                <li><a href="#" onclick="piyo()">Target</a></li>
-                <li><a href="#" onclick="huga()">Help</a></li>
-            </ul>
-        </div>
     </div>
     <!-- other ui -->
-    <div id="overlay"></div>
-    <div id="modal-window" data-display="overlay">
+    <div id="overlay" class="overlay"></div>
+    <div data-display="overlay" id="modal-window" class="modal-window">
         <div class="img_block">
-            <img id="modal-img" src="assets/coupon.jpg"/>
+            <img src="assets/coupon.jpg" id="modal-img" class="modal-img" />
         </div>
-
-        <p id="modal-msg">クーポンを獲得しました!!!</p>
-        <div id="modal-close" data-role="button" class="modal">OK</div>
+        <p id="modal-msg" class="modal-msg">クーポンを獲得しました!!!</p>
+        <div data-role="button" id="modal-close">OK</div>
     </div>
-</div>
-<!-- page2 -->
-<div data-role="page" id="page1" style="background: none;">
-
 </div>
 </bodY>
 </html>
