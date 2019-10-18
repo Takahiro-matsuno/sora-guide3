@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.constraintlayout.widget.Constraints
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.ar.ARCameraActivity
 import jp.co.jalinfotec.soraguide.base.BaseNavigationActivity
@@ -18,6 +20,7 @@ class StampRallyActivity :
     StampRallyViewHolder.CallbackListener
 {
     private val logTag = this::class.java.simpleName
+    private val stampRallyBackupKey = "STAMP_RALLY_BACK_UP"
     private lateinit var stampRallyRepository: StampRallyRepository
     private lateinit var stampRallyAdapter: StampRallyAdapter
 
@@ -50,6 +53,26 @@ class StampRallyActivity :
         if (savedInstanceState == null) {
             // 初回起動時のみデータを取得
             setStampRallyData()
+        } else {
+            // Activity再起動時はbackupしたデータを取得
+            val backupData = savedInstanceState.getString(stampRallyBackupKey)
+            if (backupData != null) {
+                val type = object : TypeToken<List<StampRallyEntity>>() {}.type
+                stampRallyAdapter.appendMembers(Gson().fromJson(backupData, type) as ArrayList<StampRallyEntity>)
+            } else {
+                // バックアップなしの場合
+                setStampRallyData()
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // 取得済みデータを保存する
+        // Activity側にlistを持ちたくないのでJsonで受け取る
+        val backupData = stampRallyAdapter.getBackupData()
+        if (backupData != null ) {
+            outState.putString(stampRallyBackupKey, backupData)
         }
     }
 

@@ -2,6 +2,7 @@ package jp.co.jalinfotec.soraguide.ar.stamprally
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 
 class StampRallyAdapter(
     private val listener: StampRallyViewHolder.CallbackListener
@@ -19,6 +20,13 @@ class StampRallyAdapter(
 
     override fun onBindViewHolder(holder: StampRallyViewHolder, position: Int) {
         holder.bindData(dataList[position])
+    }
+
+    /**
+     * リストの取得
+     */
+    fun getBackupData(): String? {
+        return if (dataList.any()) Gson().toJson(dataList) else null
     }
 
     /**
