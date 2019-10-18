@@ -41,7 +41,8 @@ var World = {
 		}
 		console.log('World Initialize END:');
 	},
-
+/*
+デフォルトインフォアイコン
 	// updates status message shon in small "i"-button aligned bottom center
 	// index.htmlのメッセージやアイコンに状態を表示する
 	updateStatusMessage: function updateStatusMessageFn(message, isWarning) {
@@ -55,6 +56,7 @@ var World = {
 			icon: iconToUse
 		});
 	},
+*/
 	// マーカー取得処理
 	getMarker: function getMarkerFn(id) {
 		console.log('Get Marker');
