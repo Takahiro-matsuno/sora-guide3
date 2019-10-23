@@ -3,7 +3,7 @@
  */
 
 // アプリへのデータ送信
-var sendKotlin = function(type, data) {
+var sendKotlin = function(obj) {
     // TODO Interfaceを検討する
 	console.log('Notice Kotlin');
 	var obj = new Object();

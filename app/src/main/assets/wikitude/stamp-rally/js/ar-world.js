@@ -88,8 +88,13 @@ var World = {
         target.src = res;
 
 		/* Kotlinへ通知 */
-		// TODO 通知方法を変更する
-		sendKotlin("COLLECT_STAMP", JSON.stringify(World.acquiredList));
+		var sendObj = new Object();
+		sendObj.type = "data";
+		var data = new Object();
+		data.key = World.arId;
+		data.value = "ほげほげ";
+		sendObj.data = data;
+		AR.platform.sendJSONObject(sendObj);
 
 		/* コンプリート判定 */
 		const list = World.resObj.filter((res) => {
@@ -168,12 +173,3 @@ function setResourceObjectFn(arResource) {
     World.arId = obj.stampRallyId;
     World.resObj = obj.markers;
 }
-
-/*
-function setAcquiredListFn(jStr) {
-	var jArray = JSON.parse(jStr);
-	for (var cnt = 0; cnt < jArray.length; cnt++) {
-		World.acquiredList[cnt] = jArray[cnt];
-	}
-}
-*/

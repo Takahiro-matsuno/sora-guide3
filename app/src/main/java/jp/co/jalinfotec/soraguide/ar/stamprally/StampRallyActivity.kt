@@ -3,6 +3,7 @@ package jp.co.jalinfotec.soraguide.ar.stamprally
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.constraintlayout.widget.Constraints
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -103,6 +104,10 @@ class StampRallyActivity :
         //val data = stampRallyAdapter.findById(id)
         if (data != null) {
             Log.d(logTag, "クーポンタップ:${data.stampRallyName}")
+
+            if (data.isCompleted) {
+                Toast.makeText(this, "クーポンを表示", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
