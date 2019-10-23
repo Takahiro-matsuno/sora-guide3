@@ -94,7 +94,7 @@ class StampRallyActivity :
             // TODO アプリの権限チェック
             Log.d(logTag, "アイテムタップ${data.stampRallyName}")
             val intent = Intent(this, ARCameraActivity::class.java)
-            intent.putExtra(ARCameraActivity.arResourceKey, "")
+            intent.putExtra(ARCameraActivity.arResourceKey, Gson().toJson(data))
             startActivity(intent)
         }
     }

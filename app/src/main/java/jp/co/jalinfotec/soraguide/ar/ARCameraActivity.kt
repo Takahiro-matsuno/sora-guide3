@@ -20,6 +20,7 @@ class ARCameraActivity : BaseARActivity() {
     companion object {
         const val arResourceKey = "AR_RESOURCE"
     }
+
     private val logTag = this::class.java.simpleName
     // 遷移元取得データ
     private var arResource: String? = null
@@ -39,71 +40,80 @@ class ARCameraActivity : BaseARActivity() {
         if (savedInstanceState == null) {
             // 遷移元からARデータを受け取る
             arResource = intent.getStringExtra(arResourceKey)
+        } else {
+            arResource = savedInstanceState.getString(arResourceKey, null)
         }
 
+        if (arResource != null) {
 
-        // Wikitudeの初期設定
-        val config = ArchitectStartupConfiguration()
-        config.licenseKey = Constants.wikitudeLicenseKey
-        architectView.onCreate(config)
+            // Wikitudeの初期設定
+            val config = ArchitectStartupConfiguration()
+            config.licenseKey = Constants.wikitudeLicenseKey
+            architectView.onCreate(config)
+            // データをJSへ通知
+            noticeJavaScript("setResourceObjectFn", arResource!!)
 
-        loadArData()
-        noticeJavaScript("setAcquiredListFn",arData!!)
+            // 方位トラッキングリスナー
+            this.sensorAccuracyListener = this.getSensorAccuracyListener()
 
-        // 方位トラッキングリスナー
-        this.sensorAccuracyListener = this.getSensorAccuracyListener()
-
-        // 位置情報トラッキングリスナー
-        this.locationProvider = LocationProvider(this, object : LocationListener {
-            // 位置情報が変更された時
-            override fun onLocationChanged(location: Location?) {
-                // forward location updates fired by LocationProvider to architectView, you can set lat/lon from any location-strategy
-                if (location != null) {
-                    // sore last location as member, in case it is needed somewhere (in e.g. your adjusted project)
-                    // 位置をセット
-                    this@ARCameraActivity.lastKnownLocation = location
-                    if (this@ARCameraActivity.architectView != null) {
-                        // check if location has altitude at certain accuracy level & call right architect method (the one with altitude information)
-                        // 誤差が7m未満の時.hasAltitudeは標高。
-                        // 位置情報をARのビューの位置情報に設定。これでJavaScriptで設定した。AR.context.onLocationChangedの関数が動く。
-                        if (location.hasAltitude() && location.hasAccuracy() && location.accuracy < 7) {
-                            this@ARCameraActivity.architectView.setLocation(
-                                location.latitude,
-                                location.longitude,
-                                location.altitude,
-                                location.accuracy
-                            )
-                        } else {
-                            this@ARCameraActivity.architectView.setLocation(
-                                location.latitude,
-                                location.longitude,
-                                if (location.hasAccuracy()) location.accuracy.toDouble() else 1000.0
-                            )
+            // 位置情報トラッキングリスナー
+            this.locationProvider = LocationProvider(this, object : LocationListener {
+                // 位置情報が変更された時
+                override fun onLocationChanged(location: Location?) {
+                    // forward location updates fired by LocationProvider to architectView, you can set lat/lon from any location-strategy
+                    if (location != null) {
+                        // sore last location as member, in case it is needed somewhere (in e.g. your adjusted project)
+                        // 位置をセット
+                        this@ARCameraActivity.lastKnownLocation = location
+                        if (this@ARCameraActivity.architectView != null) {
+                            // check if location has altitude at certain accuracy level & call right architect method (the one with altitude information)
+                            // 誤差が7m未満の時.hasAltitudeは標高。
+                            // 位置情報をARのビューの位置情報に設定。これでJavaScriptで設定した。AR.context.onLocationChangedの関数が動く。
+                            if (location.hasAltitude() && location.hasAccuracy() && location.accuracy < 7) {
+                                this@ARCameraActivity.architectView.setLocation(
+                                    location.latitude,
+                                    location.longitude,
+                                    location.altitude,
+                                    location.accuracy
+                                )
+                            } else {
+                                this@ARCameraActivity.architectView.setLocation(
+                                    location.latitude,
+                                    location.longitude,
+                                    if (location.hasAccuracy()) location.accuracy.toDouble() else 1000.0
+                                )
+                            }
                         }
+                    }
+                }
+
+                //
+                override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {}
+
+                //
+                override fun onProviderEnabled(p0: String?) {}
+
+                //
+                override fun onProviderDisabled(p0: String?) {}
+            })
+
+            // JSからの通知
+            architectView.addArchitectJavaScriptInterfaceListener { jsonObj ->
+                when (jsonObj.getString("type")) {
+                    Constants.arCollectedDataKey -> {
+                        updateArData(jsonObj.getString("data"))
+                    }
+                    else -> {
+                        Log.d(logTag, "不正なJSONを受け取りました")
                     }
                 }
             }
 
-            //
-            override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {}
+        } else {
 
-            //
-            override fun onProviderEnabled(p0: String?) {}
-
-            //
-            override fun onProviderDisabled(p0: String?) {}
-        })
-
-        // JSからの通知
-        architectView.addArchitectJavaScriptInterfaceListener { jsonObj ->
-            when (jsonObj.getString("type")) {
-                Constants.arCollectedDataKey -> {
-                    updateArData(jsonObj.getString("data"))
-                }
-                else -> {
-                    Log.d(logTag, "不正なJSONを受け取りました")
-                }
-            }
+            // データがない場合は画面を終了する
+            Toast.makeText(this, "データの読み込みに失敗しました", Toast.LENGTH_SHORT).show()
+            this@ARCameraActivity.finish()
         }
     }
 
@@ -143,6 +153,14 @@ class ARCameraActivity : BaseARActivity() {
         this.locationProvider?.onPause()
 
         saveArData()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        if (arResource != null) {
+            outState.putString(arResourceKey, arResource)
+        }
     }
 
     // Activity破棄前に実行
