@@ -3,6 +3,7 @@ package jp.co.jalinfotec.soraguide.ar.stamprally
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.constraintlayout.widget.Constraints
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -17,12 +18,29 @@ import kotlinx.android.synthetic.main.activity_stamprally.*
 // TODO 起動時に操作説明ダイアログを表示
 class StampRallyActivity :
     BaseNavigationActivity(),
-    StampRallyViewHolder.CallbackListener
+    StampRallyViewHolder.CallbackListener,
+    StampDialog.CallbackListener
 {
+
+
+    override fun ok() {
+        // OKボタン押下の処理
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this,"OKボタン",Toast.LENGTH_LONG).show()
+    }
+
+    override fun cancel() {
+        // Negativeボタン押下時の処理
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this,"cancelボタン",Toast.LENGTH_LONG).show()
+    }
+
     private val logTag = this::class.java.simpleName
     private val stampRallyBackupKey = "STAMP_RALLY_BACK_UP"
     private lateinit var stampRallyRepository: StampRallyRepository
     private lateinit var stampRallyAdapter: StampRallyAdapter
+
+    private val stampTag = "DIALOG"
 
     // toolbarタイトル設定
     override fun setToolbarTitle() {
@@ -39,6 +57,7 @@ class StampRallyActivity :
         main_content.addView(view)
     }
 
+    //
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -98,11 +117,25 @@ class StampRallyActivity :
             startActivity(intent)
         }
     }
+
     // クーポン確認タップ時
     override fun couponTapped(data: StampRallyEntity?) {
         //val data = stampRallyAdapter.findById(id)
         if (data != null) {
             Log.d(logTag, "クーポンタップ:${data.stampRallyName}")
+            couponDialog(data.couponUri)
         }
+
     }
+
+    //ダイアログを出す
+    fun couponDialog(couponURI: String){
+        // ダイアログのフラグメントのインスタンスを取得
+        val dialogFragment: StampDialog = StampDialog().newInstance(this, couponURI)
+        dialogFragment.show(supportFragmentManager, stampTag)
+    }
+
+
+
+
 }

@@ -57,4 +57,5 @@ abstract class BaseCallbackDialog<Interface>: DialogFragment() {
             else -> {}
         }
     }
+
 }
