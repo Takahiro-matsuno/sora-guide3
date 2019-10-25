@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import jp.co.jalinfotec.soraguide.R
 import kotlinx.android.synthetic.main.activity_ar.*
+import org.json.JSONObject
 
 abstract class BaseARActivity: AppCompatActivity() {
 
@@ -14,7 +15,7 @@ abstract class BaseARActivity: AppCompatActivity() {
 
     abstract fun loadArData()
 
-    abstract fun updateArData(data: String)
+    abstract fun updateArData(data: JSONObject)
 
     abstract fun saveArData()
 

@@ -27,5 +27,4 @@ object Constants {
         Pair(Manifest.permission.ACCESS_COARSE_LOCATION, "位置情報"),
         Pair(Manifest.permission.WRITE_EXTERNAL_STORAGE, "ストレージ")
     )
-    const val arCollectedDataKey = "AR_COLLECTED_DATA"
 }

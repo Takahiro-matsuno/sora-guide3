@@ -3,7 +3,7 @@ package jp.co.jalinfotec.soraguide.ar.stamprally
 import java.util.*
 
 data class StampRallyEntity(
-    val stampRallyId: Long,
+    val stampRallyId: Int,
     val stampRallyName: String,
     val startDate: Date,
     val endDate: Date,
@@ -13,7 +13,7 @@ data class StampRallyEntity(
     val markers: List<Marker>
 ) {
     data class Marker(
-        val markerId: Long,
+        val markerId: Int,
         val latitude: Double,   // 緯度
         val longitude: Double,  // 軽度
         val altitude: Double,   // 高度

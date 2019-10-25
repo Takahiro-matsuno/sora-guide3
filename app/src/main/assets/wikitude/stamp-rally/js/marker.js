@@ -14,7 +14,7 @@ function Marker(poiData) {
 	 *  The example Image Recognition already explained how images are loaded and displayed in the augmented reality view. This sample loads an AR.ImageResource when the World variable was defined. It will be reused for each marker that we will create afterwards.
 	 */
 	// 画像を取得
-	var markerDrawable = new AR.ImageResource("assets/" + this.poiData.resource, {
+	var markerDrawable = new AR.ImageResource(this.poiData.resource, {
 		onError: World.onError
 	});
 
