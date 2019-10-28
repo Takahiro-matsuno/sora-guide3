@@ -29,13 +29,11 @@ class StampRallyActivity :
 
     override fun ok() {
         // OKボタン押下の処理
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         Toast.makeText(this,"OKボタン",Toast.LENGTH_LONG).show()
     }
 
     override fun cancel() {
         // Negativeボタン押下時の処理
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         Toast.makeText(this,"cancelボタン",Toast.LENGTH_LONG).show()
     }
 
