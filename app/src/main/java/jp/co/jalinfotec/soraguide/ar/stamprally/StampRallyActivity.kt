@@ -1,18 +1,15 @@
 package jp.co.jalinfotec.soraguide.ar.stamprally
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.constraintlayout.widget.Constraints
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import jp.co.jalinfotec.soraguide.PermissionUtil
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.ar.ARCameraActivity
 import jp.co.jalinfotec.soraguide.base.BaseNavigationActivity
@@ -42,7 +39,7 @@ class StampRallyActivity :
     private lateinit var stampRallyRepository: StampRallyRepository
     private lateinit var stampRallyAdapter: StampRallyAdapter
     private var currentEntity: StampRallyEntity? = null
-    private val REQUEST_STAMP_RALLY = 1
+    private val REQUEST_PERM_STAMP_RALLY = 1
 
     private val stampTag = "DIALOG"
 
@@ -61,7 +58,6 @@ class StampRallyActivity :
         main_content.addView(view)
     }
 
-    //
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -101,17 +97,13 @@ class StampRallyActivity :
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
-            REQUEST_STAMP_RALLY -> {
+            REQUEST_PERM_STAMP_RALLY -> {
                 if (grantResults.contains(-1)) {
                     // 権限が許可されなかった場合
                     Toast.makeText(this, "AR機能を利用するには権限の許可が必要です", Toast.LENGTH_SHORT).show()
                 } else {
                     // 権限が許可された場合
-                    if (currentEntity != null) {
-                        val intent = Intent(this, ARCameraActivity::class.java)
-                        intent.putExtra(ARCameraActivity.arResourceKey, "")
-                        startActivity(intent)
-                    }
+                    startArContents()
                 }
             }
             else -> { }
@@ -131,8 +123,22 @@ class StampRallyActivity :
      */
     // スタンプラリーレイアウトタップ時
     override fun itemTapped(data:StampRallyEntity?) {
-        currentEntity = data
-        requestPermission(this, REQUEST_STAMP_RALLY)
+        currentEntity = data // 権限チェックのコールバック後に画面遷移するのでグローバルに保存
+
+        // 権限チェック
+        val perms = PermissionUtil().requestPermission(this)
+        if (perms.any()) {
+            ActivityCompat.requestPermissions(this, perms, REQUEST_PERM_STAMP_RALLY)
+        } else { startArContents() }
+    }
+
+    // AR画面に遷移
+    private fun startArContents() {
+        if (currentEntity != null) {
+            val intent = Intent(this, ARCameraActivity::class.java)
+            intent.putExtra(ARCameraActivity.arResourceKey, Gson().toJson(currentEntity))
+            startActivity(intent)
+        }
     }
 
     // クーポン確認タップ時
@@ -141,33 +147,6 @@ class StampRallyActivity :
         if (data != null) {
             Log.d(logTag, "クーポンタップ:${data.stampRallyName}")
             couponDialog(data.couponUri)
-        }
-    }
-
-    private fun requestPermission(context: Context, requestCode: Int) {
-        val permNameList = getPermissionNameList(context)
-        val isNotAllowed = ArrayList<String>()
-        if (permNameList != null) {
-            for (permName in permNameList) {
-                if (ContextCompat.checkSelfPermission(context, permName) != PackageManager.PERMISSION_GRANTED) {
-                    // 許可がない場合は見許可リストに追加
-                    isNotAllowed.add(permName)
-                }
-            }
-        }
-        if (isNotAllowed.any()) {
-            // 未許可リストのリクエストする
-            ActivityCompat.requestPermissions(this, isNotAllowed.toTypedArray(), requestCode)
-        }
-    }
-
-    // マニフェストに設定された権限の一覧を返す
-    private fun getPermissionNameList(context: Context): Array<String>? {
-        return try {
-            val pm = context.packageManager
-            packageManager.getPackageInfo(context.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions
-        } catch (ex: PackageManager.NameNotFoundException) {
-            null
         }
     }
 
