@@ -1,10 +1,15 @@
 package jp.co.jalinfotec.soraguide.ar.stamprally
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.constraintlayout.widget.Constraints
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -22,7 +27,6 @@ class StampRallyActivity :
     StampDialog.CallbackListener
 {
 
-
     override fun ok() {
         // OKボタン押下の処理
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -39,6 +43,8 @@ class StampRallyActivity :
     private val stampRallyBackupKey = "STAMP_RALLY_BACK_UP"
     private lateinit var stampRallyRepository: StampRallyRepository
     private lateinit var stampRallyAdapter: StampRallyAdapter
+    private var currentEntity: StampRallyEntity? = null
+    private val REQUEST_STAMP_RALLY = 1
 
     private val stampTag = "DIALOG"
 
@@ -95,6 +101,25 @@ class StampRallyActivity :
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            REQUEST_STAMP_RALLY -> {
+                if (grantResults.contains(-1)) {
+                    // 権限が許可されなかった場合
+                    Toast.makeText(this, "AR機能を利用するには権限の許可が必要です", Toast.LENGTH_SHORT).show()
+                } else {
+                    // 権限が許可された場合
+                    if (currentEntity != null) {
+                        val intent = Intent(this, ARCameraActivity::class.java)
+                        intent.putExtra(ARCameraActivity.arResourceKey, "")
+                        startActivity(intent)
+                    }
+                }
+            }
+            else -> { }
+        }
+    }
+
     private fun setStampRallyData() {
         // TODO 仮のリポジトリ、サーバができたら置き換え
         val list = stampRallyRepository.getStampRallyData()
@@ -108,14 +133,8 @@ class StampRallyActivity :
      */
     // スタンプラリーレイアウトタップ時
     override fun itemTapped(data:StampRallyEntity?) {
-        //val data = stampRallyAdapter.findById(id)
-        if (data != null) {
-            // TODO アプリの権限チェック
-            Log.d(logTag, "アイテムタップ${data.stampRallyName}")
-            val intent = Intent(this, ARCameraActivity::class.java)
-            intent.putExtra(ARCameraActivity.arResourceKey, "")
-            startActivity(intent)
-        }
+        currentEntity = data
+        requestPermission(this, REQUEST_STAMP_RALLY)
     }
 
     // クーポン確認タップ時
@@ -125,7 +144,33 @@ class StampRallyActivity :
             Log.d(logTag, "クーポンタップ:${data.stampRallyName}")
             couponDialog(data.couponUri)
         }
+    }
 
+    private fun requestPermission(context: Context, requestCode: Int) {
+        val permNameList = getPermissionNameList(context)
+        val isNotAllowed = ArrayList<String>()
+        if (permNameList != null) {
+            for (permName in permNameList) {
+                if (ContextCompat.checkSelfPermission(context, permName) != PackageManager.PERMISSION_GRANTED) {
+                    // 許可がない場合は見許可リストに追加
+                    isNotAllowed.add(permName)
+                }
+            }
+        }
+        if (isNotAllowed.any()) {
+            // 未許可リストのリクエストする
+            ActivityCompat.requestPermissions(this, isNotAllowed.toTypedArray(), requestCode)
+        }
+    }
+
+    // マニフェストに設定された権限の一覧を返す
+    private fun getPermissionNameList(context: Context): Array<String>? {
+        return try {
+            val pm = context.packageManager
+            packageManager.getPackageInfo(context.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions
+        } catch (ex: PackageManager.NameNotFoundException) {
+            null
+        }
     }
 
     //ダイアログを出す
@@ -134,8 +179,4 @@ class StampRallyActivity :
         val dialogFragment: StampDialog = StampDialog().newInstance(this, couponURI)
         dialogFragment.show(supportFragmentManager, stampTag)
     }
-
-
-
-
 }
