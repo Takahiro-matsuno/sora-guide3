@@ -20,4 +20,11 @@
     <string name="open_end_colume">営業時間</string>
     <string name="price_colume">料金情報</string>
     <string name="overview_colume">概要</string>
+
+    <!-- クーポンダイアログ用 -->
+    <string name="coupon_identifier">クーポンを確認</string>
+    <string name="qr_guide">QRコードを確認</string>
+
+
+
 </resources>

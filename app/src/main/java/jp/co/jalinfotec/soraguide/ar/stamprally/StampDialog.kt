@@ -68,6 +68,7 @@ class StampDialog : BaseCallbackDialog<StampDialog.CallbackListener>() {
         outState.putString(dataKey, data)
     }
 
+    /*
     @SuppressLint("ResourceType")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // R.layoutを使わない場合
@@ -90,6 +91,8 @@ class StampDialog : BaseCallbackDialog<StampDialog.CallbackListener>() {
         return Dialog(context!!, R.layout.coupon_layout)
     }
 
+
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // TODO R.layoutを使用したViewを使う場合は以下に追加
          return  inflater.inflate(R.layout.coupon_layout, container, false)
@@ -100,11 +103,16 @@ class StampDialog : BaseCallbackDialog<StampDialog.CallbackListener>() {
 
         val ips = resources.assets.open("wikitude/stamp-rally/assets/qr.png")
         val bm = BitmapFactory.decodeStream(ips)
+
+
         imageView.setImageBitmap(bm)
 
+        /*
         dia_ok.setOnClickListener{
             getCallbackListener()?.ok()
         }
+
+         */
 
 
     }

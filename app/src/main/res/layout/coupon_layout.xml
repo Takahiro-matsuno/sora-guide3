@@ -1,39 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" android:gravity="center"><![CDATA[
+    android:background="#66FF0000" />
+
+
+    ]]>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="429dp"
+            android:layout_height="342dp">
+        <TextView
+                android:text="TextView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:tools="http://schemas.android.com/tools">
-
-    <ImageView
-            android:layout_width="320dp"
-            android:layout_height="289dp"
-            tools:src="@drawable/__leak_canary_icon"
-            android:id="@+id/imageView"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="68dp"
-            android:layout_above="@+id/dia_ok"
-            android:layout_marginBottom="54dp"/>
-
-    <Button
-            android:text="cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="120dp"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/dia_cancel"
-            android:layout_marginBottom="322dp"/>
-
-    <Button
-            android:text="OK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="106dp"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/dia_ok"
-            android:layout_marginBottom="284dp"
-            android:layout_toEndOf="@+id/dia_cancel"/>
-
-</RelativeLayout>
+                android:layout_height="wrap_content" android:id="@+id/textView8"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView2"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="266dp" app:srcCompat="@drawable/coupon" android:id="@+id/imageView"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="74dp">
+        <TextView
+                android:text="@string/overview_colume"
+                android:layout_width="269dp"
+                android:layout_height="wrap_content" android:id="@+id/textView6" android:layout_weight="1"/>
+        <Button
+                android:text="@string/coupon_identifier"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" android:id="@+id/button" android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>
