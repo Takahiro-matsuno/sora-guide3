@@ -101,13 +101,23 @@ class StampDialog : BaseCallbackDialog<StampDialog.CallbackListener>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //リソース取得
         val ips = resources.assets.open("wikitude/stamp-rally/assets/qr.png")
         val bm = BitmapFactory.decodeStream(ips)
 
+        //クーポン名　差し替え
+        couponText1.text = "ほげほげクーポン"
+        //有効期限　差し替え
+        QRLimit.text = "有効期限: 2019/10/32~ 2022/12/43"
+        //画像差し替え
+        QRView.setImageBitmap(bm)
 
-        imageView.setImageBitmap(bm)
+
+
+
 
         /*
+        リスナ
         dia_ok.setOnClickListener{
             getCallbackListener()?.ok()
         }

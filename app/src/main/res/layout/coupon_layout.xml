@@ -1,40 +1,57 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" android:gravity="center"><![CDATA[
-    android:background="#66FF0000" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+>
 
+    <TextView
+            android:text="@string/coupon_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/couponText1"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"/>
 
-    ]]>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="429dp"
-            android:layout_height="342dp">
-        <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView8"/>
-        <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView2"/>
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="266dp" app:srcCompat="@drawable/coupon" android:id="@+id/imageView"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="74dp">
-        <TextView
-                android:text="@string/overview_colume"
-                android:layout_width="269dp"
-                android:layout_height="wrap_content" android:id="@+id/textView6" android:layout_weight="1"/>
-        <Button
-                android:text="@string/coupon_identifier"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" android:id="@+id/button" android:layout_weight="1"/>
-    </LinearLayout>
-</LinearLayout>
+    <TextView
+            android:text="@string/qr_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/couponText2"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/couponText1"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"/>
+
+    <ImageView
+            android:layout_width="257dp"
+            android:layout_height="244dp" app:srcCompat="@drawable/coupon"
+            android:id="@+id/QRView" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/couponText1"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "@string/qr_limit"
+            android:id="@+id/QRLimit"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/QRView"/>
+
+    <Button
+            android:text="@string/coupon_use_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/button_use"
+            app:layout_constraintTop_toBottomOf="@+id/QRLimit"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="15dp"
+            tools:layout_editor_absoluteX="64dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

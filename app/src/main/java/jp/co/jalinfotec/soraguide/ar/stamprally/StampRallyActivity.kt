@@ -131,6 +131,7 @@ class StampRallyActivity :
         // ダイアログのフラグメントのインスタンスを取得
         val dialogFragment: StampDialog = StampDialog().newInstance(this, couponURI)
         dialogFragment.show(supportFragmentManager, stampTag)
+
     }
 
 
