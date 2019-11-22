@@ -14,58 +14,60 @@ import kotlinx.android.synthetic.main.coupon_layout.*
 import android.graphics.BitmapFactory
 import java.io.InputStream
 import android.graphics.Bitmap
-
-
-
+import android.util.Log
+import android.widget.Toast
+import jp.co.jalinfotec.*
+import java.io.Serializable
 
 
 class StampDialog : BaseCallbackDialog<StampDialog.CallbackListener>() {
 
-    private val dataKey = "DATA"
+    private val dataKey = "ENTITY"
     private val default: String = "DEF"
-    private lateinit var data: String
-    private lateinit var URI: String
+    private var entity: StampRallyEntity?=null
 
     /**
      * 呼び出し元(Activity, Fragment)で実装するCallbackMethodを定義
      */
 
     interface CallbackListener {
-        fun ok()
-        fun cancel()
+        fun useCoupon(entity :StampRallyEntity)
     }
 
     // インスタンスは必ず以下のクラスで生成
     fun newInstance(
         listener: CallbackListener,
-        data: String // ダイアログに渡したいデータ
+        entity: StampRallyEntity // ダイアログに渡したいデータ
     ): StampDialog {
         val dialog = StampDialog()
         dialog.setCallbackListener(listener)
         val args = dialog.arguments ?: Bundle()
-        args.putString("DATA", data)
-        URI = data
+        args.putSerializable("ENTITY", entity)
         return dialog
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 呼び出し元からの引数を取得
-        data = if (savedInstanceState == null) {
-            // ダイアログ生成時
-            arguments?.getString(dataKey) ?: default
+        entity = if (savedInstanceState !== null) {
+            // 呼び出し元からの引数を取得
+            savedInstanceState.getSerializable(dataKey) as StampRallyEntity
         } else {
-            // 再起動時
-            savedInstanceState.getString(dataKey) ?: default
-
+            //新規インスタンスから
+            arguments?.getSerializable(dataKey) as StampRallyEntity
         }
+        //クーポンデータがnullならダイアログを閉じる
+        if (entity ==  null){
+            Toast.makeText(this.context, "クーポンは無効です。", Toast.LENGTH_LONG).show()
+            this.dismiss()
+        }
+
     }
 
     // Activity終了前にデータを保存
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(dataKey, data)
+        outState.putSerializable(dataKey, entity)
     }
 
     /*
@@ -101,32 +103,35 @@ class StampDialog : BaseCallbackDialog<StampDialog.CallbackListener>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //リソース取得
-        val ips = resources.assets.open("wikitude/stamp-rally/assets/qr.png")
-        val bm = BitmapFactory.decodeStream(ips)
-
         //クーポン名　差し替え
-        couponText1.text = "ほげほげクーポン"
+        couponText1.text = entity?.stampRallyName
         //有効期限　差し替え
         QRLimit.text = "有効期限: 2019/10/32~ 2022/12/43"
-        //画像差し替え
-        QRView.setImageBitmap(bm)
 
+        var isCouponUsed:Boolean = false //使用フラグ
 
-
-
-
-        /*
-        リスナ
-        dia_ok.setOnClickListener{
-            getCallbackListener()?.ok()
+        if(isCouponUsed === false){
+            //"クーポンを使用する" ボタン
+            button_use.setOnClickListener(){
+                // "クーポンを使用する"ボタンをタップ時の処理
+                val ips = resources.assets.open("wikitude/stamp-rally/assets/qr.png") //リソース取得
+                val bm = BitmapFactory.decodeStream(ips)
+                isCouponUsed = true
+                //画像差し替え
+                QRView.setImageBitmap(bm)
+                //使用済みにする処理
+                //StampRallyActivity.
+                Log.d("cp_used" ,"this coupon has been deleted")
+            }
         }
 
-         */
+        //右上の"×"ボタン
+        close_coupon.setOnClickListener(){
+            this.dismiss()
+        }
 
 
     }
-
 
 
 }

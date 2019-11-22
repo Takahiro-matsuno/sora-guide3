@@ -1,6 +1,7 @@
 package jp.co.jalinfotec.soraguide.ar.stamprally
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -13,6 +14,7 @@ import jp.co.jalinfotec.soraguide.ar.ARCameraActivity
 import jp.co.jalinfotec.soraguide.base.BaseNavigationActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.activity_stamprally.*
+import kotlinx.android.synthetic.main.coupon_layout.*
 
 // TODO クーポン確認タップ時にQR表示ダイアログを表示
 // TODO 起動時に操作説明ダイアログを表示
@@ -22,16 +24,10 @@ class StampRallyActivity :
     StampDialog.CallbackListener
 {
 
-
-    override fun ok() {
-        // OKボタン押下の処理
-        Toast.makeText(this,"OKボタン",Toast.LENGTH_LONG).show()
+    override fun useCoupon(entity :StampRallyEntity) {
+        stampRallyAdapter.setUsed(entity)
     }
 
-    override fun cancel() {
-        // Negativeボタン押下時の処理
-        Toast.makeText(this,"cancelボタン",Toast.LENGTH_LONG).show()
-    }
 
     private val logTag = this::class.java.simpleName
     private val stampRallyBackupKey = "STAMP_RALLY_BACK_UP"
@@ -121,20 +117,12 @@ class StampRallyActivity :
         //val data = stampRallyAdapter.findById(id)
         if (data != null) {
             Log.d(logTag, "クーポンタップ:${data.stampRallyName}")
-            couponDialog(data.couponUri)
+
+            // ダイアログのフラグメントのインスタンスを取得
+            val dialogFragment: StampDialog = StampDialog().newInstance(this, data)
+            dialogFragment.show(supportFragmentManager, stampTag)
         }
-
     }
-
-    //ダイアログを出す
-    fun couponDialog(couponURI: String){
-        // ダイアログのフラグメントのインスタンスを取得
-        val dialogFragment: StampDialog = StampDialog().newInstance(this, couponURI)
-        dialogFragment.show(supportFragmentManager, stampTag)
-
-    }
-
-
 
 
 }

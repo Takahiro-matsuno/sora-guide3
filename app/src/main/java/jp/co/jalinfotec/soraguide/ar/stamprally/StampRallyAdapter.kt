@@ -42,6 +42,16 @@ class StampRallyAdapter(
         this@StampRallyAdapter.notifyItemRangeInserted(pos, range)
     }
 
+    //使用済みにする
+    fun setUsed(entity :StampRallyEntity){
+        var position = dataList.indexOf(entity)
+        //使用済み
+        if (position !== -1 ){
+            entity.isCouponUsed = true
+            this.notifyItemChanged(position)
+        }
+    }
+
     /**
      * リストの検索
 

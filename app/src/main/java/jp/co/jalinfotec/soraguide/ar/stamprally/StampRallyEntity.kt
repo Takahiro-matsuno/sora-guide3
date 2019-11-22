@@ -1,25 +1,26 @@
 package jp.co.jalinfotec.soraguide.ar.stamprally
 
+import java.io.Serializable
 import java.util.*
 
 data class StampRallyEntity(
     val stampRallyId: Int,
     val stampRallyName: String,
-    val startDate: Date,
-    val endDate: Date,
-    val isCompleted: Boolean,
-    val isCouponUsed: Boolean,
+    var startDate: Date,
+    var endDate: Date,
+    var isCompleted: Boolean,
+    var isCouponUsed: Boolean,
     val couponUri: String,
-    val markers: List<Marker>
-) {
+    var markers: List<Marker>
+) :Serializable {
     data class Marker(
         val markerId: Int,
         val latitude: Double,   // 緯度
         val longitude: Double,  // 軽度
         val altitude: Double,   // 高度
         val markerUri: String, // 画像URI
-        val isAcquired: Boolean // 獲得済みフラグ
-    )
+        var isAcquired: Boolean // 獲得済みフラグ
+    ): Serializable
 
     // 獲得済みマーカー数の取得
     fun getAcquiredNum(): Int {
@@ -27,4 +28,5 @@ data class StampRallyEntity(
         if (isCompleted) n = markers.size else for (m in markers) if (m.isAcquired) n++
         return n
     }
+
 }
