@@ -14,6 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
         //databinding有効に
         dataBinding {
             enabled = true
@@ -49,9 +50,9 @@ dependencies {
      */
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04' // RecyclerView (リスト用コンポーネント)
     implementation 'androidx.browser:browser:1.0.0' // ChromeCustomTabs (WebViewとしてchromeを利用するタブ)
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0' // Retrofit2 (通信用ライブラリ)
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0' // Retrofit2 (通信用ライブラリ)
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'//logger
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0' // Gson (Json<->Javaクラス変換ライブラリ)
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0' // Gson (Json<->Javaクラス変換ライブラリ)
     implementation 'com.github.bumptech.glide:glide:4.8.0' // Glide (画像用ライブラリ)
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0' // Glide (画像用ライブラリ)
 
@@ -59,6 +60,13 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'//メモリリーク調査用
     // wikitude
     implementation(name: 'wikitudesdk', ext: 'aar')
+
+    //topmenu
+    //追加　Picassoを扱う
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Admob：アフィリエイト用
+    implementation 'com.google.android.gms:play-services-ads:18.2.0'
 }
 
 repositories {
