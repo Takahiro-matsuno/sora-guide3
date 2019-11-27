@@ -9,7 +9,7 @@ import android.util.Log
 import android.widget.Toast
 import com.wikitude.architect.ArchitectStartupConfiguration
 import com.wikitude.architect.ArchitectView
-import jp.co.jalinfotec.soraguide.Constants
+import jp.co.jalinfotec.soraguide.utils.Constants
 import jp.co.jalinfotec.soraguide.ar.base.ArchitectViewHolderInterface
 import jp.co.jalinfotec.soraguide.ar.base.BaseARActivity
 import jp.co.jalinfotec.soraguide.ar.base.LocationProvider

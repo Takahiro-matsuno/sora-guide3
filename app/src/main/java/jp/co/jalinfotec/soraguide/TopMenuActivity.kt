@@ -9,21 +9,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
 import android.util.Log
-import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.squareup.picasso.Picasso
-import jp.co.jalinfotec.soraguide.ar.ARCameraActivity
 import jp.co.jalinfotec.soraguide.taxi.TaxiActivity
 import jp.co.jalinfotec.soraguide.topMenu.GetTopicsApiService
 import jp.co.jalinfotec.soraguide.topMenu.Topic
+import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.activity_top_menu.*
-import jp.co.jalinfotec.soraguide.util.Constants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,9 +30,7 @@ import kotlin.concurrent.timer
 
 class TopMenuActivity : AppCompatActivity() {
 
-
-    //Admob生成用
-    lateinit var mAdView : AdView
+    private val logTag = this::class.java.simpleName
 
     //画像スライドショー初期設定
     private var isSlideshow = true
@@ -45,11 +40,10 @@ class TopMenuActivity : AppCompatActivity() {
     private var position = 0
 
     //Topicsを格納する変数
-    var topics:MutableList<Topic> = mutableListOf()
-
-
+    private var topics:MutableList<Topic> = mutableListOf()
+    private lateinit var topicsApiService: GetTopicsApiService
     private val permissionRequestCode = 1
-    private val logTag = this::class.java.simpleName
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,46 +52,50 @@ class TopMenuActivity : AppCompatActivity() {
         // 権限リクエスト
         requestPermission()
 
-        //Admobの設定　ここから
+        /**
+         * 各画面への遷移
+         */
+        // 観光案内画面へ遷移
+        sightseeing.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
+        // タクシー予約画面へ遷移
+        taxi.setOnClickListener { startActivity(Intent(this, TaxiActivity::class.java)) }
 
-        //Admobアカウント設定
-        // Sample AdMob app ID: ca-app-pub-2003234893806822~5059310598
+        // TODO 施設案内機能実装後、変更する
+        // airport.setOnClickListener { startActivity<AirportGuideActivity>() }
+        // flight.setOnClickListener { startActivity(Intent(this, ARCameraActivity::class.java)) }
+        airport.setBackgroundColor(Color.GRAY)
+        flight.setBackgroundColor(Color.GRAY)
+
+        // Admobの設定
         MobileAds.initialize(this, "ca-app-pub-2003234893806822~5059310598")
-
-        //ViewにAdmobの情報を設定
-        mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        adView.loadAd(adRequest)
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.topicsUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        topicsApiService = retrofit.create(GetTopicsApiService::class.java)
+        loadTopics()
+    }
 
-        //Admobの設定　ここまで
+    private fun loadTopics() {
 
-
-        //Topicsの生成　ここから
-
-        // Retrofitクライアントの取得
-        val retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:8080/").addConverterFactory(
-            GsonConverterFactory.create()).build()
-
-        // APIエンドポイントの生成
-        val api = retrofit.create(GetTopicsApiService::class.java)
-
-        // 引数によってapiエンドポイントを指定し、リクエスト
-        val a = api.getTopics().enqueue(object: Callback<Array<Topic>> {
+        val hoge= topicsApiService.getTopics().enqueue(object: Callback<Array<Topic>> {
 
             // 通信が失敗したときの処理
             override fun onFailure(call: Call<Array<Topic>>?, t: Throwable?) {
                 // 今回は失敗したときは無視しています。
-                Log.d("test","$t")
+                Log.d(logTag,"通信エラー:$t")
             }
 
             // 通信が成功したときの処理
-            override fun onResponse(call: Call<Array<Topic>>?, response: Response<Array<Topic>>?){
+            override fun onResponse(call: Call<Array<Topic>>?, response: Response<Array<Topic>>) {
 
+                // TODO response 20x以外の処理を追加する
                 //topicsにデータを格納
-                for(topic in response?.body()!!){
+                for(topic in response.body()!!){
                     topics.add(topic)
                 }
-
 
                 //ImageViewに初期画像をセット
                 Picasso.get()
@@ -105,7 +103,6 @@ class TopMenuActivity : AppCompatActivity() {
                     .fit()
                     .centerInside()
                     .into(imageView)
-
 
                 //period秒ごとにImageViewの表示画像を切り替える
                 timer(period = 5000){
@@ -117,8 +114,6 @@ class TopMenuActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-
                 //画像タップされた時の動作
                 imageView.setOnClickListener {
                     Log.d("TAG", position.toString())
@@ -127,46 +122,8 @@ class TopMenuActivity : AppCompatActivity() {
                     intent.data = Uri.parse(topics[position].topic_url)
                     startActivity(intent)
                 }
-
-
-
             }
         })
-
-        //空港案内画面へ遷移
-        val toAirportButton = findViewById<ImageButton>(R.id.airport)
-        toAirportButton.setBackgroundColor(Color.GRAY)
-        toAirportButton.setOnClickListener{
-
-            //startActivity<AirportGuideActivity>()
-        }
-
-        //TODO:AR用の画面イメージ作成とarclear画面への遷移ボタン作成
-        //フライト情報画面へ遷移 --->いったんAR機能への画面遷移としています
-        val toFlightInfoButton = findViewById<ImageButton>(R.id.flight)
-        toFlightInfoButton.setBackgroundColor(Color.GRAY)
-        toFlightInfoButton.setOnClickListener{
-            startActivity(Intent(this, ARCameraActivity::class.java))
-        }
-        //仮のtopmenu画面に存在したARclearへのソース残しています↓
-//        arClear_btn.setOnClickListener {
-//            val intent = Intent(this, ARCameraActivity::class.java)
-//            intent.putExtra(ARCameraActivity.clearFlgKey, true)
-//            startActivity(intent)
-//        }
-
-        //タクシー予約画面へ遷移
-        val toTaxyButton = findViewById<ImageButton>(R.id.taxi)
-        toTaxyButton.setOnClickListener{
-            startActivity(Intent(this, TaxiActivity::class.java))
-        }
-
-        //観光案内画面へ遷移
-        val toSightseeingButton = findViewById<ImageButton>(R.id.sightseeing)
-        toSightseeingButton.setOnClickListener{
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-
     }
 
     //画像切り替えのメソッド

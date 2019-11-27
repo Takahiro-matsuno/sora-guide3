@@ -6,7 +6,7 @@ import android.view.KeyEvent
 import kotlinx.android.synthetic.main.activity_navigation.*
 import android.webkit.*
 import androidx.constraintlayout.widget.Constraints
-import jp.co.jalinfotec.soraguide.Constants
+import jp.co.jalinfotec.soraguide.utils.Constants
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.base.BaseNavigationActivity
 
