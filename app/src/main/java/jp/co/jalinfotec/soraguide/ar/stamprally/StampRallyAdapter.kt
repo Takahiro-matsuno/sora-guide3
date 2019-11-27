@@ -25,8 +25,8 @@ class StampRallyAdapter(
     /**
      * リストの取得
      */
-    fun getBackupData(): String? {
-        return if (dataList.any()) Gson().toJson(dataList) else null
+    fun getList(): ArrayList<StampRallyEntity> {
+        return dataList
     }
 
     /**
@@ -51,15 +51,4 @@ class StampRallyAdapter(
             this.notifyItemChanged(position)
         }
     }
-
-    /**
-     * リストの検索
-
-    fun findById(id: Long): StampRallyEntity? {
-        for (d in dataList) {
-            if (d.id == id) return d
-        }
-        return null
-    }
-    */
 }
