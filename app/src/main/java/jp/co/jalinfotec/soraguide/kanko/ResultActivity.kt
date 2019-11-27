@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import jp.co.jalinfotec.soraguide.kanko.ApiClientManager
 import jp.co.jalinfotec.soraguide.kanko.ResultDialog
 import kotlinx.android.synthetic.main.activity_result.*
 import okhttp3.OkHttpClient
@@ -14,6 +15,9 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+import rx.subscriptions.CompositeSubscription
 import java.util.concurrent.TimeUnit
 
 class ResultActivity : AppCompatActivity(),
@@ -21,6 +25,8 @@ class ResultActivity : AppCompatActivity(),
 
     private val logTag = this::class.java.simpleName
     private val sampleTag = "RESULT_DIALOG"
+
+    private val compositeSubscription = CompositeSubscription()
 
     /**
      * ResultDialogのCallbackMethodを実装
@@ -45,6 +51,70 @@ class ResultActivity : AppCompatActivity(),
         val keyword= intent.getStringExtra("keyword")
         val ken= intent.getStringExtra("ken")
         val tachiyori= intent.getStringExtra("tachiyori")
+
+        //RxJavaで実装
+        compositeSubscription.clear()
+        compositeSubscription.add(
+            ApiClientManager.apiClient.getResponseWithRxJava("jtzY6LZYK8226ibN",keyword,ken,tachiyori,100,"json")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext{
+                    Log.d("RxJavaで呼び出した結果：", "response=$it")
+                    //”検索中”を非表示へ
+                    progress_bar.visibility = android.widget.ProgressBar.GONE
+                    progress_text.visibility = android.widget.ProgressBar.GONE
+
+                    //ResponseAdapterへ渡すデータセットを作成
+                    //TODO:取得データ全ページ分表示させる
+                    //TODO:SwipeRefreshLayoutが使えるかも
+                    val dataset = it[0].SightList?.filterNotNull()
+
+                    if (dataset == null){
+                        val dialog = ResultDialog().newInstance(this@ResultActivity,"検索結果が0件でした。\n条件を変更し、再検索をお願いします。")
+                        dialog.show(supportFragmentManager, sampleTag)
+                    }else {
+                        Toast.makeText(applicationContext,"検索結果は${it[0].TotalResults}件です",Toast.LENGTH_SHORT).show()
+                    }
+
+                    recycler_list.apply() {
+                        //リストの罫線設定
+                        addItemDecoration(
+                            androidx.recyclerview.widget.DividerItemDecoration(
+                                this@ResultActivity,
+                                androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
+                            )
+                        )
+                        //生成したLinearLayoutManagerをセット
+                        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@ResultActivity)
+                        //RecyclerViewの生成したResponseAdapter をセット
+                        adapter = dataset?.let { it1 -> ResponseAdapter(this@ResultActivity, it1) }
+                    }
+                    recycler_list.addOnItemTouchListener(RecyclerClickListener(this@ResultActivity,object :RecyclerClickListener.OnItemClickListener{
+                        override fun onItemClick(view: View, position: Int) {
+                            val intent = Intent(this@ResultActivity,DetailActivity::class.java)
+                            //渡す引数のセット
+                            Log.d("mesh","resultのmeshの値は$dataset[position].Mesh.name")
+                            intent.putExtra("title", dataset?.get(position)?.Title)
+                            intent.putExtra("address",dataset?.get(position)?.Address)
+                            intent.putExtra("time",dataset?.get(position)?.Time)
+                            intent.putExtra("image", dataset?.get(position)?.PhotoList?.get(0)?.URL)
+                            intent.putExtra("price",dataset?.get(position)?.Price)
+                            intent.putExtra("summary",dataset?.get(position)?.Summary)
+                            //                        intent.putExtra("mesh",dataset[position].Mesh.name)
+                            intent.putExtra("latitude",dataset?.get(position)?.Latitude)
+                            intent.putExtra("Longitude",dataset?.get(position)?.Longitude)
+
+                            startActivity(intent)
+                        }
+                    }))
+
+                }
+                .doOnError{
+                }
+                .doOnCompleted{
+                }
+                .subscribe())
+
 
         //retrofit用のパラメータ
         val baseApiUrl = "https://www.j-jti.com/"
@@ -86,58 +156,58 @@ class ResultActivity : AppCompatActivity(),
                 dialog.show(supportFragmentManager, sampleTag)
             }
             override fun onResponse(call: Call<List<ResponseData>>?, response: Response<List<ResponseData>>) {
-                //”検索中”を非表示へ
-                progress_bar.visibility = android.widget.ProgressBar.GONE
-                progress_text.visibility = android.widget.ProgressBar.GONE
-
-                Log.d("TEST","取得せいこう！")
-
-                if (response.isSuccessful){
-                    val res = response?.body()?:return
-                    //ResponseAdapterへ渡すデータセットを作成
-                    //TODO:取得データ全ページ分表示させる
-                    //TODO:SwipeRefreshLayoutが使えるかも
-                    val dataset:List<Sight>? = res[0]?.SightList?.filterNotNull()
-
-                    if (dataset == null){
-                            val dialog = ResultDialog().newInstance(this@ResultActivity,"検索結果が0件でした。\n条件を変更し、再検索をお願いします。")
-                            dialog.show(supportFragmentManager, sampleTag)
-                    }else {
-                        Toast.makeText(applicationContext,"検索結果は${res[0].TotalResults}件です",Toast.LENGTH_SHORT).show()
-                    }
-
-                    recycler_list.apply() {
-                        //リストの罫線設定
-                        addItemDecoration(
-                            androidx.recyclerview.widget.DividerItemDecoration(
-                                this@ResultActivity,
-                                androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
-                            )
-                        )
-                        //生成したLinearLayoutManagerをセット
-                        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@ResultActivity)
-                        //RecyclerViewの生成したResponseAdapter をセット
-                        adapter = dataset?.let { it1 -> ResponseAdapter(this@ResultActivity, it1) }
-                    }
-                    recycler_list.addOnItemTouchListener(RecyclerClickListener(this@ResultActivity,object :RecyclerClickListener.OnItemClickListener{
-                        override fun onItemClick(view: View, position: Int) {
-                            val intent = Intent(this@ResultActivity,DetailActivity::class.java)
-                            //渡す引数のセット
-                            Log.d("mesh","resultのmeshの値は$dataset[position].Mesh.name")
-                            intent.putExtra("title", dataset?.get(position)?.Title)
-                            intent.putExtra("address",dataset?.get(position)?.Address)
-                            intent.putExtra("time",dataset?.get(position)?.Time)
-                            intent.putExtra("image", dataset?.get(position)?.PhotoList?.get(0)?.URL)
-                            intent.putExtra("price",dataset?.get(position)?.Price)
-                            intent.putExtra("summary",dataset?.get(position)?.Summary)
-    //                        intent.putExtra("mesh",dataset[position].Mesh.name)
-                            intent.putExtra("latitude",dataset?.get(position)?.Latitude)
-                            intent.putExtra("Longitude",dataset?.get(position)?.Longitude)
-
-                            startActivity(intent)
-                        }
-                    }))
-                }
+//                //”検索中”を非表示へ
+//                progress_bar.visibility = android.widget.ProgressBar.GONE
+//                progress_text.visibility = android.widget.ProgressBar.GONE
+//
+//                Log.d("TEST","取得せいこう！")
+//
+//                if (response.isSuccessful){
+//                    val res = response?.body()?:return
+//                    //ResponseAdapterへ渡すデータセットを作成
+//                    //TODO:取得データ全ページ分表示させる
+//                    //TODO:SwipeRefreshLayoutが使えるかも
+//                    val dataset:List<Sight>? = res[0]?.SightList?.filterNotNull()
+//
+//                    if (dataset == null){
+//                            val dialog = ResultDialog().newInstance(this@ResultActivity,"検索結果が0件でした。\n条件を変更し、再検索をお願いします。")
+//                            dialog.show(supportFragmentManager, sampleTag)
+//                    }else {
+//                        Toast.makeText(applicationContext,"検索結果は${res[0].TotalResults}件です",Toast.LENGTH_SHORT).show()
+//                    }
+//
+//                    recycler_list.apply() {
+//                        //リストの罫線設定
+//                        addItemDecoration(
+//                            androidx.recyclerview.widget.DividerItemDecoration(
+//                                this@ResultActivity,
+//                                androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
+//                            )
+//                        )
+//                        //生成したLinearLayoutManagerをセット
+//                        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@ResultActivity)
+//                        //RecyclerViewの生成したResponseAdapter をセット
+//                        adapter = dataset?.let { it1 -> ResponseAdapter(this@ResultActivity, it1) }
+//                    }
+//                    recycler_list.addOnItemTouchListener(RecyclerClickListener(this@ResultActivity,object :RecyclerClickListener.OnItemClickListener{
+//                        override fun onItemClick(view: View, position: Int) {
+//                            val intent = Intent(this@ResultActivity,DetailActivity::class.java)
+//                            //渡す引数のセット
+//                            Log.d("mesh","resultのmeshの値は$dataset[position].Mesh.name")
+//                            intent.putExtra("title", dataset?.get(position)?.Title)
+//                            intent.putExtra("address",dataset?.get(position)?.Address)
+//                            intent.putExtra("time",dataset?.get(position)?.Time)
+//                            intent.putExtra("image", dataset?.get(position)?.PhotoList?.get(0)?.URL)
+//                            intent.putExtra("price",dataset?.get(position)?.Price)
+//                            intent.putExtra("summary",dataset?.get(position)?.Summary)
+//    //                        intent.putExtra("mesh",dataset[position].Mesh.name)
+//                            intent.putExtra("latitude",dataset?.get(position)?.Latitude)
+//                            intent.putExtra("Longitude",dataset?.get(position)?.Longitude)
+//
+//                            startActivity(intent)
+//                        }
+//                    }))
+//                }
             }
         })
     }
@@ -149,5 +219,10 @@ class ResultActivity : AppCompatActivity(),
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+    //Activity破棄時に未処理のsubscribeを破棄
+    override fun onDestroy() {
+        compositeSubscription.clear()
+        super.onDestroy()
     }
 }

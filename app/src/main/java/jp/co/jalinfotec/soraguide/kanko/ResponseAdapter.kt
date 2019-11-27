@@ -30,8 +30,8 @@ class ResponseAdapter(private val context: Context,private val dataset:List<Sigh
 //            Glide.with(context).load(preparatePicture).apply(options).into(holder.imageView!!)
         }else{
             //withでimageViewがあるActivityかFragment指定。 loadで画像ダウンロード先指定 intoで表示させるimageviewを指定
-            val picture = "https://www.j-jti.com/Storage/Image/Product/SightImage/S/${response.PhotoList[0].URL}"
-            Glide.with(context).load(picture).apply(options).into(holder.imageView!!)//nullのPhotolistも含まれるためこんな書き方
+//            val picture = "https://www.j-jti.com/Storage/Image/Product/SightImage/S/${response.PhotoList[0].URL}"
+//            Glide.with(context).load(picture).apply(options).into(holder.imageView!!)//nullのPhotolistも含まれるためこんな書き方
         }
         //観光地名、住所をセット
         holder.descriptionText!!.text = response?.Title
