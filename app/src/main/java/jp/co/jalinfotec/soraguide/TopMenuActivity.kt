@@ -80,7 +80,7 @@ class TopMenuActivity : AppCompatActivity() {
 
     private fun loadTopics() {
 
-        val hoge= topicsApiService.getTopics().enqueue(object: Callback<Array<Topic>> {
+        topicsApiService.getTopics().enqueue(object: Callback<Array<Topic>> {
 
             // 通信が失敗したときの処理
             override fun onFailure(call: Call<Array<Topic>>?, t: Throwable?) {
