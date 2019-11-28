@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide.model.kanko
+package jp.co.jalinfotec.soraguide.model.sight
 
 data class Mesh(
     val Code:Int,

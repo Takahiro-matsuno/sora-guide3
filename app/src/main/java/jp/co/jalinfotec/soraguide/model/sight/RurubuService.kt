@@ -1,10 +1,10 @@
-package jp.co.jalinfotec.soraguide.model.kanko
+package jp.co.jalinfotec.soraguide.model.sight
 
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface APIService {
+interface RurubuService {
     @GET("appif/sight")
     fun getResponse(@Query("appid")appid:String?,
               @Query("keywords") keywords: String?,

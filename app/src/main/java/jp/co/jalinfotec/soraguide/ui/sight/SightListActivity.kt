@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import jp.co.jalinfotec.soraguide.model.kanko.APIService
-import jp.co.jalinfotec.soraguide.model.kanko.SightPage
-import jp.co.jalinfotec.soraguide.model.kanko.Sight
+import jp.co.jalinfotec.soraguide.model.sight.RurubuService
+import jp.co.jalinfotec.soraguide.model.sight.SightPage
+import jp.co.jalinfotec.soraguide.model.sight.Sight
 import jp.co.jalinfotec.soraguide.ui.base.RecyclerClickListener
 import kotlinx.android.synthetic.main.activity_sight_list.*
 import okhttp3.OkHttpClient
@@ -63,7 +63,7 @@ class SightListActivity : AppCompatActivity(),
             .build()
 
         //APIエンドポイント生成
-        val api = retrofit.create(APIService::class.java)
+        val api = retrofit.create(RurubuService::class.java)
 
         //TODO:最終的には消す！！ ↓ここはリクエスト結果確認用変数でごわす
         val request = api.getResponse(
