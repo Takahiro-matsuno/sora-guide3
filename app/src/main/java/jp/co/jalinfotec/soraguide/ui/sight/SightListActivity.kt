@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 import jp.co.jalinfotec.soraguide.R
 
 class SightListActivity : AppCompatActivity(),
-    SearchResultDialog.CallbackListener {
+    SearchErrorDialog.CallbackListener {
 
     private val logTag = this::class.java.simpleName
     private val sampleTag = "RESULT_DIALOG"
@@ -86,7 +86,7 @@ class SightListActivity : AppCompatActivity(),
                 Log.d("Test","throwable:$t")
                 Log.d("GETかけたAPI：","$request")
 
-                val dialog = SearchResultDialog().newInstance(this@SightListActivity,"通信エラーです。\n通信環境が良い状態で再検索をお願いします。")
+                val dialog = SearchErrorDialog().newInstance(this@SightListActivity,"通信エラーです。\n通信環境が良い状態で再検索をお願いします。")
                 dialog.show(supportFragmentManager, sampleTag)
             }
             override fun onResponse(call: Call<List<SightPage>>?, response: Response<List<SightPage>>) {
@@ -97,14 +97,14 @@ class SightListActivity : AppCompatActivity(),
                 Log.d("TEST","取得せいこう！")
 
                 if (response.isSuccessful){
-                    val res = response?.body()?:return
+                    val res = response.body()?:return
                     //ResponseAdapterへ渡すデータセットを作成
                     //TODO:取得データ全ページ分表示させる
                     //TODO:SwipeRefreshLayoutが使えるかも
-                    val dataset:List<Sight>? = res[0]?.SightList?.filterNotNull()
+                    val dataset:List<Sight>? = res[0].SightList?.filterNotNull()
 
                     if (dataset == null){
-                            val dialog = SearchResultDialog().newInstance(this@SightListActivity,"検索結果が0件でした。\n条件を変更し、再検索をお願いします。")
+                            val dialog = SearchErrorDialog().newInstance(this@SightListActivity,"検索結果が0件でした。\n条件を変更し、再検索をお願いします。")
                             dialog.show(supportFragmentManager, sampleTag)
                     }else {
                         Toast.makeText(applicationContext,"検索結果は${res[0].TotalResults}件です",Toast.LENGTH_SHORT).show()

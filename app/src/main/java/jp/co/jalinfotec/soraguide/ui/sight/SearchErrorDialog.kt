@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import jp.co.jalinfotec.soraguide.ui.base.BaseCallbackDialog
 
-class SearchResultDialog:BaseCallbackDialog<SearchResultDialog.CallbackListener>() {
+class SearchErrorDialog:BaseCallbackDialog<SearchErrorDialog.CallbackListener>() {
     private val dataKey = "DATA"
     private val default: String = "DEF"
     private lateinit var data: String
@@ -22,8 +22,8 @@ class SearchResultDialog:BaseCallbackDialog<SearchResultDialog.CallbackListener>
     fun newInstance(
         listener: CallbackListener,
         data: String // activityからダイアログに渡したいデータがあればこれ使う
-    ): SearchResultDialog {
-        val dialog = SearchResultDialog()
+    ): SearchErrorDialog {
+        val dialog = SearchErrorDialog()
         dialog.setCallbackListener(listener)
         val args = dialog.arguments ?: Bundle()
         args.putString("DATA", data)

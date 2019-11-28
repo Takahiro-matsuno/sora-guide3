@@ -13,9 +13,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import com.squareup.picasso.Picasso
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity
 import jp.co.jalinfotec.soraguide.model.topics.TopicsService
@@ -48,6 +48,7 @@ class TopMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // https://github.com/android/sunflower/issues/295
         setContentView(R.layout.activity_top_menu)
 
         // 権限リクエスト
@@ -99,11 +100,7 @@ class TopMenuActivity : AppCompatActivity() {
                 }
 
                 //ImageViewに初期画像をセット
-                Picasso.get()
-                    .load(topics[position].topic_image)
-                    .fit()
-                    .centerInside()
-                    .into(imageView)
+                Glide.with(this@TopMenuActivity).load(topics[position].topic_image).into(imageView)
 
                 //period秒ごとにImageViewの表示画像を切り替える
                 timer(period = 5000){
@@ -139,12 +136,7 @@ class TopMenuActivity : AppCompatActivity() {
         }
 
         //ImageViewに画像をセットし直す
-        Picasso.get()
-            .load(topics[position].topic_image)
-            .fit()
-            .centerInside()
-            .into(imageView)
-
+         Glide.with(this).load(topics[position].topic_image).into(imageView)
     }
 
     // アプリの権限リクエスト
