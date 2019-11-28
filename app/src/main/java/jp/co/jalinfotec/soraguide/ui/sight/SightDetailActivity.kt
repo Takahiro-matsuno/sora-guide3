@@ -1,21 +1,20 @@
-package jp.co.jalinfotec.soraguide
+package jp.co.jalinfotec.soraguide.ui.sight
 
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.activity_result.*
+import kotlinx.android.synthetic.main.activity_sight_detail.*
+import jp.co.jalinfotec.soraguide.R
 
-class DetailActivity : AppCompatActivity() {
+class SightDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        setContentView(R.layout.activity_sight_detail)
 /* ---------------------------------------------------------------------- */
 /* 前画面から値受け取り                                                      */
 /* ---------------------------------------------------------------------- */

@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide
+package jp.co.jalinfotec.soraguide.ui.sight
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import jp.co.jalinfotec.soraguide.model.kanko.Sight
+import jp.co.jalinfotec.soraguide.R
 
-class ResponseAdapter(private val context: Context,private val dataset:List<Sight>): RecyclerView.Adapter<ResponseViewHolder>(){
+class SightListAdapter(private val context: Context, private val dataset:List<Sight>): RecyclerView.Adapter<SightViewHolder>(){
     //1行のレイアウトをセット
-    override fun onCreateViewHolder(parent:ViewGroup,viewType: Int): ResponseViewHolder {
-        return ResponseViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.response_row,parent,false))
+    override fun onCreateViewHolder(parent:ViewGroup,viewType: Int): SightViewHolder {
+        return SightViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.viewholder_sight,parent,false))
     }
 
     //リストに表示する行数を返す
@@ -19,9 +21,9 @@ class ResponseAdapter(private val context: Context,private val dataset:List<Sigh
         return dataset.size
     }
 
-    override fun onBindViewHolder(holder: ResponseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SightViewHolder, position: Int) {
         //この行の情報を取得
-        val response:Sight? = dataset[position]
+        val response: Sight? = dataset[position]
         //GlideでImagetoUrlの画像をholder.imageviewにセット
         val options = RequestOptions().centerCrop()
 

@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide
+package jp.co.jalinfotec.soraguide.model.kanko
 
 import retrofit2.Call
 import retrofit2.http.GET
@@ -11,7 +11,7 @@ interface APIService {
               @Query("ken") ken:String?,
               @Query("SOC0") tachiyori:String?,
               @Query("pagecount") pagecount:Int?,
-              @Query("responsetype") respnsetype: String?):Call<List<ResponseData>>
+              @Query("responsetype") respnsetype: String?):Call<List<SightPage>>
 }
 //fun createService():APIService{
 //    val baseApiUrl = "https://www.j-jti.com/"

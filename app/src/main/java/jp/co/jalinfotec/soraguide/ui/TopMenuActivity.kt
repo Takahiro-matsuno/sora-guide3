@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide
+package jp.co.jalinfotec.soraguide.ui
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -16,9 +16,10 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.squareup.picasso.Picasso
-import jp.co.jalinfotec.soraguide.taxi.TaxiActivity
-import jp.co.jalinfotec.soraguide.topMenu.GetTopicsApiService
-import jp.co.jalinfotec.soraguide.topMenu.Topic
+import jp.co.jalinfotec.soraguide.R
+import jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity
+import jp.co.jalinfotec.soraguide.model.topics.TopicsService
+import jp.co.jalinfotec.soraguide.model.topics.Topic
 import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.activity_top_menu.*
 import retrofit2.Call
@@ -41,7 +42,7 @@ class TopMenuActivity : AppCompatActivity() {
 
     //Topicsを格納する変数
     private var topics:MutableList<Topic> = mutableListOf()
-    private lateinit var topicsApiService: GetTopicsApiService
+    private lateinit var topicsService: TopicsService
     private val permissionRequestCode = 1
 
 
@@ -56,7 +57,7 @@ class TopMenuActivity : AppCompatActivity() {
          * 各画面への遷移
          */
         // 観光案内画面へ遷移
-        sightseeing.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
+        sightseeing.setOnClickListener { startActivity(Intent(this, SightSearchActivity::class.java)) }
         // タクシー予約画面へ遷移
         taxi.setOnClickListener { startActivity(Intent(this, TaxiActivity::class.java)) }
 
@@ -74,13 +75,13 @@ class TopMenuActivity : AppCompatActivity() {
             .baseUrl(Constants.topicsUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        topicsApiService = retrofit.create(GetTopicsApiService::class.java)
+        topicsService = retrofit.create(TopicsService::class.java)
         loadTopics()
     }
 
     private fun loadTopics() {
 
-        topicsApiService.getTopics().enqueue(object: Callback<Array<Topic>> {
+        topicsService.getTopics().enqueue(object: Callback<Array<Topic>> {
 
             // 通信が失敗したときの処理
             override fun onFailure(call: Call<Array<Topic>>?, t: Throwable?) {

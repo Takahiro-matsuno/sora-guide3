@@ -41,22 +41,22 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning"
     >
-        <activity android:name=".ar.ARCameraActivity"
+        <activity android:name="jp.co.jalinfotec.soraguide.ui.ar.ARCameraActivity"
                   android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         >
         </activity>
-        <activity android:name=".TopMenuActivity">
+        <activity android:name=".ui.TopMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".taxi.TaxiActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".ui.TaxiActivity" android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".DetailActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ResultActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="jp.co.jalinfotec.soraguide.ui.sight.SightDetailActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="jp.co.jalinfotec.soraguide.ui.sight.SightListActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity" android:theme="@style/AppTheme.NoActionBar" />
 
         <!--AdMobアプリIDの設定-->
         <!-- AdMob App ID: ca-app-pub-2003234893806822~5059310598 -->

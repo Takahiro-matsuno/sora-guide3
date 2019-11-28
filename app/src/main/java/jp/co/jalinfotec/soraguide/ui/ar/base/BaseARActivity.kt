@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide.ar.base
+package jp.co.jalinfotec.soraguide.ui.ar.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

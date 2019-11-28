@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide.topMenu
+package jp.co.jalinfotec.soraguide.model.topics
 
 import com.google.gson.annotations.SerializedName
 

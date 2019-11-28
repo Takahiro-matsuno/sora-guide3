@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide.base
+package jp.co.jalinfotec.soraguide.ui.base
 
 import android.app.Activity
 import android.content.Context

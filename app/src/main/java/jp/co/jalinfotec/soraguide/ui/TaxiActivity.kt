@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide.taxi
+package jp.co.jalinfotec.soraguide.ui
 
 import android.os.Build
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.webkit.*
 import androidx.constraintlayout.widget.Constraints
 import jp.co.jalinfotec.soraguide.utils.Constants
 import jp.co.jalinfotec.soraguide.R
-import jp.co.jalinfotec.soraguide.base.BaseNavigationActivity
+import jp.co.jalinfotec.soraguide.ui.base.BaseNavigationActivity
 
 class TaxiActivity :
     BaseNavigationActivity()

@@ -1,11 +1,4 @@
-package jp.co.jalinfotec.soraguide
-
-data class ResponseData(
-    val PageNo: Int?,
-    val SightList: List<Sight>?,
-    val TotalPages: Int?,
-    val TotalResults: Int?
-)
+package jp.co.jalinfotec.soraguide.model.kanko
 
 data class Sight(
     val Address: String,
@@ -40,14 +33,4 @@ data class Sight(
 //    val Traffic1: String,
 //    val Traffic2: String,
 //    val Tresure: String
-)
-
-data class Photo(
-    val Order: Int,
-    val URL: String
-)
-
-data class Mesh(
-    val Code:Int,
-    val name:String
 )

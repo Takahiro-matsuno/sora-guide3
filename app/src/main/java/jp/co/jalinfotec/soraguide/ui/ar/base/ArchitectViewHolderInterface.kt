@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide.ar.base
+package jp.co.jalinfotec.soraguide.ui.ar.base
 
 interface ArchitectViewHolderInterface {
 

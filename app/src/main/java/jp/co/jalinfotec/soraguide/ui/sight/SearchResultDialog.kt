@@ -1,12 +1,12 @@
-package jp.co.jalinfotec.soraguide.kanko
+package jp.co.jalinfotec.soraguide.ui.sight
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.Toast
-import jp.co.jalinfotec.soraguide.base.BaseCallbackDialog
+import jp.co.jalinfotec.soraguide.ui.base.BaseCallbackDialog
 
-class ResultDialog:BaseCallbackDialog<ResultDialog.CallbackListener>() {
+class SearchResultDialog:BaseCallbackDialog<SearchResultDialog.CallbackListener>() {
     private val dataKey = "DATA"
     private val default: String = "DEF"
     private lateinit var data: String
@@ -22,8 +22,8 @@ class ResultDialog:BaseCallbackDialog<ResultDialog.CallbackListener>() {
     fun newInstance(
         listener: CallbackListener,
         data: String // activityからダイアログに渡したいデータがあればこれ使う
-    ): ResultDialog {
-        val dialog = ResultDialog()
+    ): SearchResultDialog {
+        val dialog = SearchResultDialog()
         dialog.setCallbackListener(listener)
         val args = dialog.arguments ?: Bundle()
         args.putString("DATA", data)

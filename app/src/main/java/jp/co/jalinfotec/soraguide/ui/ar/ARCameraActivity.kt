@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide.ar
+package jp.co.jalinfotec.soraguide.ui.ar
 
 import android.content.Context
 import android.hardware.SensorManager
@@ -10,9 +10,9 @@ import android.widget.Toast
 import com.wikitude.architect.ArchitectStartupConfiguration
 import com.wikitude.architect.ArchitectView
 import jp.co.jalinfotec.soraguide.utils.Constants
-import jp.co.jalinfotec.soraguide.ar.base.ArchitectViewHolderInterface
-import jp.co.jalinfotec.soraguide.ar.base.BaseARActivity
-import jp.co.jalinfotec.soraguide.ar.base.LocationProvider
+import jp.co.jalinfotec.soraguide.ui.ar.base.ArchitectViewHolderInterface
+import jp.co.jalinfotec.soraguide.ui.ar.base.BaseARActivity
+import jp.co.jalinfotec.soraguide.ui.ar.base.LocationProvider
 import kotlinx.android.synthetic.main.activity_ar.*
 import java.io.IOException
 

@@ -1,4 +1,4 @@
-package jp.co.jalinfotec.soraguide.base
+package jp.co.jalinfotec.soraguide.ui.base
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,11 +7,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
-import jp.co.jalinfotec.soraguide.MainActivity
 import jp.co.jalinfotec.soraguide.R
-import jp.co.jalinfotec.soraguide.TopMenuActivity
-import jp.co.jalinfotec.soraguide.ar.ARCameraActivity
-import jp.co.jalinfotec.soraguide.taxi.TaxiActivity
+import jp.co.jalinfotec.soraguide.ui.TopMenuActivity
+import jp.co.jalinfotec.soraguide.ui.ar.ARCameraActivity
+import jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity
+import jp.co.jalinfotec.soraguide.ui.TaxiActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 
 /**
@@ -63,7 +63,7 @@ abstract class BaseNavigationActivity:
                 finish()
             }
             R.id.nav_tourism -> {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, SightSearchActivity::class.java))
                 finish()
             }
             R.id.nav_taxi -> {

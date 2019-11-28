@@ -1,6 +1,5 @@
-package jp.co.jalinfotec.soraguide
+package jp.co.jalinfotec.soraguide.ui.sight
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,10 +9,10 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import com.squareup.leakcanary.LeakCanary
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_sigth_search.*
+import jp.co.jalinfotec.soraguide.R
 
-class MainActivity : AppCompatActivity() {
+class SightSearchActivity : AppCompatActivity() {
 /* ---------------------------------------------------------------------- */
 /* 事前定義(プルダウンの部品など                                            */
 /* ---------------------------------------------------------------------- */
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 //        LeakCanary.install(Application())//メモリリーク調査用
 
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_sigth_search)
         setSupportActionBar(toolbar)
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
@@ -45,10 +44,10 @@ class MainActivity : AppCompatActivity() {
 
         spiner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        spinner_area?.adapter = spiner_adapter
+        spinner_area.adapter = spiner_adapter
         var ken = ""
 
-        spinner_area?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinner_area.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val spinnerParent = parent as Spinner
                 val item = spinnerParent.selectedItem as String
@@ -108,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                 "所要90分以上"       -> {tachiyori = "3"}
             }
 
-            val intent = Intent(this@MainActivity,ResultActivity::class.java)
+            val intent = Intent(this@SightSearchActivity,SightListActivity::class.java)
             intent.putExtra("keyword",keyword)
             intent.putExtra("ken",ken)
             intent.putExtra("tachiyori",tachiyori)
