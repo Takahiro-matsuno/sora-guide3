@@ -26,7 +26,7 @@ class StampRallyRepository(context: Context) {
                 StampRallyEntity.Marker(2, 1.0, 1.0, 1.0, "stamp_blue.png", false),
                 StampRallyEntity.Marker(3, 1.0, 1.0, 1.0, "stamp_green.png", true))
         ))
-        list.add(StampRallyEntity(4, "ばーを探せ！！！", Date() , Date(), true,  false,"assets/qr.png",
+        list.add(StampRallyEntity(4, "LONGLONGLONGLONGばーを探せ！！！", Date() , Date(), true,  false,"assets/qr.png",
             listOf(
                 StampRallyEntity.Marker(1, 1.0, 1.0, 1.0, "stamp_red.png", true),
                 StampRallyEntity.Marker(2, 1.0, 1.0, 1.0, "stamp_blue.png", true),

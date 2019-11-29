@@ -42,13 +42,14 @@ class StampRallyAdapter(
         this@StampRallyAdapter.notifyItemRangeInserted(pos, range)
     }
 
-    //使用済みにする
+    // クーポンを使用済みにする
     fun setUsed(entity :StampRallyEntity){
-        var position = dataList.indexOf(entity)
-        //使用済み
-        if (position !== -1 ){
+        val position = dataList.indexOf(entity)
+        //dataListに対象のentityが含まれている場合
+        if (position != -1 ){
             entity.isCouponUsed = true
             this.notifyItemChanged(position)
         }
     }
+
 }

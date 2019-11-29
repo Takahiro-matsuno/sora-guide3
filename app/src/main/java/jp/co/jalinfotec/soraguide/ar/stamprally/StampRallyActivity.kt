@@ -21,12 +21,8 @@ import kotlinx.android.synthetic.main.activity_stamprally.*
 class StampRallyActivity :
     BaseNavigationActivity(),
     StampRallyViewHolder.CallbackListener,
-    StampDialog.CallbackListener
+    CouponDialog.CallbackListener
 {
-
-    override fun useCoupon(entity :StampRallyEntity) {
-        stampRallyAdapter.setUsed(entity)
-    }
 
     private val logTag = this::class.java.simpleName
     private lateinit var stampRallyRepository: StampRallyRepository
@@ -34,7 +30,7 @@ class StampRallyActivity :
     private val requestPermStampRally = 1
     private var currentEntity: StampRallyEntity? = null
     private val stampRallyBackupKey = "STAMP_RALLY_BACK_UP"
-    private val stampTag = "DIALOG"
+    private val couponTag = "COUPON_DIALOG"
 
     // toolbarタイトル設定
     override fun setToolbarTitle() {
@@ -128,14 +124,18 @@ class StampRallyActivity :
 
     // クーポン確認タップ時
     override fun couponTapped(data: StampRallyEntity?) {
-        //val data = stampRallyAdapter.findById(id)
         if (data != null) {
-            Log.d(logTag, "クーポンタップ:${data.stampRallyName}")
-            // ダイアログのフラグメントのインスタンスを取得
-            val dialogFragment: StampDialog = StampDialog().newInstance(this, data)
-            dialogFragment.show(supportFragmentManager, stampTag)
+            // CouponDialogのインスタンスを取得
+            val dialogFragment: CouponDialog = CouponDialog().newInstance(this, data)
+            dialogFragment.show(supportFragmentManager, couponTag)
         }
     }
+
+    //クーポンを使用済みに設定する
+    override fun useCoupon(entity :StampRallyEntity) {
+        stampRallyAdapter.setUsed(entity)
+    }
+
     // AR画面に遷移
     private fun startArContents() {
         if (currentEntity != null) {
@@ -144,4 +144,5 @@ class StampRallyActivity :
             startActivity(intent)
         }
     }
+
 }

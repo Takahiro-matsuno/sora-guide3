@@ -22,12 +22,8 @@
     <string name="overview_colume">概要</string>
 
     <!-- クーポンダイアログ用 -->
-    <string name="coupon_str">〇×クーポン</string>
-    <string name="coupon_identifier">クーポンを確認</string>
-    <string name="qr_str">QRコード</string>
-    <string name="qr_guide">QRコードを確認</string>
-    <string name="qr_limit">有効期限 hoge/hoge/</string>
     <string name ="coupon_use_button">クーポンを使用する</string>
+    <string name ="limitStr">有効期限:</string>
 
 
 
