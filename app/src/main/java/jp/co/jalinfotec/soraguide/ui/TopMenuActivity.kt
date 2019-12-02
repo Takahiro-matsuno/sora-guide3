@@ -2,7 +2,6 @@ package jp.co.jalinfotec.soraguide.ui
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -11,8 +10,6 @@ import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -20,6 +17,7 @@ import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity
 import jp.co.jalinfotec.soraguide.model.topics.TopicsService
 import jp.co.jalinfotec.soraguide.model.topics.Topic
+import jp.co.jalinfotec.soraguide.ui.ar.stamprally.StampRallyActivity
 import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.activity_top_menu.*
 import retrofit2.Call
@@ -51,9 +49,6 @@ class TopMenuActivity : AppCompatActivity() {
         // https://github.com/android/sunflower/issues/295
         setContentView(R.layout.activity_top_menu)
 
-        // 権限リクエスト
-        requestPermission()
-
         /**
          * 各画面への遷移
          */
@@ -63,9 +58,8 @@ class TopMenuActivity : AppCompatActivity() {
         taxi.setOnClickListener { startActivity(Intent(this, TaxiActivity::class.java)) }
 
         // TODO 施設案内機能実装後、変更する
-        // airport.setOnClickListener { startActivity<AirportGuideActivity>() }
+        airport.setOnClickListener { startActivity(Intent(this, StampRallyActivity::class.java)) }
         // flight.setOnClickListener { startActivity(Intent(this, ARCameraActivity::class.java)) }
-        airport.setBackgroundColor(Color.GRAY)
         flight.setBackgroundColor(Color.GRAY)
 
         // Admobの設定
@@ -137,28 +131,6 @@ class TopMenuActivity : AppCompatActivity() {
 
         //ImageViewに画像をセットし直す
          Glide.with(this).load(topics[position].topic_image).into(imageView)
-    }
-
-    // アプリの権限リクエスト
-    private fun requestPermission () {
-        val permList = ArrayList<String>()
-        // Here, thisActivity is the current activity
-        for (permission in Constants.permissionMap) {
-            // 許可がない場合
-            if (ContextCompat.checkSelfPermission(this, permission.key) != PackageManager.PERMISSION_GRANTED) {
-                permList.add(permission.key)
-                /*
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission.key)) {
-                    // リクエスト済みではない場合
-                }
-                */
-
-            }
-        }
-        // 許可されていない権限をリクエスト
-        if (permList.any()) {
-            ActivityCompat.requestPermissions(this, permList.toTypedArray(), permissionRequestCode)
-        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,

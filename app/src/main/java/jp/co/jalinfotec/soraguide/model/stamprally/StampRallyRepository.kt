@@ -11,7 +11,7 @@ class StampRallyRepository(context: Context) {
         val list = ArrayList<StampRallyEntity>()
         list.add(
             StampRallyEntity(
-                1, "ほげほげを探せ！！！", Date(), Date(), false, false, "assets/qr.png",
+                1, "ほげほげを探せ！！！", Date(), Date(), false, false, "wikitude/stamp-rally/assets/qr.png",
                 listOf(
                     StampRallyEntity.Marker(
                         1,
@@ -42,7 +42,7 @@ class StampRallyRepository(context: Context) {
         )
         list.add(
             StampRallyEntity(
-                2, "ぴよぴよを探せ！！！", Date(), Date(), false, false, "assets/qr.png",
+                2, "ぴよぴよを探せ！！！", Date(), Date(), false, false, "wikitude/stamp-rally/assets/qr.png",
                 listOf(
                     StampRallyEntity.Marker(
                         1,
@@ -73,7 +73,7 @@ class StampRallyRepository(context: Context) {
         )
         list.add(
             StampRallyEntity(
-                3, "ふーを探せ！！！", Date(), Date(), false, false, "assets/qr.png",
+                3, "ふーを探せ！！！", Date(), Date(), false, false, "wikitude/stamp-rally/assets/qr.png",
                 listOf(
                     StampRallyEntity.Marker(
                         1,
@@ -104,7 +104,7 @@ class StampRallyRepository(context: Context) {
         )
         list.add(
             StampRallyEntity(
-                4, "ばーを探せ！！！", Date(), Date(), true, false, "assets/qr.png",
+                4, "ばーを探せ！！！", Date(), Date(), true, false, "wikitude/stamp-rally/assets/qr.png",
                 listOf(
                     StampRallyEntity.Marker(
                         1,

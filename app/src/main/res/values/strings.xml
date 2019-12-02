@@ -13,14 +13,17 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!-- kanko -->
+    <!-- sight -->
     <string name="title_activity_maps">Map</string>
     <string name="kankouti_colume">観光地名</string>
     <string name="address_colume">住所</string>
     <string name="open_end_colume">営業時間</string>
     <string name="price_colume">料金情報</string>
     <string name="overview_colume">概要</string>
-
+    <!-- stamp rally -->
+    <string name="stamprally_achieve">達成度:%1$d/%2$d</string>
+    <string name="coupon_btn_used">クーポン使用済み</string>
+    <string name="coupon_btn_not_used">クーポンを確認する</string>
     <!-- クーポンダイアログ用 -->
     <string name ="coupon_use_button">クーポンを使用する</string>
     <string name ="limitStr">有効期限:%1$s~%2$s</string>

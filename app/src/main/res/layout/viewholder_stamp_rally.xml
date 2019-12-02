@@ -44,8 +44,8 @@
             android:id="@+id/coupon_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="クーポンを確認する"
             android:layout_weight="3"
             android:backgroundTint="@color/colorAccent"
+            tools:text="@string/coupon_btn_not_used"
     />
 </LinearLayout>

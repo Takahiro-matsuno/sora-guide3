@@ -2,6 +2,8 @@ package jp.co.jalinfotec.soraguide.utils
 
 import android.Manifest
 import jp.co.jalinfotec.soraguide.BuildConfig
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Constants {
 
@@ -14,6 +16,7 @@ object Constants {
         Pair(Manifest.permission.ACCESS_COARSE_LOCATION, "位置情報"),
         Pair(Manifest.permission.WRITE_EXTERNAL_STORAGE, "ストレージ")
     )
+    val df = SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN)
 
     /**
      * トップメニュー

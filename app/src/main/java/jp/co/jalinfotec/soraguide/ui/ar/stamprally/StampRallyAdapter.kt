@@ -1,17 +1,19 @@
 package jp.co.jalinfotec.soraguide.ui.ar.stamprally
 
+import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
 
 class StampRallyAdapter(
+    private val context: Context,
     private val listener: StampRallyViewHolder.CallbackListener
 ): RecyclerView.Adapter<StampRallyViewHolder>()
 {
     private var dataList = ArrayList<StampRallyEntity>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StampRallyViewHolder {
-        return StampRallyViewHolder(parent).newInstance(parent, listener)
+        return StampRallyViewHolder(parent).newInstance(context, parent, listener)
     }
 
     override fun getItemCount(): Int {

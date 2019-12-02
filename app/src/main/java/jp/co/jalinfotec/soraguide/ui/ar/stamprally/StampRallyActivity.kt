@@ -53,7 +53,7 @@ class StampRallyActivity :
 
         // 初期化
         stampRallyRepository = StampRallyRepository(this)
-        stampRallyAdapter = StampRallyAdapter(this)
+        stampRallyAdapter = StampRallyAdapter(this, this)
 
         // RecyclerViewにアダプターを設定
         stamp_rally_list.adapter = stampRallyAdapter
@@ -68,7 +68,6 @@ class StampRallyActivity :
             if (backupData == null) {
                 getStampRallyData()
             } else {
-                Log.d(logTag, "バックアップ復元")
                 @Suppress("UNCHECKED_CAST")
                 stampRallyAdapter.appendMembers(backupData as ArrayList<StampRallyEntity>)
             }
@@ -144,5 +143,4 @@ class StampRallyActivity :
             startActivity(intent)
         }
     }
-
 }
