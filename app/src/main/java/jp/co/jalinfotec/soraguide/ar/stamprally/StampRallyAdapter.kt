@@ -51,5 +51,4 @@ class StampRallyAdapter(
             this.notifyItemChanged(position)
         }
     }
-
 }

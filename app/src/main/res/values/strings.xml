@@ -23,7 +23,7 @@
 
     <!-- クーポンダイアログ用 -->
     <string name ="coupon_use_button">クーポンを使用する</string>
-    <string name ="limitStr">有効期限:</string>
+    <string name ="limitStr">有効期限:%1$s~%2$s</string>
 
 
 

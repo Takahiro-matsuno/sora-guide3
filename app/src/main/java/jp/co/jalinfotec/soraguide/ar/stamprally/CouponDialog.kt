@@ -11,17 +11,14 @@ import android.widget.Toast
 import java.lang.Exception
 import java.text.SimpleDateFormat
 
-
 class CouponDialog : BaseCallbackDialog<CouponDialog.CallbackListener>() {
 
     private val dataKey = "ENTITY"
-    private val default: String = "DEF"
     private lateinit var entity: StampRallyEntity
 
     /**
      * 呼び出し元(Activity, Fragment)で実装するCallbackMethodを定義
      */
-
     interface CallbackListener {
         fun useCoupon(entity :StampRallyEntity)
     }
@@ -81,7 +78,8 @@ class CouponDialog : BaseCallbackDialog<CouponDialog.CallbackListener>() {
 
         //クーポンの有効期限をViewに設定
         val dateFormat = SimpleDateFormat("yyyy/MM/dd")
-        cpn_expiry_date.text = "${resources.getString(R.string.limitStr) }${dateFormat.format(entity.startDate)}～${dateFormat.format(entity.endDate)}"
+        cpn_expiry_date.text = resources.getString(R.string.limitStr, dateFormat.format(entity.startDate), dateFormat.format(entity.endDate))
+
 
         //"クーポンを使用する"ボタンタップ処理
         cpn_use_btn.setOnClickListener(){

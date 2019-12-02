@@ -16,8 +16,6 @@ import jp.co.jalinfotec.soraguide.base.BaseNavigationActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.activity_stamprally.*
 
-// TODO クーポン確認タップ時にQR表示ダイアログを表示
-// TODO 起動時に操作説明ダイアログを表示
 class StampRallyActivity :
     BaseNavigationActivity(),
     StampRallyViewHolder.CallbackListener,
