@@ -1,0 +1,137 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+>
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="35dp"
+            android:text="高松空港へようこそ!!"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+        <TextView
+            android:id="@+id/textView_Explanation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="こちらの画面では\n四国周辺の観光地を検索出来ます"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/textView_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/textView_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="296dp"
+            android:text="検索エリア"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_Explanation"
+            android:textAllCaps="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/frame_style"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_area"
+        />
+
+        <TextView
+            android:id="@+id/textView_keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:paddingStart="20dp"
+            android:layout_marginTop="15dp"
+            android:textAllCaps="true"
+            android:text="検索キーワード"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_area"/>
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/frame_style"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_keyword" />
+
+        <TextView
+            android:id="@+id/textView_sonohoka"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:layout_marginTop="15dp"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            android:layout_gravity="left"
+            android:text="その他詳細検索条件"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text" />
+
+        <TextView
+            android:id="@+id/textView_fortachiyori"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:paddingStart="20dp"
+            android:textAllCaps="true"
+            android:text="立ち寄り時間"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_sonohoka"/>
+
+        <Spinner
+            android:id="@+id/spinner_tachiyori"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/frame_style"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_fortachiyori"/>
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="検索"
+            android:textSize="18sp"
+            android:background="@drawable/frame_style4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_tachiyori"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

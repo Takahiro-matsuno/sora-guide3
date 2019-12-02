@@ -13,24 +13,11 @@
     <!--<uses-permission android:name="android.permission.ACCESS_GPS"/>-->
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-feature
-            android:name="android.hardware.camera"
-            android:required="true"/>
-    <uses-feature
-            android:name="android.hardware.location"
-            android:required="true"/>
-    <uses-feature
-            android:name="android.hardware.sensor.accelerometer"
-            android:required="true"/>
-    <uses-feature
-            android:name="android.hardware.sensor.compass"
-            android:required="true"/>
-    <uses-feature
-            android:glEsVersion="0x00020000"
-            android:required="true"/>
-
-    <!-- アプリ権限 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-feature android:name="android.hardware.location" android:required="true"/>
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true"/>
+    <uses-feature android:name="android.hardware.sensor.compass" android:required="true"/>
+    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
 
     <application
             android:allowBackup="true"
@@ -42,21 +29,27 @@
             tools:ignore="GoogleAppIndexingWarning"
     >
         <!-- TOP -->
-        <activity android:name=".TopMenuActivity">
+        <activity android:name=".ui.TopMenuActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <!-- 観光案内 -->
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ResultActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".DetailActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.sight.SightDetailActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.sight.SightListActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.sight.SightSearchActivity" android:theme="@style/AppTheme.NoActionBar" />
         <!-- タクシー -->
-        <activity android:name=".taxi.TaxiActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.TaxiActivity" android:theme="@style/AppTheme.NoActionBar" />
         <!-- AR -->
-        <activity android:name=".ar.stamprally.StampRallyActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ar.ARCameraActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.ar.stamprally.StampRallyActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.ar.ARCameraActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <!--AdMobアプリIDの設定-->
+        <!-- AdMob App ID: ca-app-pub-2003234893806822~5059310598 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2003234893806822~5059310598"/>
     </application>
 </manifest>
 
