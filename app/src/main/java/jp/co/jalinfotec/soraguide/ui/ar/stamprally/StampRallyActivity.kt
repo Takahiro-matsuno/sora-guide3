@@ -132,7 +132,7 @@ class StampRallyActivity :
 
     //クーポンを使用済みに設定する
     override fun useCoupon(entity : StampRallyEntity) {
-        stampRallyAdapter.setUsed(entity)
+        stampRallyAdapter.usedCoupon(entity)
     }
 
     // AR画面に遷移

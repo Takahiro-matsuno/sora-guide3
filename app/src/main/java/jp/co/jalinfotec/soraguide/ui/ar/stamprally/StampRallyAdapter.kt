@@ -45,7 +45,7 @@ class StampRallyAdapter(
     }
 
     // クーポンを使用済みにする
-    fun setUsed(entity : StampRallyEntity){
+    fun usedCoupon(entity : StampRallyEntity){
         val position = dataList.indexOf(entity)
         //dataListに対象のentityが含まれている場合
         if (position != -1 ){
