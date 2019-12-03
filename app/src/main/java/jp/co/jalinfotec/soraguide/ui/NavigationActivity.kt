@@ -2,6 +2,7 @@ package jp.co.jalinfotec.soraguide.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -11,6 +12,7 @@ import jp.co.jalinfotec.soraguide.ui.ar.stamprally.StampRallyFragment
 import jp.co.jalinfotec.soraguide.ui.sight.SightFragment
 import jp.co.jalinfotec.soraguide.ui.taxi.TaxiFragment
 import kotlinx.android.synthetic.main.activity_navigation.*
+import kotlinx.android.synthetic.main.fragment_taxi.*
 
 class NavigationActivity:
     AppCompatActivity(),
@@ -73,6 +75,18 @@ class NavigationActivity:
         return true
     }
 
+    // Android標準ボタンの制御
+    /* TaxiFragment <--> NavigationActivityの相互作用になるため廃止
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (mNavigationType == NavigationType.TAXI && keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            // Taxi画面の場合はWebViewに戻り先の画面がある場合は
+        } else {
+            // 通常のキーイベント
+            return super.onKeyDown(keyCode, event)
+        }
+    }
+     */
+
     // メインコンテンツの切り替え
     private fun changeMainContent(navigationType: NavigationType) {
         mNavigationType = navigationType
@@ -99,4 +113,5 @@ class NavigationActivity:
         }
         aftFragment?.let { f -> supportFragmentManager.beginTransaction().replace(R.id.main_content, f).commit() }
     }
+
 }
