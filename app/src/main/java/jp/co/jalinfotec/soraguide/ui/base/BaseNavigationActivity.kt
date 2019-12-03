@@ -41,7 +41,6 @@ abstract class BaseNavigationActivity:
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         navigationView.setNavigationItemSelectedListener(this)
     }
 
@@ -62,7 +61,7 @@ abstract class BaseNavigationActivity:
                 //startActivity(Intent(this, Activity::class.java))
                 finish()
             }
-            R.id.nav_tourism -> {
+            R.id.sight -> {
                 startActivity(Intent(this, SightSearchActivity::class.java))
                 finish()
             }

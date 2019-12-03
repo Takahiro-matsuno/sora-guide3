@@ -14,10 +14,8 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import jp.co.jalinfotec.soraguide.R
-import jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity
 import jp.co.jalinfotec.soraguide.model.topics.TopicsService
 import jp.co.jalinfotec.soraguide.model.topics.Topic
-import jp.co.jalinfotec.soraguide.ui.ar.stamprally.StampRallyActivity
 import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.activity_top_menu.*
 import retrofit2.Call
@@ -27,8 +25,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.concurrent.timer
 
-class TopMenuActivity : AppCompatActivity() {
-
+class TopMenuActivity :
+    AppCompatActivity()
+{
     private val logTag = this::class.java.simpleName
 
     //画像スライドショー初期設定
@@ -53,16 +52,18 @@ class TopMenuActivity : AppCompatActivity() {
          * 各画面への遷移
          */
         // 観光案内画面へ遷移
-        sightseeing.setOnClickListener { startActivity(Intent(this, SightSearchActivity::class.java)) }
+        sightseeing.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.SIGHT) }
         // タクシー予約画面へ遷移
-        taxi.setOnClickListener { startActivity(Intent(this, TaxiActivity::class.java)) }
+        taxi.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.TAXI) }
 
         // TODO 施設案内機能実装後、変更する
-        airport.setOnClickListener { startActivity(Intent(this, StampRallyActivity::class.java)) }
-        // flight.setOnClickListener { startActivity(Intent(this, ARCameraActivity::class.java)) }
+        airport.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.STAMP_RALLY) }
+        // flight.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.FLIGHT) }
         flight.setBackgroundColor(Color.GRAY)
 
-        // Admobの設定
+        /**
+         * Admobの設定
+         */
         MobileAds.initialize(this, "ca-app-pub-2003234893806822~5059310598")
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
@@ -72,6 +73,13 @@ class TopMenuActivity : AppCompatActivity() {
             .build()
         topicsService = retrofit.create(TopicsService::class.java)
         loadTopics()
+    }
+
+    // NavigationActivityへの遷移
+    private fun intentNavigationActivity(navigationType: NavigationActivity.NavigationType) {
+        val intent = Intent(this, NavigationActivity::class.java)
+        intent.putExtra(NavigationActivity.NAVIGATION_KEY, navigationType)
+        startActivity(intent)
     }
 
     private fun loadTopics() {

@@ -4,7 +4,7 @@
     <string name="top_menu">ホーム</string>
     <string name="airport_navigation">空港案内</string>
     <string name="flight_info">フライト情報</string>
-    <string name="tourist_info">観光案内</string>
+    <string name="sight_info">観光案内</string>
     <string name="taxi_reservation">タクシー予約</string>
     <string name="stamp_rally">スタンプラリー</string>
 
@@ -25,9 +25,8 @@
     <string name="coupon_btn_used">クーポン使用済み</string>
     <string name="coupon_btn_not_used">クーポンを確認する</string>
     <!-- クーポンダイアログ用 -->
-    <string name ="coupon_use_button">クーポンを使用する</string>
-    <string name ="limitStr">有効期限:%1$s~%2$s</string>
-
+    <string name="coupon_use_button">クーポンを使用する</string>
+    <string name="limitStr">有効期限:%1$s~%2$s</string>
 
 
 </resources>
