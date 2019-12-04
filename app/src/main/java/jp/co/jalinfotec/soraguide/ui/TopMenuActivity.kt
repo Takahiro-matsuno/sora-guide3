@@ -16,6 +16,7 @@ import com.google.android.gms.ads.MobileAds
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.topics.TopicsService
 import jp.co.jalinfotec.soraguide.model.topics.Topic
+import jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity
 import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.activity_top_menu.*
 import retrofit2.Call
@@ -52,7 +53,8 @@ class TopMenuActivity :
          * 各画面への遷移
          */
         // 観光案内画面へ遷移
-        sightseeing.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.SIGHT) }
+        sightseeing.setOnClickListener { startActivity(Intent(this, SightSearchActivity::class.java)) }
+//        sightseeing.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.SIGHT) }
         // タクシー予約画面へ遷移
         taxi.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.TAXI) }
 

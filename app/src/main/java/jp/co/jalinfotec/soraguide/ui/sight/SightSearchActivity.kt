@@ -1,131 +1,145 @@
 package jp.co.jalinfotec.soraguide.ui.sight
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+
 import kotlinx.android.synthetic.main.activity_sigth_search.*
 import jp.co.jalinfotec.soraguide.R
+import jp.co.jalinfotec.soraguide.model.sight.RurubuService
+import jp.co.jalinfotec.soraguide.model.sight.SightPage
+import jp.co.jalinfotec.soraguide.ui.base.RecyclerClickListener
+import jp.co.jalinfotec.soraguide.utils.Constants
+import kotlinx.android.synthetic.main.fragment_sight.*
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
-class SightSearchActivity : AppCompatActivity() {
-/* ---------------------------------------------------------------------- */
-/* 事前定義(プルダウンの部品など                                            */
-/* ---------------------------------------------------------------------- */
-    private val spinnerKen = arrayOf(
-     " ","徳島県","香川県","愛媛県","高知県"
-    )
-    private val spinnerTachiyori = arrayOf(
-        "指定なし", "所要30分程度", "所要30～60分くらい", "所要60～90分くらい", "所要90分以上"
-    )
-/* ---------------------------------------------------------------------- */
-/* Lifecycle                                                              */
-/* ---------------------------------------------------------------------- */
+
+class SightSearchActivity : AppCompatActivity(),SightSearchDialog.CallbackListener,SearchErrorDialog.CallbackListener {
+    private lateinit var adapter: SightListAdapter
+    private lateinit var rurubuService: RurubuService
+    private var isSearching = false
+    private val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging).readTimeout(30,
+        TimeUnit.SECONDS).connectTimeout(10,TimeUnit.SECONDS)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        LeakCanary.install(Application())//メモリリーク調査用
-
         setContentView(R.layout.activity_sigth_search)
-        setSupportActionBar(toolbar)
-        supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setHomeButtonEnabled(true)
-        } ?: IllegalAccessException("Toolbar cannot be null")
 
-        //県選択用プルダウン部分の部品
-        val spiner_adapter = ArrayAdapter(
-            applicationContext,
-            android.R.layout.simple_spinner_item,
-            spinnerKen)
+        //toolbar
+        val sightToolbar = findViewById<Toolbar>(R.id.sightToolbar)
+        sightToolbar.title = "観光案内"
+        setSupportActionBar(sightToolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        spiner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Adapter
+        adapter = SightListAdapter(this)
+        sightRecyclerView.adapter = adapter
+        sightRecyclerView.layoutManager = LinearLayoutManager(this)
+        sightRecyclerView.setHasFixedSize(true)
+        sightRecyclerView.addOnItemTouchListener(RecyclerClickListener(
+            this,
+            object : RecyclerClickListener.OnItemClickListener {
+                override fun onItemClick(view: View, position: Int) {
+                    val data = adapter.getItem(position)
+                    val intent = Intent(this@SightSearchActivity, SightDetailActivity::class.java)
+//                    intent.putExtra(SightDetailActivity.SIGHT_DATA,data)
+                    startActivity(intent)
+                }
+            }))
+        // 通信設定
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.RURUBU_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClientBuilder.build())
+            .build()
 
-        spinner_area.adapter = spiner_adapter
-        var ken = ""
+        rurubuService = retrofit.create(RurubuService::class.java)
 
-        spinner_area.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val spinnerParent = parent as Spinner
-                val item = spinnerParent.selectedItem as String
-                ken = item
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
-
-
-        //立ち寄り時間選択用プルダウン部分の部品
-        val tachiyori_adapter = ArrayAdapter(
-            applicationContext,
-            android.R.layout.simple_spinner_item,
-            spinnerTachiyori
-        )
-
-        tachiyori_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner_tachiyori.adapter = tachiyori_adapter
-        var tachiyori = ""
-
-        spinner_tachiyori?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val tachiyoriParent = parent as Spinner
-                val tachiyoritime = tachiyoriParent.selectedItem as String
-                tachiyori = tachiyoritime
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
-        //キーボードでenterキー押されたら閉じる処理
-        edit_text.setOnKeyListener(OnkeyListener())
-
-        search_button.setOnClickListener {
-            if(ken == " "){
-                Toast.makeText(applicationContext,"検索するエリアを選択して下さい",Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-
-            //検索キーワードに入力された値のset
-            val keyword = edit_text.text.toString()
-            Log.d("検索キーワード","入力されたキーワードは$keyword")
-
-            //spinnerで選択された値をJISコードへ変換
-            when(ken){
-                "徳島県" -> {ken = "36"}
-                "香川県" -> {ken = "37"}
-                "愛媛県" -> {ken = "38"}
-                "高知県" -> {ken = "39"}
-            }
-
-            when(tachiyori){
-                "指定なし"           -> {tachiyori = "0,1,2,3"}
-                "所要30分程度"       -> {tachiyori = "0"}
-                "所要30～60分くらい" -> {tachiyori = "1"}
-                "所要60～90分くらい" -> {tachiyori = "2"}
-                "所要90分以上"       -> {tachiyori = "3"}
-            }
-
-            val intent = Intent(this@SightSearchActivity,SightListActivity::class.java)
-            intent.putExtra("keyword",keyword)
-            intent.putExtra("ken",ken)
-            intent.putExtra("tachiyori",tachiyori)
-            startActivity(intent)
-        }
+    }
+    override fun onResume() {//activityが表示された時に動く処理
+        super.onResume()
+        updateSightProgressView()
     }
 
-    //キーボード消すためのクラス。
-    private inner class OnkeyListener : View.OnKeyListener{
-        override fun onKey(view: View,keycode:Int,keyEvent: KeyEvent):Boolean{
-            if(keyEvent.action != KeyEvent.ACTION_UP || keycode != KeyEvent.KEYCODE_ENTER){
-                return false
-            }
-            val editText = view as EditText
-            // キーボードを閉じる
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(editText.windowToken, 0)
-            return true
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_sight_search, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.app_bar_search -> showSearchDialog()
+            else -> {}
         }
+        return true
+    }
+
+    private fun updateSightProgressView() {
+        // 検索結果テキスト
+        sightResultText.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
+        // プログレス
+        if (isSearching) {
+            sight_progressBar.visibility = View.VISIBLE
+            sight_progressText.visibility = View.VISIBLE
+        } else {
+            sight_progressBar.visibility = View.GONE
+            sight_progressText.visibility = View.GONE
+        }
+    }
+    /**
+     * 検索条件ダイアログ
+     */
+    // 表示
+    private fun showSearchDialog() {
+        val dialog = SightSearchDialog().newInstance(this)
+        dialog.show(supportFragmentManager, "SEARCH_DIALOG")
+    }
+
+
+    // コールバック・検索開始
+    override fun search(ken: String, keyword: String, tachiyori: String) {
+        if (!isSearching) {
+            adapter.removeAllMember() // アダプターの要素を削除
+            isSearching = true
+            updateSightProgressView()
+
+            rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, 20,"json")
+                .enqueue(object : Callback<List<SightPage>> {
+                    // 通信失敗
+                    override fun onFailure(call: Call<List<SightPage>>, t: Throwable) {
+                        Toast.makeText(this@SightSearchActivity, "通信失敗", Toast.LENGTH_SHORT).show()
+                        // 通信中解除
+                        isSearching = false
+                        updateSightProgressView()
+                    }
+                    // 通信成功
+                    override fun onResponse(call: Call<List<SightPage>>, rurubuResponse: Response<List<SightPage>>) {
+                        if (rurubuResponse.isSuccessful && rurubuResponse.body() != null) {
+                            val data = rurubuResponse.body()!![0].SightList
+                            if (data.isNullOrEmpty()) Toast.makeText(this@SightSearchActivity, "検索結果:0件", Toast.LENGTH_SHORT).show()
+                            else adapter.appendMember(data)
+                        } else Toast.makeText(this@SightSearchActivity, "検索結果:0件", Toast.LENGTH_SHORT).show()
+                        // 通信中解除
+                        isSearching = false
+                        updateSightProgressView()
+                    }
+                })
+        }
+    }
+    override fun errorcoll() {
     }
 }

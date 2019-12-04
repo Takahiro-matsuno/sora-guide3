@@ -15,7 +15,7 @@ class SearchErrorDialog:BaseCallbackDialog<SearchErrorDialog.CallbackListener>()
      * 呼び出し元(Activity, Fragment)で実装するCallbackMethodを定義
      */
     interface CallbackListener {
-        fun ok()
+        fun errorcoll()
     }
 
     // インスタンスは必ず以下のクラスで生成
@@ -55,7 +55,7 @@ class SearchErrorDialog:BaseCallbackDialog<SearchErrorDialog.CallbackListener>()
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
                 Toast.makeText(context,"検索画面に戻ります", Toast.LENGTH_SHORT).show()
-                getCallbackListener()?.ok()
+                getCallbackListener()?.errorcoll()
                 finishActivity()
             }
         return builder.create()

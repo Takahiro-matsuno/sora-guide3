@@ -94,7 +94,7 @@ class NavigationActivity:
         val aftFragment = when (mNavigationType) {
             NavigationType.SIGHT -> {
                 if (preFragment is SightFragment) null else {
-                    toolbar.title = resources.getString(R.string.sight_info)
+                    toolbar.title = "観光案内"
                     SightFragment().newInstance()
                 }
             }
