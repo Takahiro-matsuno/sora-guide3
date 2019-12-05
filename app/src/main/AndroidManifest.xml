@@ -42,7 +42,7 @@
 
         <activity android:name=".ui.NavigationActivity" android:theme="@style/AppTheme.NoActionBar" />
         <!-- TOP -->
-        <activity android:name=".ui.TopMenuActivity">
+        <activity android:name=".ui.topmenu.TopMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

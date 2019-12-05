@@ -2,7 +2,6 @@ package jp.co.jalinfotec.soraguide.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -12,7 +11,6 @@ import jp.co.jalinfotec.soraguide.ui.ar.stamprally.StampRallyFragment
 import jp.co.jalinfotec.soraguide.ui.sight.SightFragment
 import jp.co.jalinfotec.soraguide.ui.taxi.TaxiFragment
 import kotlinx.android.synthetic.main.activity_navigation.*
-import kotlinx.android.synthetic.main.fragment_taxi.*
 
 class NavigationActivity:
     AppCompatActivity(),

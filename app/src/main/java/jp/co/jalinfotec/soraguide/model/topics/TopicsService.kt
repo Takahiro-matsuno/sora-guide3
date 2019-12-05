@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface TopicsService {
         @GET("index/getAllTopics")
-        fun getTopics(): Call<Array<Topic>>
+        fun getTopic(): Call<Array<Topics>>
 }
