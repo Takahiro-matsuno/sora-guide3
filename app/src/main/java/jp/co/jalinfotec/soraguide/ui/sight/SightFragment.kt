@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.sight.RurubuService
 import jp.co.jalinfotec.soraguide.model.sight.SightPage
 import jp.co.jalinfotec.soraguide.ui.base.RecyclerClickListener
 import jp.co.jalinfotec.soraguide.utils.Constants
-import kotlinx.android.synthetic.main.activity_sigth_search.*
-import kotlinx.android.synthetic.main.dialog_sight_search.*
 import kotlinx.android.synthetic.main.fragment_sight.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -70,9 +67,9 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
             .build()
 
         rurubuService = retrofit.create(RurubuService::class.java)
-        fragment_search_button.setOnClickListener{
+        search_button.setOnClickListener{
             val dialog = SightSearchDialog().newInstance(this)
-            dialog.show(childFragmentManager, "SEARCH_DIALOG")
+            dialog.show(fragmentManager!!, "SEARCH_DIALOG")
         }
     }
 
@@ -85,11 +82,11 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
         fragment_sightResultText.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
         // プログレス
         if (isSearching) {
-            sight_progressBar.visibility = View.VISIBLE
-            sight_progressText.visibility = View.VISIBLE
+            fragment_sight_progressBar.visibility = View.VISIBLE
+            fragment_sight_progressText.visibility = View.VISIBLE
         } else {
-            sight_progressBar.visibility = View.GONE
-            sight_progressText.visibility = View.GONE
+            fragment_sight_progressBar.visibility = View.GONE
+            fragment_sight_progressText.visibility = View.GONE
         }
     }
     /**
