@@ -10,7 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import jp.co.jalinfotec.soraguide.model.sight.Sight
 import jp.co.jalinfotec.soraguide.R
 
-class SightListAdapter(private val context:Context): RecyclerView.Adapter<SightViewHolder>() {
+class SightListAdapter(private val context:Context?): RecyclerView.Adapter<SightViewHolder>() {
     private val dataList = ArrayList<Sight>()
 
     fun appendMember(list: List<Sight>) {

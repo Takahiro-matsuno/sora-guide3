@@ -14,8 +14,10 @@ import kotlinx.android.synthetic.main.activity_sigth_search.*
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.sight.RurubuService
 import jp.co.jalinfotec.soraguide.model.sight.SightPage
+import jp.co.jalinfotec.soraguide.ui.base.BaseNavigationActivity
 import jp.co.jalinfotec.soraguide.ui.base.RecyclerClickListener
 import jp.co.jalinfotec.soraguide.utils.Constants
+import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.fragment_sight.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -27,13 +29,24 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-class SightSearchActivity : AppCompatActivity(),SightSearchDialog.CallbackListener,SearchErrorDialog.CallbackListener {
+class SightSearchActivity :BaseNavigationActivity(),SightSearchDialog.CallbackListener,SearchErrorDialog.CallbackListener {
     private lateinit var adapter: SightListAdapter
     private lateinit var rurubuService: RurubuService
+
     private var isSearching = false
     private val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging).readTimeout(30,
         TimeUnit.SECONDS).connectTimeout(10,TimeUnit.SECONDS)
+
+    private val onClick ={view:View ->
+        showSearchDialog()
+    }
+
+    override fun setToolbarTitle() {
+        toolbar.title = resources.getString(R.string.sight_info)
+    }
+    override fun setMainContent(){
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +54,7 @@ class SightSearchActivity : AppCompatActivity(),SightSearchDialog.CallbackListen
 
         //toolbar
         val sightToolbar = findViewById<Toolbar>(R.id.sightToolbar)
-        sightToolbar.title = "観光案内"
+        sightToolbar.title = resources.getString(R.string.sight_info)
         setSupportActionBar(sightToolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
@@ -69,28 +82,18 @@ class SightSearchActivity : AppCompatActivity(),SightSearchDialog.CallbackListen
 
         rurubuService = retrofit.create(RurubuService::class.java)
 
+        fragment_search_button.setOnClickListener(onClick)
     }
+
     override fun onResume() {//activityが表示された時に動く処理
         super.onResume()
         updateSightProgressView()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar_sight_search, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.app_bar_search -> showSearchDialog()
-            else -> {}
-        }
-        return true
-    }
-
     private fun updateSightProgressView() {
         // 検索結果テキスト
-        sightResultText.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
+        sightWelcomeText1.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
+        sightWelcomeText2.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
         // プログレス
         if (isSearching) {
             sight_progressBar.visibility = View.VISIBLE

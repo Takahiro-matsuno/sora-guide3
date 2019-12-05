@@ -18,14 +18,14 @@ class SightViewHolder(itemview:View): androidx.recyclerview.widget.RecyclerView.
     private lateinit var mContext: Context
     private val logTag = this::class.java.simpleName
 
-    fun newInstance(context: Context, parent: ViewGroup): SightViewHolder {
+    fun newInstance(context: Context?, parent: ViewGroup): SightViewHolder {
         val holder = SightViewHolder(
             LayoutInflater.from(parent.context).inflate(
             R.layout.viewholder_sight,
             parent,
             false)
         )
-        holder.mContext = context
+        holder.mContext = context!!
         return holder
     }
 

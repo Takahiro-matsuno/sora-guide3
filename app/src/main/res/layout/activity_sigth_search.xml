@@ -5,54 +5,80 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
-        <ProgressBar
-            android:id="@+id/sight_progressBar"
-            style="?android:attr/progressBarStyle"
+    <ProgressBar
+        android:id="@+id/sight_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="100dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+    <TextView
+        android:id="@+id/sight_progressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="検索中..."
+        android:layout_marginTop="8dp"
+        android:textSize="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/sight_progressBar"
+        app:layout_constraintStart_toStartOf="@id/sight_progressBar"
+        app:layout_constraintEnd_toEndOf="@id/sight_progressBar"
+        />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/sightToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
+            android:background="@color/colorAccent"
             />
         <TextView
-            android:id="@+id/sight_progressText"
+            android:id="@+id/sightWelcomeText1"
+            android:text="空港案内画面へようこそ。"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="検索中..."
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/sight_progressBar"
-            app:layout_constraintStart_toStartOf="@id/sight_progressBar"
-            app:layout_constraintEnd_toEndOf="@id/sight_progressBar"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
             />
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/sightWelcomeText2"
+            android:text="高松空港周辺の観光地をご案内できます。"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/sightWelcomeText1"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sightRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/sightToolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    />
-                <TextView
-                    android:id="@+id/sightResultText"
-                    android:text="検索結果はありません。"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/sightRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
-        </LinearLayout>
+            />
+    </LinearLayout>
+    <Button
+        android:id="@+id/fragment_search_button"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/frame_style3"
+        android:text="検索ボタン"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="search_buttonClickEvent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
