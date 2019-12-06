@@ -27,6 +27,8 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
     private lateinit var adapter: SightListAdapter
     private lateinit var rurubuService: RurubuService
 
+    private var isShowDialog = true
+
     private var isSearching = false
     private val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging).readTimeout(30,
@@ -67,7 +69,18 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
             .build()
 
         rurubuService = retrofit.create(RurubuService::class.java)
-        search_button.setOnClickListener{
+
+        if (isShowDialog){
+            //初回起動時にダイアログボックスを開くように
+            val dialog = SightSearchDialog().newInstance(this)
+            dialog.show(fragmentManager!!, "SEARCH_DIALOG")
+            isShowDialog = false
+        }else{
+            //初回起動時以外は何もしない
+            return
+        }
+
+        search_button.setOnClickListener{//画面上の検索用ボタン押下で検索ダイアログ出力
             val dialog = SightSearchDialog().newInstance(this)
             dialog.show(fragmentManager!!, "SEARCH_DIALOG")
         }
@@ -89,14 +102,6 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
             sight_progressBar.visibility = View.GONE
             sight_progressText.visibility = View.GONE
         }
-    }
-    /**
-     * 検索条件ダイアログ
-     */
-    // 表示
-    private fun showSearchDialog() {
-        val dialog = SightSearchDialog().newInstance(this)
-        dialog.show(childFragmentManager, "SEARCH_DIALOG")
     }
 
     // コールバック・検索開始
