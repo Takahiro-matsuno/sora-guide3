@@ -57,10 +57,13 @@ abstract class BaseNavigationActivity:
                 //startActivity(Intent(this, Activity::class.java))
                 finish()
             }
+            /*
             R.id.nav_flight -> { // todo 遷移先画面を設定する
                 //startActivity(Intent(this, Activity::class.java))
                 finish()
             }
+
+             */
             R.id.sight -> {
                 startActivity(Intent(this, SightSearchActivity::class.java))
                 finish()

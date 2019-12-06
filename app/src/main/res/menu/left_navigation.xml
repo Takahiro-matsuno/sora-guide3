@@ -7,25 +7,26 @@
                 android:id="@+id/nav_home"
                 android:icon="@drawable/ic_home_black_24dp"
                 android:title="@string/top_menu" />
+
         <item
                 android:id="@+id/nav_airport"
                 android:icon="@drawable/ic_info_outline_black_24dp"
                 android:title="@string/airport_navigation" />
         <item
-                android:id="@+id/nav_flight"
-                android:icon="@drawable/ic_local_airport_black_24dp"
-                android:title="@string/flight_info" />
-        <item
-                android:id="@+id/sight"
-                android:icon="@drawable/ic_map_black_24dp"
-                android:title="@string/sight_info" />
+                android:id="@+id/nav_stamp_rally"
+                android:icon="@drawable/ic_local_florist_black_24dp"
+                android:title="@string/stamp_rally" />
         <item
                 android:id="@+id/nav_taxi"
                 android:icon="@drawable/ic_local_taxi_black_24dp"
                 android:title="@string/taxi_reservation" />
         <item
-                android:id="@+id/nav_stamp_rally"
-                android:icon="@drawable/ic_local_florist_black_24dp"
-                android:title="@string/stamp_rally" />
+                android:id="@+id/sight"
+                android:icon="@drawable/ic_map_black_24dp"
+                android:title="@string/sight_info" />
+        <!--<item
+                android:id="@+id/nav_flight"
+                android:icon="@drawable/ic_local_airport_black_24dp"
+                android:title="@string/flight_info" />-->
     </group>
 </menu>

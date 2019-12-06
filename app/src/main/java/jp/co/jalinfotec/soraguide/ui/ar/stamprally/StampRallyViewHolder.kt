@@ -5,12 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
 import jp.co.jalinfotec.soraguide.utils.Constants
-import kotlinx.android.synthetic.main.activity_ar.view.*
 import kotlinx.android.synthetic.main.viewholder_stamp_rally.view.*
 
 class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -45,10 +43,10 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val num = data.markers.size
         if (data.isCompleted) {
             itemView.coupon_btn.isEnabled = true
-            itemView.achieve_txt.text = mContext.getString(R.string.stamprally_achieve, num, num)
+            itemView.achieve_txt.text = mContext.getString(R.string.stamp_rally_achieve, num, num)
         } else {
             itemView.coupon_btn.isEnabled = false
-            itemView.achieve_txt.text = mContext.getString(R.string.stamprally_achieve, data.getAcquiredNum(), num)
+            itemView.achieve_txt.text = mContext.getString(R.string.stamp_rally_achieve, data.getAcquiredNum(), num)
 
         }
         // クーポン使用済みかで表記を変更する

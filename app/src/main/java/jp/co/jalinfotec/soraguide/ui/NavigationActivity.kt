@@ -3,6 +3,7 @@ package jp.co.jalinfotec.soraguide.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
@@ -20,11 +21,11 @@ class NavigationActivity:
     private lateinit var mNavigationType: NavigationType
 
     enum class NavigationType {
+        AIRPORT,
         SIGHT,
         TAXI,
         STAMP_RALLY
         // FLIGHT フライト情報
-        // AIRPORT 施設案内
     }
 
     companion object {
@@ -63,11 +64,11 @@ class NavigationActivity:
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> this.finish()
-            R.id.nav_airport -> { /* todo 遷移先画面を設定する */ }
-            R.id.nav_flight -> { /* todo 遷移先画面を設定する */ }
-            R.id.sight -> changeMainContent(NavigationType.SIGHT)
-            R.id.nav_taxi -> changeMainContent(NavigationType.TAXI)
+            R.id.nav_airport -> { changeMainContent(NavigationType.AIRPORT) }
             R.id.nav_stamp_rally -> changeMainContent(NavigationType.STAMP_RALLY)
+            R.id.nav_taxi -> changeMainContent(NavigationType.TAXI)
+            R.id.sight -> changeMainContent(NavigationType.SIGHT)
+            //  R.id.nav_flight -> { /* todo 遷移先画面を設定する */ }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -90,10 +91,14 @@ class NavigationActivity:
         mNavigationType = navigationType
         val preFragment = supportFragmentManager.findFragmentById(R.id.main_content)
         val aftFragment = when (mNavigationType) {
-            NavigationType.SIGHT -> {
-                if (preFragment is SightFragment) null else {
-                    toolbar.title = "観光案内"
-                    SightFragment().newInstance()
+            NavigationType.AIRPORT -> {
+                Toast.makeText(this, "coming soon", Toast.LENGTH_SHORT).show()
+                null
+            }
+            NavigationType.STAMP_RALLY -> {
+                if (preFragment is StampRallyFragment) null else {
+                    toolbar.title = resources.getString(R.string.stamp_rally)
+                    StampRallyFragment().newInstance()
                 }
             }
             NavigationType.TAXI -> {
@@ -102,10 +107,10 @@ class NavigationActivity:
                     TaxiFragment().newInstance()
                 }
             }
-            NavigationType.STAMP_RALLY -> {
-                if (preFragment is StampRallyFragment) null else {
-                    toolbar.title = resources.getString(R.string.stamp_rally)
-                    StampRallyFragment().newInstance()
+            NavigationType.SIGHT -> {
+                if (preFragment is SightFragment) null else {
+                    toolbar.title = resources.getString(R.string.sight_info)
+                    SightFragment().newInstance()
                 }
             }
         }
