@@ -1,23 +1,18 @@
 package jp.co.jalinfotec.soraguide.ui.sight
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-
-import kotlinx.android.synthetic.main.activity_sigth_search.*
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.sight.RurubuService
 import jp.co.jalinfotec.soraguide.model.sight.SightPage
-import jp.co.jalinfotec.soraguide.ui.base.BaseNavigationActivity
 import jp.co.jalinfotec.soraguide.ui.base.RecyclerClickListener
 import jp.co.jalinfotec.soraguide.utils.Constants
-import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.fragment_sight.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,51 +23,42 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-
-class SightSearchActivity :BaseNavigationActivity(),SightSearchDialog.CallbackListener,SearchErrorDialog.CallbackListener {
+class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDialog.CallbackListener {
     private lateinit var adapter: SightListAdapter
     private lateinit var rurubuService: RurubuService
 
     private var isSearching = false
     private val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging).readTimeout(30,
-        TimeUnit.SECONDS).connectTimeout(10,TimeUnit.SECONDS)
+        TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS)
 
-    private val onClick ={view:View ->
-        showSearchDialog()
+    fun newInstance(): SightFragment {
+        return SightFragment()
     }
 
-    override fun setToolbarTitle() {
-        toolbar.title = resources.getString(R.string.sight_info)
-    }
-    override fun setMainContent(){
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_sight, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sigth_search)
-
-        //toolbar
-        val sightToolbar = findViewById<Toolbar>(R.id.sightToolbar)
-        sightToolbar.title = resources.getString(R.string.sight_info)
-        setSupportActionBar(sightToolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // Adapter
-        adapter = SightListAdapter(this)
-        sightRecyclerView.adapter = adapter
-        sightRecyclerView.layoutManager = LinearLayoutManager(this)
-        sightRecyclerView.setHasFixedSize(true)
-        sightRecyclerView.addOnItemTouchListener(RecyclerClickListener(
-            this,
-            object : RecyclerClickListener.OnItemClickListener {
-                override fun onItemClick(view: View, position: Int) {
-                    val data = adapter.getItem(position)
-                    val intent = Intent(this@SightSearchActivity, SightDetailActivity::class.java)
-//                    intent.putExtra(SightDetailActivity.SIGHT_DATA,data)
-                    startActivity(intent)
-                }
-            }))
+        adapter = SightListAdapter(context)
+        fragment_sightRecyclerView.adapter = adapter
+        fragment_sightRecyclerView.layoutManager = LinearLayoutManager(context)
+        fragment_sightRecyclerView.setHasFixedSize(true)
+        fragment_sightRecyclerView.addOnItemTouchListener(
+            RecyclerClickListener(
+                context,
+                object : RecyclerClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        val data = adapter.getItem(position)
+                        val intent = Intent(context, SightDetailActivity::class.java)
+//                        intent.putExtra(SightDetailActivity.SIGHT_DATA,data)
+                        startActivity(intent)
+                    }
+                })
+        )
         // 通信設定
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.RURUBU_URL)
@@ -81,26 +67,26 @@ class SightSearchActivity :BaseNavigationActivity(),SightSearchDialog.CallbackLi
             .build()
 
         rurubuService = retrofit.create(RurubuService::class.java)
-
-        fragment_search_button.setOnClickListener(onClick)
+        search_button.setOnClickListener{
+            val dialog = SightSearchDialog().newInstance(this)
+            dialog.show(fragmentManager!!, "SEARCH_DIALOG")
+        }
     }
 
     override fun onResume() {//activityが表示された時に動く処理
         super.onResume()
         updateSightProgressView()
     }
-
     private fun updateSightProgressView() {
         // 検索結果テキスト
-        sightWelcomeText1.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
-        sightWelcomeText2.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
+        fragment_sightResultText.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
         // プログレス
         if (isSearching) {
-            sight_progressBar.visibility = View.VISIBLE
-            sight_progressText.visibility = View.VISIBLE
+            fragment_sight_progressBar.visibility = View.VISIBLE
+            fragment_sight_progressText.visibility = View.VISIBLE
         } else {
-            sight_progressBar.visibility = View.GONE
-            sight_progressText.visibility = View.GONE
+            fragment_sight_progressBar.visibility = View.GONE
+            fragment_sight_progressText.visibility = View.GONE
         }
     }
     /**
@@ -109,9 +95,8 @@ class SightSearchActivity :BaseNavigationActivity(),SightSearchDialog.CallbackLi
     // 表示
     private fun showSearchDialog() {
         val dialog = SightSearchDialog().newInstance(this)
-        dialog.show(supportFragmentManager, "SEARCH_DIALOG")
+        dialog.show(childFragmentManager, "SEARCH_DIALOG")
     }
-
 
     // コールバック・検索開始
     override fun search(ken: String, keyword: String, tachiyori: String) {
@@ -124,7 +109,7 @@ class SightSearchActivity :BaseNavigationActivity(),SightSearchDialog.CallbackLi
                 .enqueue(object : Callback<List<SightPage>> {
                     // 通信失敗
                     override fun onFailure(call: Call<List<SightPage>>, t: Throwable) {
-                        Toast.makeText(this@SightSearchActivity, "通信失敗", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "通信失敗", Toast.LENGTH_SHORT).show()
                         // 通信中解除
                         isSearching = false
                         updateSightProgressView()
@@ -133,9 +118,9 @@ class SightSearchActivity :BaseNavigationActivity(),SightSearchDialog.CallbackLi
                     override fun onResponse(call: Call<List<SightPage>>, rurubuResponse: Response<List<SightPage>>) {
                         if (rurubuResponse.isSuccessful && rurubuResponse.body() != null) {
                             val data = rurubuResponse.body()!![0].SightList
-                            if (data.isNullOrEmpty()) Toast.makeText(this@SightSearchActivity, "検索結果:0件", Toast.LENGTH_SHORT).show()
+                            if (data.isNullOrEmpty()) Toast.makeText(context, "検索結果:0件", Toast.LENGTH_SHORT).show()
                             else adapter.appendMember(data)
-                        } else Toast.makeText(this@SightSearchActivity, "検索結果:0件", Toast.LENGTH_SHORT).show()
+                        } else Toast.makeText(context, "検索結果:0件", Toast.LENGTH_SHORT).show()
                         // 通信中解除
                         isSearching = false
                         updateSightProgressView()

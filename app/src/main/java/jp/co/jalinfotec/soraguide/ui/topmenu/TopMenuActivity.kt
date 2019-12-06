@@ -1,47 +1,38 @@
-package jp.co.jalinfotec.soraguide.ui
+package jp.co.jalinfotec.soraguide.ui.topmenu
 
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.provider.Settings
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 import jp.co.jalinfotec.soraguide.R
+import jp.co.jalinfotec.soraguide.model.topics.Topics
+import jp.co.jalinfotec.soraguide.model.topics.TopicsRepository
+import jp.co.jalinfotec.soraguide.ui.NavigationActivity
 import jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity
-import jp.co.jalinfotec.soraguide.model.topics.TopicsService
-import jp.co.jalinfotec.soraguide.model.topics.Topic
-import jp.co.jalinfotec.soraguide.ui.ar.stamprally.StampRallyActivity
-import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.activity_top_menu.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.concurrent.timer
 
-class TopMenuActivity : AppCompatActivity() {
-
+class TopMenuActivity :
+    AppCompatActivity()
+{
     private val logTag = this::class.java.simpleName
+    private val topicsRepository = TopicsRepository()
+    private val mTopicsList = ArrayList<Topics>()
+    private var isLoading = false
 
     //画像スライドショー初期設定
-    private var isSlideshow = true
-    private val handler = Handler()
+    //private var isSlideshow = true
+    //private val handler = Handler()
 
     //どの画像を表示しているかを保持する変数
-    private var position = 0
+    //private var position = 0
 
     //Topicsを格納する変数
-    private var topics:MutableList<Topic> = mutableListOf()
-    private lateinit var topicsService: TopicsService
-    private val permissionRequestCode = 1
+    //private var topics:MutableList<Topics> = mutableListOf()
+    //private lateinit var topicsService: TopicsService
+    // private val permissionRequestCode = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,40 +43,67 @@ class TopMenuActivity : AppCompatActivity() {
         /**
          * 各画面への遷移
          */
-        // 観光案内画面へ遷移
+        airport.setOnClickListener { /* TODO 施設案内に置き換える */ Toast.makeText(this, "coming soon", Toast.LENGTH_SHORT).show() }
+        stamp_rally.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.STAMP_RALLY) }
+        taxi.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.TAXI) }
         sightseeing.setOnClickListener { startActivity(Intent(this, SightSearchActivity::class.java)) }
-        // タクシー予約画面へ遷移
-        taxi.setOnClickListener { startActivity(Intent(this, TaxiActivity::class.java)) }
 
-        // TODO 施設案内機能実装後、変更する
-        airport.setOnClickListener { startActivity(Intent(this, StampRallyActivity::class.java)) }
-        // flight.setOnClickListener { startActivity(Intent(this, ARCameraActivity::class.java)) }
-        flight.setBackgroundColor(Color.GRAY)
+        // 広告表示
+        if (supportFragmentManager.findFragmentById(R.id.adsense_layout) == null) {
+            supportFragmentManager.beginTransaction().add(R.id.adsense_layout, AdSenseFragment().newInstance()).commit()
+        }
 
-        // Admobの設定
-        MobileAds.initialize(this, "ca-app-pub-2003234893806822~5059310598")
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+
+        /**
+         * 通信設定
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.topicsUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         topicsService = retrofit.create(TopicsService::class.java)
+        */
+        viewFlipper.flipInterval = 5000
+        // Topicsのロード
         loadTopics()
     }
 
-    private fun loadTopics() {
+    // NavigationActivityへの遷移
+    private fun intentNavigationActivity(navigationType: NavigationActivity.NavigationType) {
+        val intent = Intent(this, NavigationActivity::class.java)
+        intent.putExtra(NavigationActivity.NAVIGATION_KEY, navigationType)
+        startActivity(intent)
+    }
 
-        topicsService.getTopics().enqueue(object: Callback<Array<Topic>> {
+    private fun loadTopics() {
+        if (!isLoading) {
+            isLoading = true
+            viewFlipper.stopFlipping()
+            val topicsList = topicsRepository.getTopics()
+            topicsList.forEach { new ->
+                if (mTopicsList.find { local -> local.topic_id == new.topic_id } == null) { // 新しいTopicsの場合
+                    mTopicsList.add(new)
+                    // ImageViewの作成
+                    val iv = ImageView(this)
+                    Glide.with(this).load(new.topic_image).into(iv)
+                    iv.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(new.topic_url))) }
+                    viewFlipper.addView(iv)
+                }
+            }
+            viewFlipper.startFlipping()
+        }
+
+
+        /*
+        topicsService.getTopic().enqueue(object: Callback<Array<Topics>> {
 
             // 通信が失敗したときの処理
-            override fun onFailure(call: Call<Array<Topic>>?, t: Throwable?) {
+            override fun onFailure(call: Call<Array<Topics>>?, t: Throwable?) {
                 // 今回は失敗したときは無視しています。
                 Log.d(logTag,"通信エラー:$t")
             }
 
             // 通信が成功したときの処理
-            override fun onResponse(call: Call<Array<Topic>>?, response: Response<Array<Topic>>) {
+            override fun onResponse(call: Call<Array<Topics>>?, response: Response<Array<Topics>>) {
 
                 // TODO response 20x以外の処理を追加する
                 //topicsにデータを格納
@@ -116,10 +134,16 @@ class TopMenuActivity : AppCompatActivity() {
                 }
             }
         })
+         */
     }
 
+    private fun setTopicsImage(topics: Topics) {
+
+    }
+
+    /*
     //画像切り替えのメソッド
-    private fun movePosition(move: Int, topics : MutableList<Topic> ){
+    private fun movePosition(move: Int, topics : MutableList<Topics> ){
         position += move
         //Positionが画像配列のサイズよりも大きい場合は0に戻す。
         if(position >= topics.size){
@@ -132,7 +156,10 @@ class TopMenuActivity : AppCompatActivity() {
         //ImageViewに画像をセットし直す
          Glide.with(this).load(topics[position].topic_image).into(imageView)
     }
+    */
 
+
+    /*
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>,
                                             grantResults: IntArray
@@ -165,4 +192,6 @@ class TopMenuActivity : AppCompatActivity() {
             else -> {} // Ignore all other requests.
         }
     }
+
+     */
 }

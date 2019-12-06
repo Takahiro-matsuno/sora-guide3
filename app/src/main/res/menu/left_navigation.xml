@@ -16,9 +16,9 @@
                 android:icon="@drawable/ic_local_airport_black_24dp"
                 android:title="@string/flight_info" />
         <item
-                android:id="@+id/nav_tourism"
+                android:id="@+id/sight"
                 android:icon="@drawable/ic_map_black_24dp"
-                android:title="@string/tourist_info" />
+                android:title="@string/sight_info" />
         <item
                 android:id="@+id/nav_taxi"
                 android:icon="@drawable/ic_local_taxi_black_24dp"

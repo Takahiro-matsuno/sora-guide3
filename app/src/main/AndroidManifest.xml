@@ -2,22 +2,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:dist="http://schemas.android.com/apk/distribution"
           xmlns:tools="http://schemas.android.com/tools"
-          package="jp.co.jalinfotec.soraguide"
->
+          package="jp.co.jalinfotec.soraguide">
+
     <dist:module dist:instant="true"/>
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!--<uses-permission android:name="android.permission.ACCESS_GPS"/>-->
+    <uses-permission
+            android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- <uses-permission android:name="android.permission.ACCESS_GPS"/> -->
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
-    <uses-feature android:name="android.hardware.location" android:required="true"/>
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true"/>
-    <uses-feature android:name="android.hardware.sensor.compass" android:required="true"/>
-    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+
+    <uses-feature
+            android:name="android.hardware.camera"
+            android:required="true"/>
+    <uses-feature
+            android:name="android.hardware.location"
+            android:required="true"/>
+    <uses-feature
+            android:name="android.hardware.sensor.accelerometer"
+            android:required="true"/>
+    <uses-feature
+            android:name="android.hardware.sensor.compass"
+            android:required="true"/>
+    <uses-feature
+            android:glEsVersion="0x00020000"
+            android:required="true"/>
 
     <application
             android:allowBackup="true"
@@ -25,31 +37,40 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning"
-    >
-        <!-- TOP -->
-        <activity android:name=".ui.TopMenuActivity">
+            android:theme="@style/MyAppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
 
+        <activity android:name=".ui.NavigationActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <!-- TOP -->
+        <activity android:name=".ui.topmenu.TopMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <!-- 観光案内 -->
-        <activity android:name=".ui.sight.SightDetailActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.sight.SightListActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.sight.SightSearchActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <!-- タクシー -->
-        <activity android:name=".ui.TaxiActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <!-- AR -->
-        <activity android:name=".ui.ar.stamprally.StampRallyActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.ar.ARCameraActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <!--AdMobアプリIDの設定-->
+        </activity> <!-- 観光案内 -->
+        <activity
+                android:name=".ui.sight.SightDetailActivity"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".ui.sight.SightListActivity"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".ui.sight.SightSearchActivity"
+                android:theme="@style/AppTheme.NoActionBar"/> <!-- タクシー -->
+        <activity
+                android:name=".ui.TaxiActivity"
+                android:theme="@style/AppTheme.NoActionBar"/> <!-- AR -->
+        <activity
+                android:name=".ui.ar.stamprally.StampRallyActivity"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".ui.ar.ARCameraActivity"
+                android:theme="@style/AppTheme.NoActionBar"/> <!-- AdMobアプリIDの設定 -->
         <!-- AdMob App ID: ca-app-pub-2003234893806822~5059310598 -->
         <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-2003234893806822~5059310598"/>
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="ca-app-pub-2003234893806822~5059310598"/>
     </application>
-</manifest>
 
+</manifest>

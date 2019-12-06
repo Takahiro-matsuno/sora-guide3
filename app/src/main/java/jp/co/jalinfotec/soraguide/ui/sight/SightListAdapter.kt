@@ -10,39 +10,39 @@ import com.bumptech.glide.request.RequestOptions
 import jp.co.jalinfotec.soraguide.model.sight.Sight
 import jp.co.jalinfotec.soraguide.R
 
-class SightListAdapter(private val context: Context, private val dataset:List<Sight>): RecyclerView.Adapter<SightViewHolder>(){
+class SightListAdapter(private val context:Context?): RecyclerView.Adapter<SightViewHolder>() {
+    private val dataList = ArrayList<Sight>()
+
+    fun appendMember(list: List<Sight>) {
+        val sta = dataList.size
+        list.forEach { dataList.add(it) }
+        this.notifyItemRangeInserted(sta, list.size)
+    }
+
+    fun removeAllMember() {
+        if (itemCount != 0) {
+            val range = dataList.size
+            dataList.removeAll(dataList)
+            this.notifyItemRangeRemoved(0, range)
+        }
+    }
+
+    fun getItem(pos: Int): Sight {
+        return dataList[pos]
+    }
+
     //1行のレイアウトをセット
     override fun onCreateViewHolder(parent:ViewGroup,viewType: Int): SightViewHolder {
-        return SightViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.viewholder_sight,parent,false))
+//        return SightViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.viewholder_sight,parent,false))
+        return SightViewHolder(parent).newInstance(context, parent)
     }
 
     //リストに表示する行数を返す
     override fun getItemCount(): Int {
-        return dataset.size
+        return dataList.size
     }
 
     override fun onBindViewHolder(holder: SightViewHolder, position: Int) {
-        //この行の情報を取得
-        val response: Sight? = dataset[position]
-        //GlideでImagetoUrlの画像をholder.imageviewにセット
-        val options = RequestOptions().centerCrop()
-
-        if (response?.PhotoList == null){//TODO:画像データない場合の実装
-//             val preparatePicture = "http://imepic.jp/20190409/717130"
-//            Glide.with(context).load(preparatePicture).apply(options).into(holder.imageView!!)
-        }else{
-            //withでimageViewがあるActivityかFragment指定。 loadで画像ダウンロード先指定 intoで表示させるimageviewを指定
-            val picture = "https://www.j-jti.com/Storage/Image/Product/SightImage/S/${response.PhotoList[0].URL}"
-            Glide.with(context).load(picture).apply(options).into(holder.imageView!!)//nullのPhotolistも含まれるためこんな書き方
-        }
-        //観光地名、住所をセット
-        holder.descriptionText!!.text = response?.Title
-        holder.publishText!!.text = response?.Address
-        holder.timetext!!.text = response?.Time
-
-        if (position == this.dataset.count() - 1){//positionはゼロスタート
-            //リストの末尾にきたときの処理ここに記載
-            Log.d("test","リストの末尾に到達！")
-        }
+        holder.bindData(dataList[position])
     }
 }
