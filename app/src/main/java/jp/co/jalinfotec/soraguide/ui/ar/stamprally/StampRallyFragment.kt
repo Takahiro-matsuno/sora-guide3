@@ -14,6 +14,7 @@ import com.google.gson.Gson
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
 import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyRepository
+import jp.co.jalinfotec.soraguide.model.stamprally.TutorialEntity
 import jp.co.jalinfotec.soraguide.ui.ar.ARCameraActivity
 import jp.co.jalinfotec.soraguide.utils.PermissionUtil
 import kotlinx.android.synthetic.main.activity_stamprally.*
@@ -117,6 +118,21 @@ class StampRallyFragment:
             intent.putExtra(ARCameraActivity.arResourceKey, Gson().toJson(currentEntity))
             startActivity(intent)
         }
+    }
+
+
+    //チュートリアル用ダイアログ呼び出し
+    /*
+    private fun callTutorial(data: TutorialEntity?){
+        data?.let { d - showTutorialDialog}
+    }
+    */
+
+     */
+    //チュートリアル表示
+    private fun showTutorialDailog(entity: TutorialEntity) {
+        val dialogFragment: TutorialEntity = TutorialDialog().newInstance(this, entity)
+        dailogFragment.show(fragmentManager!!, TutorialDialogTag)
     }
 
     /**
