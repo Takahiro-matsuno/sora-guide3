@@ -61,4 +61,9 @@ class TaxiFragment: Fragment() {
         // webアクセス
         webView.loadUrl(Constants.taxiUrl)
     }
+
+    override fun onStop() {
+        super.onStop()
+        // TODO ロードのキャンセル処理を追加する
+    }
 }
