@@ -1,9 +1,16 @@
 package jp.co.jalinfotec.soraguide.model.sight
+import java.io.Serializable
 
+data class SightPage(
+    val PageNo: Int?,
+    val SightList: List<Sight>?,
+    val TotalPages: Int?,
+    val TotalResults: Int?
+){
 data class Sight(
     val Address: String,
     val Title: String?,
-    val PhotoList: List<Photo>,
+    val PhotoList: List<Photo?>?,
 //    val Chiku: Chiku,
 //    val Closed: String,
 //    val GenreList: List<ListGenre>,
@@ -33,4 +40,4 @@ data class Sight(
 //    val Traffic1: String,
 //    val Traffic2: String,
 //    val Tresure: String
-)
+): Serializable}

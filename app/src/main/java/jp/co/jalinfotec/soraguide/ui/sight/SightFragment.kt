@@ -54,7 +54,7 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
                     override fun onItemClick(view: View, position: Int) {
                         val data = adapter.getItem(position)
                         val intent = Intent(context, SightDetailActivity::class.java)
-//                        intent.putExtra(SightDetailActivity.SIGHT_DATA,data)
+                        intent.putExtra(SightDetailActivity.SIGHT_DATA,data)
                         startActivity(intent)
                     }
                 })
@@ -79,14 +79,15 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
     }
     private fun updateSightProgressView() {
         // 検索結果テキスト
-        fragment_sightResultText.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
+        sightWelcomeText1.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
+        sightWelcomeText2.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
         // プログレス
         if (isSearching) {
-            fragment_sight_progressBar.visibility = View.VISIBLE
-            fragment_sight_progressText.visibility = View.VISIBLE
+            sight_progressBar.visibility = View.VISIBLE
+            sight_progressText.visibility = View.VISIBLE
         } else {
-            fragment_sight_progressBar.visibility = View.GONE
-            fragment_sight_progressText.visibility = View.GONE
+            sight_progressBar.visibility = View.GONE
+            sight_progressText.visibility = View.GONE
         }
     }
     /**

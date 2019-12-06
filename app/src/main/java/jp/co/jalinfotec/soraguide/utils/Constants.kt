@@ -43,4 +43,5 @@ object Constants {
      */
     const val RURUBU_URL = "https://www.j-jti.com/"
     const val RURUBU_STOAGE_URL = "Storage/Image/Product/SightImage/S/"
+    const val googleMap_URL="https://www.google.com/maps/dir/?api=1&origin=34.215207,134.018567&destination="
 }

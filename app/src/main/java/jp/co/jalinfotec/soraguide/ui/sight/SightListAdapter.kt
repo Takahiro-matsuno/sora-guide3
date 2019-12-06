@@ -2,18 +2,14 @@ package jp.co.jalinfotec.soraguide.ui.sight
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import jp.co.jalinfotec.soraguide.model.sight.Sight
-import jp.co.jalinfotec.soraguide.R
+
+import jp.co.jalinfotec.soraguide.model.sight.SightPage
 
 class SightListAdapter(private val context:Context?): RecyclerView.Adapter<SightViewHolder>() {
-    private val dataList = ArrayList<Sight>()
+    private val dataList = ArrayList<SightPage.Sight>()
 
-    fun appendMember(list: List<Sight>) {
+    fun appendMember(list: List<SightPage.Sight>) {
         val sta = dataList.size
         list.forEach { dataList.add(it) }
         this.notifyItemRangeInserted(sta, list.size)
@@ -27,7 +23,7 @@ class SightListAdapter(private val context:Context?): RecyclerView.Adapter<Sight
         }
     }
 
-    fun getItem(pos: Int): Sight {
+    fun getItem(pos: Int): SightPage.Sight {
         return dataList[pos]
     }
 
