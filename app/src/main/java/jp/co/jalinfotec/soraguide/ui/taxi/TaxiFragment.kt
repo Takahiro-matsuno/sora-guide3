@@ -3,6 +3,7 @@ package jp.co.jalinfotec.soraguide.ui.taxi
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,12 +59,11 @@ class TaxiFragment: Fragment() {
 
     override fun onStart() {
         super.onStart()
-        // webアクセス
         webView.loadUrl(Constants.taxiUrl)
     }
 
     override fun onStop() {
         super.onStop()
-        // TODO ロードのキャンセル処理を追加する
+        webView.stopLoading()
     }
 }

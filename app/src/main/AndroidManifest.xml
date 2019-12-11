@@ -53,9 +53,6 @@
                 android:name=".ui.sight.SightDetailActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".ui.sight.SightListActivity"
-                android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
                 android:name=".ui.sight.SightSearchActivity"
                 android:theme="@style/AppTheme.NoActionBar"/> <!-- タクシー -->
         <activity
@@ -70,7 +67,8 @@
         <!-- AdMob App ID: ca-app-pub-2003234893806822~5059310598 -->
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ca-app-pub-2003234893806822~5059310598"/>
+                android:value="ca-app-pub-2003234893806822~5059310598"
+        />
     </application>
 
 </manifest>
