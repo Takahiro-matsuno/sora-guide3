@@ -22,7 +22,8 @@ import kotlinx.android.synthetic.main.activity_stamprally.*
 class StampRallyFragment:
     Fragment(),
     StampRallyViewHolder.CallbackListener,
-    CouponDialog.CallbackListener
+    CouponDialog.CallbackListener,
+    TutorialDialog.CallbackListener
 {
     private val logTag = this::class.java.simpleName
     private lateinit var stampRallyRepository: StampRallyRepository
@@ -31,6 +32,7 @@ class StampRallyFragment:
     private var currentEntity: StampRallyEntity? = null
     private val stampRallyBackupKey = "STAMP_RALLY_BACK_UP"
     private val couponDialogTag = "COUPON_DIALOG"
+    private val tutorialDialogTag = "TUTORIAL_DIALOG"
 
     fun newInstance(): StampRallyFragment {
         return StampRallyFragment()
@@ -68,6 +70,11 @@ class StampRallyFragment:
                 stampRallyAdapter.appendMembers(backupData as ArrayList<StampRallyEntity>)
             }
         }
+
+        //チュートリアルダイアログ呼び出し
+        callTutorial(getTutorialSample())
+
+
     }
     // 権限リクエスト
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -107,10 +114,12 @@ class StampRallyFragment:
             ActivityCompat.requestPermissions(this.activity!!, perms, requestPermStampRally)
         } else { startArContents() }
     }
+
     // クーポン確認タップ時
     override fun couponTapped(data: StampRallyEntity?) {
         data?.let { d -> showCouponDialog(d) }
     }
+
     // AR画面に遷移
     private fun startArContents() {
         if (currentEntity != null) {
@@ -119,20 +128,39 @@ class StampRallyFragment:
             startActivity(intent)
         }
     }
-
-
-    //チュートリアル用ダイアログ呼び出し
-    /*
-    private fun callTutorial(data: TutorialEntity?){
-        data?.let { d - showTutorialDialog}
-    }
-    */
-
+    /**
+     * Tutorial Dialog
      */
+    //チュートリアル用ダイアログ呼び出し
+    private fun callTutorial(data: TutorialEntity?){
+        data?.let { d -> showTutorialDialog(d)}
+    }
+
     //チュートリアル表示
-    private fun showTutorialDailog(entity: TutorialEntity) {
-        val dialogFragment: TutorialEntity = TutorialDialog().newInstance(this, entity)
-        dailogFragment.show(fragmentManager!!, TutorialDialogTag)
+    private fun showTutorialDialog(entity: TutorialEntity) {
+        val dialogFragment: TutorialDialog = TutorialDialog().newInstance(this, entity)
+        dialogFragment.show(fragmentManager!!, tutorialDialogTag)
+    }
+
+    //サンプルデータ作成 Debug用
+    private fun getTutorialSample() :TutorialEntity?{
+
+        return TutorialEntity(
+            "id_is_1",
+                    listOf(
+                        TutorialEntity.page(
+                            "チュートリアル 1/2 \nほげほげ",
+                            "position1",
+                            "tutorial_sample.png"
+                        ),
+                        TutorialEntity.page(
+                            "チュートリアル 2/2 \nふがふが",
+                            "position2",
+                            "tutorial2_sample.png"
+                        )
+                    )
+        )
+
     }
 
     /**
