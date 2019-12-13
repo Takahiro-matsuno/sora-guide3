@@ -4,12 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import jp.co.jalinfotec.soraguide.R
-import jp.co.jalinfotec.soraguide.model.sight.Sight
+import jp.co.jalinfotec.soraguide.model.sight.SightPage
 import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.viewholder_sight.view.*
 
@@ -29,7 +27,7 @@ class SightViewHolder(itemview:View): androidx.recyclerview.widget.RecyclerView.
         return holder
     }
 
-    fun bindData(data: Sight) {
+    fun bindData(data: SightPage.Sight) {
         /* Viewのデータ設定 */
         itemView.sightTitle.text   = data.Title
         itemView.sightAddress.text = data.Address

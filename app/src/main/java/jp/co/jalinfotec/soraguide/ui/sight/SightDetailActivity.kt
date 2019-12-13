@@ -6,26 +6,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_sight_detail.*
 import jp.co.jalinfotec.soraguide.R
-import jp.co.jalinfotec.soraguide.model.sight.Sight
+import jp.co.jalinfotec.soraguide.model.sight.SightPage
 import jp.co.jalinfotec.soraguide.utils.Constants
+import jp.co.jalinfotec.soraguide.utils.Constants.googleMap_URL
 
 class SightDetailActivity : AppCompatActivity() {
     companion object {
         const val SIGHT_DATA = "SIGHT_DATA"
     }
-    private lateinit var sight: Sight
+    private lateinit var sight: SightPage.Sight
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sight_detail)
 
         sight = if (savedInstanceState == null) {
-            intent.getSerializableExtra(SIGHT_DATA) as Sight
+            intent.getSerializableExtra(SIGHT_DATA) as SightPage.Sight
         } else {
-            savedInstanceState.getSerializable(SIGHT_DATA) as Sight
+            savedInstanceState.getSerializable(SIGHT_DATA) as SightPage.Sight
         }
 
         sight.PhotoList?.get(0)?.URL?.let { url -> loadImage(url) }
@@ -42,8 +42,8 @@ class SightDetailActivity : AppCompatActivity() {
             time.text = "※営業時間は公開されておりません"
         }
 
-        val ido_notuse = intent.getStringExtra("latitude")//mapで使用する緯度
-        val keido_notuse = intent.getStringExtra("Longitude")//mapで使用する経度
+        val ido_notuse   = sight.Latitude//mapで使用する緯度
+        val keido_notuse = sight.Longitude//mapで使用する経度
 
         //TODO:緯度経度がnullの場合もある？その場合の処理をここで記載する
         setSupportActionBar(toolbar_detail)//
@@ -59,7 +59,7 @@ class SightDetailActivity : AppCompatActivity() {
 
         //googlemap案内 いまは高松空港発で固定にしている
         route_button.setOnClickListener {
-            val uri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin=34.215207,134.018567&destination=$ido,$keido")
+            val uri = Uri.parse("$googleMap_URL$ido,$keido")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             Log.d("maplog","mapのurlは$uri")
             startActivity(intent)

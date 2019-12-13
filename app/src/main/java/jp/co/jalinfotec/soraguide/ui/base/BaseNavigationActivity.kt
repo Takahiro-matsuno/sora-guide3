@@ -10,7 +10,6 @@ import com.google.android.material.navigation.NavigationView
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.ui.ar.stamprally.StampRallyActivity
 import jp.co.jalinfotec.soraguide.ui.topmenu.TopMenuActivity
-import jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity
 import jp.co.jalinfotec.soraguide.ui.TaxiActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 
@@ -65,7 +64,7 @@ abstract class BaseNavigationActivity:
 
              */
             R.id.sight -> {
-                startActivity(Intent(this, SightSearchActivity::class.java))
+//                startActivity(Intent(this, SightSearchActivity::class.java))
                 finish()
             }
             R.id.nav_taxi -> {

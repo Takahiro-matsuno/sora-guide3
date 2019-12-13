@@ -11,7 +11,6 @@ import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.topics.Topics
 import jp.co.jalinfotec.soraguide.model.topics.TopicsRepository
 import jp.co.jalinfotec.soraguide.ui.NavigationActivity
-import jp.co.jalinfotec.soraguide.ui.sight.SightSearchActivity
 import kotlinx.android.synthetic.main.activity_top_menu.*
 
 class TopMenuActivity :
@@ -46,7 +45,7 @@ class TopMenuActivity :
         airport.setOnClickListener { /* TODO 施設案内に置き換える */ Toast.makeText(this, "coming soon", Toast.LENGTH_SHORT).show() }
         stamp_rally.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.STAMP_RALLY) }
         taxi.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.TAXI) }
-        sightseeing.setOnClickListener { startActivity(Intent(this, SightSearchActivity::class.java)) }
+        sightseeing.setOnClickListener  { intentNavigationActivity(NavigationActivity.NavigationType.SIGHT) }
 
         // 広告表示
         if (supportFragmentManager.findFragmentById(R.id.adsense_layout) == null) {
