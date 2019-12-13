@@ -96,25 +96,19 @@ class NavigationActivity:
                 null
             }
             NavigationType.STAMP_RALLY -> {
-                if (preFragment is StampRallyFragment) null else {
-                    toolbar.title = resources.getString(R.string.stamp_rally)
-                    StampRallyFragment().newInstance()
-                }
+                toolbar.title = resources.getString(R.string.stamp_rally)
+                if (preFragment is StampRallyFragment) null else StampRallyFragment().newInstance()
+
             }
             NavigationType.TAXI -> {
-                if (preFragment is TaxiFragment) null else {
-                    toolbar.title = resources.getString(R.string.taxi_reservation)
-                    TaxiFragment().newInstance()
-                }
+                toolbar.title = resources.getString(R.string.taxi_reservation)
+                if (preFragment is TaxiFragment) null else TaxiFragment().newInstance()
             }
             NavigationType.SIGHT -> {
-                if (preFragment is SightFragment) null else {
-                    toolbar.title = resources.getString(R.string.sight_info)
-                    SightFragment().newInstance()
-                }
+                toolbar.title = resources.getString(R.string.sight_info)
+                if (preFragment is SightFragment) null else SightFragment().newInstance()
             }
         }
         aftFragment?.let { f -> supportFragmentManager.beginTransaction().replace(R.id.main_content, f).commit() }
     }
-
 }
