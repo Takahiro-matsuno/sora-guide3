@@ -127,7 +127,8 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
                 .enqueue(object : Callback<List<SightPage>> {
                     // 通信失敗
                     override fun onFailure(call: Call<List<SightPage>>, t: Throwable) {
-                        Toast.makeText(context, "通信失敗", Toast.LENGTH_SHORT).show()
+                        val dialog = SearchErrorDialog().newInstance(this@SightFragment,"通信エラーです。\n通信環境が良い状態で再検索をお願いします。")
+                        dialog.show(fragmentManager!!, "ERROR_DIALOG")
                         // 通信中解除
                         isSearching = false
                         updateSightProgressView()
@@ -136,12 +137,18 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
                     override fun onResponse(call: Call<List<SightPage>>, rurubuResponse: Response<List<SightPage>>) {
                         if (rurubuResponse.isSuccessful && rurubuResponse.body() != null) {
                             val data = rurubuResponse.body()!![0].SightList
-                            if (data.isNullOrEmpty()) Toast.makeText(context, "検索結果:0件", Toast.LENGTH_SHORT).show()
+                            if (data.isNullOrEmpty()) {
+                                val dialog = SearchErrorDialog().newInstance(this@SightFragment,"検索結果が0件でした。\n再検索をお願いします。")
+                                dialog.show(fragmentManager!!, "ERROR_DIALOG")
+                            }
                             else{
                                 adapter.appendMember(data)
                                 Toast.makeText(context, "検索結果:${rurubuResponse.body()!![0].TotalResults}件", Toast.LENGTH_SHORT).show()
                             }
-                        } else Toast.makeText(context, "検索結果:0件", Toast.LENGTH_SHORT).show()
+                        }else{
+                            val dialog = SearchErrorDialog().newInstance(this@SightFragment,"検索結果が0件でした。\n再検索をお願いします。")
+                            dialog.show(fragmentManager!!, "ERROR_DIALOG")
+                        }
                         // 通信中解除
                         isSearching = false
                         updateSightProgressView()

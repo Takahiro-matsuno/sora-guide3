@@ -50,13 +50,13 @@ class SearchErrorDialog:BaseCallbackDialog<SearchErrorDialog.CallbackListener>()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // R.layoutを使わない場合
         val builder = AlertDialog.Builder(context)
-            .setTitle("検索結果エラー")
+            .setTitle("検索エラー")
             .setMessage(data)
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
-                Toast.makeText(context,"検索画面に戻ります", Toast.LENGTH_SHORT).show()
-                getCallbackListener()?.errorcoll()
-                finishActivity()
+//                Toast.makeText(context,"再検索をお願いします。", Toast.LENGTH_SHORT).show()
+//                getCallbackListener()?.errorcoll()
+//                finishActivity()
             }
         return builder.create()
     }
@@ -65,7 +65,7 @@ class SearchErrorDialog:BaseCallbackDialog<SearchErrorDialog.CallbackListener>()
 //        return super.onCreateView(inflater, container, savedInstanceState)
 //
 //    }
-    fun finishActivity(){
-        activity?.finish()
-    }
+//    fun finishActivity(){
+//        activity?.finish()
+//    }
 }
