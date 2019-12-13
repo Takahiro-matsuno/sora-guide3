@@ -27,9 +27,10 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
         "所要時間60～90分くらい" to "2",
         "所要時間90分以上" to "3"
     )
+    private val seasonspinner = arrayOf("", "春", "夏", "秋", "冬")
 
     interface CallbackListener{//呼び出し元で動作するメソッド
-        fun search(ken: String, keyword: String, tachiyori: String)
+        fun search(ken: String, keyword: String, tachiyori: String,season:String)
     }
 
     fun newInstance(listener: CallbackListener):SightSearchDialog{
@@ -50,13 +51,15 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
 
         kenSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, kenMap.keys.toTypedArray())
         tachiyoriSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, tachiyoriMap.keys.toTypedArray())
+        seasonSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, seasonspinner)
         searchBtn.setOnClickListener {
             val kenData = kenMap[(kenSpinner.selectedItem as String)]
             val keywordData = keywordText.text.toString()
             val tachiyoriData = tachiyoriMap[(tachiyoriSpinner.selectedItem as String)]
+            val recomendData = seasonSpinner.selectedItem as String
             if (!kenData.isNullOrEmpty() && !tachiyoriData.isNullOrEmpty()) {
                 this.dismiss()
-                this.getCallbackListener()?.search(kenData, keywordData, tachiyoriData)
+                this.getCallbackListener()?.search(kenData, keywordData, tachiyoriData,recomendData)
             } else {
                 Toast.makeText(this.context, "検索条件が不正です", Toast.LENGTH_SHORT).show()
             }

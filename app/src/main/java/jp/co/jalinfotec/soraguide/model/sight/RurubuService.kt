@@ -11,6 +11,10 @@ interface RurubuService {
               @Query("keywords") keywords: String?,
               @Query("ken") ken:String?,
               @Query("SOC0") tachiyori:String?,
+              @Query("SOC5") recomend_spring:String?,
+              @Query("SOC6") recomend_summer:String?,
+              @Query("SOC7") recomend_autumn:String?,
+              @Query("SOC8") recomend_winter:String?,
               @Query("pagecount") pagecount:Int?,
               @Query("responsetype") respnsetype: String?):Call<List<SightPage>>
 

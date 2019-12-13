@@ -27,6 +27,11 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
     private lateinit var adapter: SightListAdapter
     private lateinit var rurubuService: RurubuService
 
+    private var spring = "0,1,2"
+    private var summer = "0,1,2"
+    private var autumn = "0,1,2"
+    private var winter = "0,1,2"
+
     private var isShowDialog = true
 
     private var isSearching = false
@@ -105,13 +110,20 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
     }
 
     // コールバック・検索開始
-    override fun search(ken: String, keyword: String, tachiyori: String) {
+    override fun search(ken: String, keyword: String, tachiyori: String,season:String) {
+        when(season){//検索時、季節に指定があれば検索パラメータを修正
+            "春" -> spring = "0"
+            "夏" -> summer = "0"
+            "秋" -> autumn = "0"
+            "冬" -> winter = "0"
+        }
+
         if (!isSearching) {
             adapter.removeAllMember() // アダプターの要素を削除
             isSearching = true
             updateSightProgressView()
 
-            rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, 20,"json")
+            rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, spring, summer, autumn, winter, 20, "json")
                 .enqueue(object : Callback<List<SightPage>> {
                     // 通信失敗
                     override fun onFailure(call: Call<List<SightPage>>, t: Throwable) {
@@ -125,7 +137,10 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
                         if (rurubuResponse.isSuccessful && rurubuResponse.body() != null) {
                             val data = rurubuResponse.body()!![0].SightList
                             if (data.isNullOrEmpty()) Toast.makeText(context, "検索結果:0件", Toast.LENGTH_SHORT).show()
-                            else adapter.appendMember(data)
+                            else{
+                                adapter.appendMember(data)
+                                Toast.makeText(context, "検索結果:${rurubuResponse.body()!![0].TotalResults}件", Toast.LENGTH_SHORT).show()
+                            }
                         } else Toast.makeText(context, "検索結果:0件", Toast.LENGTH_SHORT).show()
                         // 通信中解除
                         isSearching = false
