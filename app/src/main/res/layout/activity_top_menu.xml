@@ -46,7 +46,7 @@
                     android:layout_weight="1"
                     android:background="#b0d600"
                     android:layout_margin="4dp"
-                    android:src="@drawable/flight"
+                    android:src="@drawable/ar"
                     android:scaleType="fitCenter"
             />
         </TableRow>
