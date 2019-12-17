@@ -24,20 +24,24 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDialog.CallbackListener {
-    private lateinit var adapter: SightListAdapter
-    private lateinit var rurubuService: RurubuService
 
+    private val searchDialogTag = "SEARCH_DIALOG"
+    private val errorDialogTag = "ERROR_DIALOG"
+
+    private lateinit var adapter: SightListAdapter
+    // 通信用
+    private var isSearching = false
+    private lateinit var rurubuService: RurubuService
+    private lateinit var rurubuRequest: Call<List<SightPage>>
+    private val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging)
+        .readTimeout(30, TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS)
+
+    // 検索項目用
     private var spring = "0,1,2"
     private var summer = "0,1,2"
     private var autumn = "0,1,2"
     private var winter = "0,1,2"
-
-    private var isShowDialog = true
-
-    private var isSearching = false
-    private val httpLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    private val httpClientBuilder = OkHttpClient.Builder().addInterceptor(httpLogging).readTimeout(30,
-        TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS)
 
     fun newInstance(): SightFragment {
         return SightFragment()
@@ -52,6 +56,7 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
         // Adapter
         adapter = SightListAdapter(context)
         fragment_sightRecyclerView.adapter = adapter
+        // RecyclerViewの設定
         fragment_sightRecyclerView.layoutManager = LinearLayoutManager(context)
         fragment_sightRecyclerView.setHasFixedSize(true)
         fragment_sightRecyclerView.addOnItemTouchListener(
@@ -66,35 +71,24 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
                     }
                 })
         )
+        // 画面上の検索用ボタン押下で検索ダイアログ出力
+        search_button.setOnClickListener{ showSearchDialog() }
+
         // 通信設定
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.RURUBU_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClientBuilder.build())
             .build()
-
         rurubuService = retrofit.create(RurubuService::class.java)
-
-        if (isShowDialog){
-            //初回起動時にダイアログボックスを開くように
-            val dialog = SightSearchDialog().newInstance(this)
-            dialog.show(fragmentManager!!, "SEARCH_DIALOG")
-            isShowDialog = false
-        }else{
-            //初回起動時以外は何もしない
-            return
-        }
-
-        search_button.setOnClickListener{//画面上の検索用ボタン押下で検索ダイアログ出力
-            val dialog = SightSearchDialog().newInstance(this)
-            dialog.show(fragmentManager!!, "SEARCH_DIALOG")
-        }
     }
 
-    override fun onResume() {//activityが表示された時に動く処理
+    override fun onResume() { // Fragment表示時
         super.onResume()
         updateSightProgressView()
+        showSearchDialog()
     }
+
     private fun updateSightProgressView() {
         // 検索結果テキスト
         sightWelcomeText1.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
@@ -109,6 +103,21 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        if (isSearching) rurubuRequest.cancel()
+    }
+
+    /**
+     * 検索ダイアログ
+     */
+    // 表示
+    private fun showSearchDialog() {
+        if (fragmentManager!!.findFragmentByTag(searchDialogTag) == null) {
+            val dialog = SightSearchDialog().newInstance(this)
+            dialog.show(fragmentManager!!, searchDialogTag)
+        }
+    }
     // コールバック・検索開始
     override fun search(ken: String, keyword: String, tachiyori: String,season:String) {
         when(season){//検索時、季節に指定があれば検索パラメータを修正
@@ -123,39 +132,42 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
             isSearching = true
             updateSightProgressView()
 
-            rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, spring, summer, autumn, winter, 20, "json")
-                .enqueue(object : Callback<List<SightPage>> {
-                    // 通信失敗
-                    override fun onFailure(call: Call<List<SightPage>>, t: Throwable) {
+            rurubuRequest = rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, spring, summer, autumn, winter, 20, "json")
+            rurubuRequest.enqueue(object : Callback<List<SightPage>> {
+                // 通信失敗
+                override fun onFailure(call: Call<List<SightPage>>, t: Throwable) {
+                    isSearching = false
+                    if (!call.isCanceled) {
                         val dialog = SearchErrorDialog().newInstance(this@SightFragment,"通信エラーです。\n通信環境が良い状態で再検索をお願いします。")
-                        dialog.show(fragmentManager!!, "ERROR_DIALOG")
+                        dialog.show(fragmentManager!!, errorDialogTag)
                         // 通信中解除
-                        isSearching = false
                         updateSightProgressView()
                     }
-                    // 通信成功
-                    override fun onResponse(call: Call<List<SightPage>>, rurubuResponse: Response<List<SightPage>>) {
-                        if (rurubuResponse.isSuccessful && rurubuResponse.body() != null) {
-                            val data = rurubuResponse.body()!![0].SightList
-                            if (data.isNullOrEmpty()) {
-                                val dialog = SearchErrorDialog().newInstance(this@SightFragment,"検索結果が0件でした。\n再検索をお願いします。")
-                                dialog.show(fragmentManager!!, "ERROR_DIALOG")
-                            }
-                            else{
-                                adapter.appendMember(data)
-                                Toast.makeText(context, "検索結果:${rurubuResponse.body()!![0].TotalResults}件", Toast.LENGTH_SHORT).show()
-                            }
-                        }else{
+                }
+                // 通信成功
+                override fun onResponse(call: Call<List<SightPage>>, rurubuResponse: Response<List<SightPage>>) {
+                    if (rurubuResponse.isSuccessful && rurubuResponse.body() != null) {
+                        val data = rurubuResponse.body()!![0].SightList
+                        if (data.isNullOrEmpty()) {
                             val dialog = SearchErrorDialog().newInstance(this@SightFragment,"検索結果が0件でした。\n再検索をお願いします。")
-                            dialog.show(fragmentManager!!, "ERROR_DIALOG")
+                            dialog.show(fragmentManager!!, errorDialogTag)
                         }
-                        // 通信中解除
-                        isSearching = false
-                        updateSightProgressView()
+                        else{
+                            adapter.appendMember(data)
+                            Toast.makeText(context, "検索結果:${data.size}件", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        val dialog = SearchErrorDialog().newInstance(this@SightFragment,"検索結果が0件でした。\n再検索をお願いします。")
+                        dialog.show(fragmentManager!!, errorDialogTag)
                     }
-                })
+                    // 通信中解除
+                    isSearching = false
+                    updateSightProgressView()
+                }
+            })
         }
     }
+
     override fun errorcoll() {
     }
 }
