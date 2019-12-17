@@ -1,10 +1,15 @@
 package jp.co.jalinfotec.soraguide.ui.sight
 
 import android.content.Context
+import android.content.Context.WINDOW_SERVICE
+import android.graphics.Point
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -29,8 +34,14 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
     )
     private val seasonspinner = arrayOf("", "春", "夏", "秋", "冬")
 
+    private val RainMap = mapOf(
+        "指定なし" to "0,1,2",
+        "天気が雨でも楽しめる" to "0",
+        "天気が雨ならいまいち・・・" to "2"
+    )
+
     interface CallbackListener{//呼び出し元で動作するメソッド
-        fun search(ken: String, keyword: String, tachiyori: String,season:String)
+        fun search(ken: String, keyword: String, tachiyori: String,season:String,rain:String)
     }
 
     fun newInstance(listener: CallbackListener):SightSearchDialog{
@@ -49,17 +60,30 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val size = Point().also {
+            (context!!.getSystemService(WINDOW_SERVICE) as WindowManager).defaultDisplay.apply { getSize(it) }
+        }
+        val width = size.x
+        val height= size.y
+
+        Log.d("log","dialogでの画面の横幅：$width")
+        Log.d("log","dialogでの画面のたて幅：$height")
+
+
+
         kenSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, kenMap.keys.toTypedArray())
         tachiyoriSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, tachiyoriMap.keys.toTypedArray())
         seasonSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, seasonspinner)
+        rainSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, RainMap.keys.toTypedArray())
         searchBtn.setOnClickListener {
             val kenData = kenMap[(kenSpinner.selectedItem as String)]
             val keywordData = keywordText.text.toString()
             val tachiyoriData = tachiyoriMap[(tachiyoriSpinner.selectedItem as String)]
             val recomendData = seasonSpinner.selectedItem as String
+            val rainData = rainSpinner.selectedItem as String
             if (!kenData.isNullOrEmpty() && !tachiyoriData.isNullOrEmpty()) {
                 this.dismiss()
-                this.getCallbackListener()?.search(kenData, keywordData, tachiyoriData,recomendData)
+                this.getCallbackListener()?.search(kenData, keywordData, tachiyoriData,recomendData,rainData)
             } else {
                 Toast.makeText(this.context, "検索条件が不正です", Toast.LENGTH_SHORT).show()
             }

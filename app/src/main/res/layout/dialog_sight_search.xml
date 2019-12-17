@@ -117,6 +117,30 @@
         android:background="@drawable/frame_style"
         />
 
+    <TextView
+        android:id="@+id/textView_inspiteofRain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
+        android:textSize="15sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textAllCaps="true"
+        android:layout_marginTop="15dp"
+        android:text="雨でも楽しむぜ！"
+        app:layout_constraintTop_toBottomOf="@+id/seasonSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <Spinner
+        android:id="@+id/rainSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textView_inspiteofRain"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/frame_style"
+        />
 
 
     <Button
@@ -124,11 +148,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="検索"
-        app:layout_constraintTop_toBottomOf="@+id/seasonSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/rainSpinner"
         android:background="@drawable/frame_style4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

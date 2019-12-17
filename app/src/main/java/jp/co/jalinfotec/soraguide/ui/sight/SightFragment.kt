@@ -1,10 +1,14 @@
 package jp.co.jalinfotec.soraguide.ui.sight
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +46,7 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
     private var summer = "0,1,2"
     private var autumn = "0,1,2"
     private var winter = "0,1,2"
+    private var inspiteOfRain = "0,1,2"
 
     fun newInstance(): SightFragment {
         return SightFragment()
@@ -81,6 +86,15 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
             .client(httpClientBuilder.build())
             .build()
         rurubuService = retrofit.create(RurubuService::class.java)
+
+        val size = Point().also {
+            (context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.apply { getSize(it) }
+        }
+        val width = size.x
+        val height= size.y
+
+        Log.d("log","flagmentでの画面の横幅：$width")
+        Log.d("log","flagmentでの画面のたて幅：$height")
     }
 
     override fun onResume() { // Fragment表示時
@@ -116,10 +130,11 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
         if (fragmentManager!!.findFragmentByTag(searchDialogTag) == null) {
             val dialog = SightSearchDialog().newInstance(this)
             dialog.show(fragmentManager!!, searchDialogTag)
+
         }
     }
     // コールバック・検索開始
-    override fun search(ken: String, keyword: String, tachiyori: String,season:String) {
+    override fun search(ken: String, keyword: String, tachiyori: String,season:String,rain:String) {
         when(season){//検索時、季節に指定があれば検索パラメータを修正
             "春" -> spring = "0"
             "夏" -> summer = "0"
@@ -132,7 +147,7 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
             isSearching = true
             updateSightProgressView()
 
-            rurubuRequest = rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, spring, summer, autumn, winter, 20, "json")
+            rurubuRequest = rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, spring, summer, autumn, winter,inspiteOfRain,20, "json")
             rurubuRequest.enqueue(object : Callback<List<SightPage>> {
                 // 通信失敗
                 override fun onFailure(call: Call<List<SightPage>>, t: Throwable) {
