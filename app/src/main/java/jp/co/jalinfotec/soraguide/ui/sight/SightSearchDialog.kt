@@ -13,6 +13,8 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.ui.base.BaseCallbackDialog
 import kotlinx.android.synthetic.main.dialog_sight_search.*
@@ -60,17 +62,6 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val size = Point().also {
-            (context!!.getSystemService(WINDOW_SERVICE) as WindowManager).defaultDisplay.apply { getSize(it) }
-        }
-        val width = size.x
-        val height= size.y
-
-        Log.d("log","dialogでの画面の横幅：$width")
-        Log.d("log","dialogでの画面のたて幅：$height")
-
-
-
         kenSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, kenMap.keys.toTypedArray())
         tachiyoriSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, tachiyoriMap.keys.toTypedArray())
         seasonSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, seasonspinner)
@@ -88,8 +79,9 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
                 Toast.makeText(this.context, "検索条件が不正です", Toast.LENGTH_SHORT).show()
             }
         }
-//        keywordText.setOnKeyListener(hideKeyboard())
+        hideKeyboard()
     }
+
     //キーボード消すためのクラス。
     private fun hideKeyboard() {
         val view = activity?.currentFocus

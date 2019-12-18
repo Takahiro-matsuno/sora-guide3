@@ -86,15 +86,6 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
             .client(httpClientBuilder.build())
             .build()
         rurubuService = retrofit.create(RurubuService::class.java)
-
-        val size = Point().also {
-            (context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.apply { getSize(it) }
-        }
-        val width = size.x
-        val height= size.y
-
-        Log.d("log","flagmentでの画面の横幅：$width")
-        Log.d("log","flagmentでの画面のたて幅：$height")
     }
 
     override fun onResume() { // Fragment表示時
@@ -105,8 +96,7 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
 
     private fun updateSightProgressView() {
         // 検索結果テキスト
-        sightWelcomeText1.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
-        sightWelcomeText2.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
+        sightDefaultText.visibility = if (adapter.itemCount == 0 ) View.VISIBLE else View.GONE
         // プログレス
         if (isSearching) {
             sight_progressBar.visibility = View.VISIBLE
@@ -130,7 +120,6 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
         if (fragmentManager!!.findFragmentByTag(searchDialogTag) == null) {
             val dialog = SightSearchDialog().newInstance(this)
             dialog.show(fragmentManager!!, searchDialogTag)
-
         }
     }
     // コールバック・検索開始

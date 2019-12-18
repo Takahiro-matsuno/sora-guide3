@@ -32,10 +32,14 @@ class SightViewHolder(itemview:View): androidx.recyclerview.widget.RecyclerView.
         itemView.sightTitle.text   = data.Title
         itemView.sightAddress.text = data.Address
         itemView.sightTime.text    = data.Time
-        Glide.with(mContext)
-            .asBitmap()
-            .load("${Constants.RURUBU_URL}${Constants.RURUBU_STOAGE_URL}${data.PhotoList?.get(0)?.URL}")
-            .apply(RequestOptions().centerCrop())
-            .into(itemView.sightImage)
+        if (data.PhotoList == null){
+            itemView.sightImage.setImageResource(R.drawable.nowprinting)
+        }else{
+            Glide.with(mContext)
+                .asBitmap()
+                .load("${Constants.RURUBU_URL}${Constants.RURUBU_STOAGE_URL}${data.PhotoList?.get(0)?.URL}")
+                .apply(RequestOptions().centerCrop())
+                .into(itemView.sightImage)
+        }
     }
 }
