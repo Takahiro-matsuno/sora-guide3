@@ -25,6 +25,9 @@ class AdSenseFragment: Fragment() {
 
         /**
          * Admobの設定
+         * // TODO アプリをgoogleへ提出し、審査を受ける
+         * Caused by: com.google.android.gms.dynamite.DynamiteModule$LoadingException:
+         *      Failed to instantiate module class: com.google.android.gms.ads.omid.DynamiteOmid
          */
         MobileAds.initialize(this.context, "ca-app-pub-2003234893806822~5059310598")
         val adRequest = AdRequest.Builder().build()
