@@ -28,8 +28,8 @@ class SightDetailActivity : AppCompatActivity() {
             savedInstanceState.getSerializable(SIGHT_DATA) as SightPage.Sight
         }
 
-        sight.PhotoList?.get(0)?.URL?.let { url -> loadImage(url) }
         sight_name.text = sight.Title
+        sight_address.text = sight.Address
         summary.text    = sight.Summary
         price.text      = sight.Price
         time.text       = sight.Time
@@ -40,6 +40,12 @@ class SightDetailActivity : AppCompatActivity() {
         }
         if(time.text == ""){
             time.text = "※営業時間は公開されておりません"
+        }
+        //API仕様上、値がnullのものの補足処理
+        if (sight.PhotoList == null){
+            sightImage.setImageResource(R.drawable.nowprinting)
+        }else{
+            sight.PhotoList?.get(0)?.URL?.let { url -> loadImage(url) }
         }
 
         val ido_notuse   = sight.Latitude//mapで使用する緯度
