@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.*
 import android.widget.Toast
+import androidx.viewpager.widget.ViewPager
 import jp.co.jalinfotec.soraguide.model.stamprally.TutorialEntity
 import jp.co.jalinfotec.soraguide.ui.base.BaseCallbackDialog
 import jp.co.jalinfotec.soraguide.R
@@ -47,7 +48,7 @@ class TutorialDialog : BaseCallbackDialog<TutorialDialog.CallbackListener>() {
                 arguments?.getSerializable(dataKey) as? TutorialEntity ?: throw Exception()
             }
         } catch (ex: Exception) {
-            //クーポンデータがnullならダイアログを閉じる
+            //チュートリアルデータがnullならダイアログを閉じる
             Toast.makeText(this.context, "クーポンの読み込みに失敗しました", Toast.LENGTH_LONG).show()
             this.dismiss()
         }
@@ -66,27 +67,29 @@ class TutorialDialog : BaseCallbackDialog<TutorialDialog.CallbackListener>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var currentPage = 0
         titleText.text = entity.tutorialId
+        //ViewPager処理
+        val pager:ViewPager = view.findViewById<ViewPager>(R.id.TutorialPager)
+        pager.adapter = TutorialPagerAdapter(childFragmentManager, entity.pages)
 
-
-        // クーポン名をViewに設定
-        /*
-        cpn_name.text = entity.stampRallyName
-
-        // クーポンの有効期限をViewに設定
-        cpn_expiry_date.text = resources.getString(
-            R.string.limitStr, Constants.df.format(entity.startDate), Constants.df.format(entity.endDate))
-
-        cpn_use_btn.setOnClickListener {
-            if(!entity.isCouponUsed) {
-                //QRコードを表示
-                qr_image.setImageBitmap(BitmapFactory.decodeStream(resources.assets.open(entity.couponUri)))
-                getCallbackListener()?.useCoupon(entity)
-            }
+        //beforeボタン
+        beforeBtn.setOnClickListener(){
+            currentPage++
+            pager.setCurrentItem(currentPage)
         }
-        cpn_close_btn.setOnClickListener { this.dismiss() }
-        */
+
+        //nextボタン
+        nextBtn.setOnClickListener(){
+            currentPage--
+            pager.setCurrentItem(currentPage)
+        }
+
     }
+
+
+
+
 
 
 

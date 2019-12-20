@@ -143,4 +143,5 @@ class StampRallyActivity :
             startActivity(intent)
         }
     }
+
 }

@@ -138,8 +138,13 @@ class StampRallyFragment:
 
     //チュートリアル表示
     private fun showTutorialDialog(entity: TutorialEntity) {
-        val dialogFragment: TutorialDialog = TutorialDialog().newInstance(this, entity)
-        dialogFragment.show(fragmentManager!!, tutorialDialogTag)
+
+        var data: TutorialEntity? = getTutorialSample()
+        if(data != null){
+            val dialogFragment: TutorialDialog = TutorialDialog().newInstance(this, data)
+            dialogFragment.show(fragmentManager!!, tutorialDialogTag)
+        }
+
     }
 
     //サンプルデータ作成 Debug用
@@ -148,19 +153,18 @@ class StampRallyFragment:
         return TutorialEntity(
             "id_is_1",
                     listOf(
-                        TutorialEntity.page(
+                        TutorialEntity.Page(
                             "チュートリアル 1/2 \nほげほげ",
                             "position1",
                             "tutorial_sample.png"
                         ),
-                        TutorialEntity.page(
+                        TutorialEntity.Page(
                             "チュートリアル 2/2 \nふがふが",
                             "position2",
                             "tutorial2_sample.png"
                         )
                     )
         )
-
     }
 
     /**
