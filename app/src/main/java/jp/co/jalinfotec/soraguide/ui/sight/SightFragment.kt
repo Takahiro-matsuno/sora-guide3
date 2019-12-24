@@ -1,14 +1,10 @@
 package jp.co.jalinfotec.soraguide.ui.sight
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -86,12 +82,8 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
             .client(httpClientBuilder.build())
             .build()
         rurubuService = retrofit.create(RurubuService::class.java)
-    }
 
-    override fun onResume() { // Fragment表示時
-        super.onResume()
         updateSightProgressView()
-        showSearchDialog()
     }
 
     private fun updateSightProgressView() {
