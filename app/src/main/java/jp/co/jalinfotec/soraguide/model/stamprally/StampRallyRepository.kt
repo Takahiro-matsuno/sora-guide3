@@ -1,138 +1,101 @@
 package jp.co.jalinfotec.soraguide.model.stamprally
 
 import android.content.Context
-import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
 import java.util.*
-import kotlin.collections.ArrayList
 
 class StampRallyRepository(context: Context) {
 
-    fun getStampRallyData(): ArrayList<StampRallyEntity>? {
-        val list = ArrayList<StampRallyEntity>()
-        list.add(
+    fun getStampRallyData(): List<StampRallyEntity>? {
+        val date = Date()
+        return listOf(
             StampRallyEntity(
-                1, "ほげほげを探せ！！！", Date(), Date(), false, false, "wikitude/stamp-rally/assets/qr.png",
-                listOf(
+                stampRallyId = 1,
+                stampRallyName = "高松ラーメン具材探し",
+                stampRallyImageUri = "wikitude/stamp-rally/assets/ramen.png",
+                startDate = date,
+                endDate = date,
+                isCompleted = false,
+                isCouponUsed = false,
+                couponUri = "wikitude/stamp-rally/assets/qr.png",
+                markers = listOf(
                     StampRallyEntity.Marker(
-                        1,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_red.png",
-                        false
+                        markerId = 1,
+                        latitude = 1.0,
+                        longitude = 1.0,
+                        altitude = 1.0,
+                        markerUri = "cha-syu.png",
+                        isAcquired = false
                     ),
                     StampRallyEntity.Marker(
-                        2,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_blue.png",
-                        false
+                        markerId = 2,
+                        latitude = 1.0,
+                        longitude = 1.0,
+                        altitude = 1.0,
+                        markerUri = "menma.png",
+                        isAcquired = false
                     ),
                     StampRallyEntity.Marker(
-                        3,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_green.png",
-                        false
+                        markerId = 3,
+                        latitude = 1.0,
+                        longitude = 1.0,
+                        altitude = 1.0,
+                        markerUri = "tamago.png",
+                        isAcquired = false
+                    ),
+                    StampRallyEntity.Marker(
+                        markerId = 4,
+                        latitude = 1.0,
+                        longitude = 1.0,
+                        altitude = 1.0,
+                        markerUri = "shiraga_negi.png",
+                        isAcquired = false
+                    )
+                )
+            ),
+            StampRallyEntity(
+                stampRallyId = 2,
+                stampRallyName = "高松お土産探し",
+                stampRallyImageUri = "wikitude/stamp-rally/assets/omiyage.png",
+                startDate = date,
+                endDate = date,
+                isCompleted = true,
+                isCouponUsed = false,
+                couponUri = "wikitude/stamp-rally/assets/qr.png",
+                markers = listOf(
+                    StampRallyEntity.Marker(
+                        markerId = 1,
+                        latitude = 1.0,
+                        longitude = 1.0,
+                        altitude = 1.0,
+                        markerUri = "cha-syu.png",
+                        isAcquired = true
+                    ),
+                    StampRallyEntity.Marker(
+                        markerId = 2,
+                        latitude = 1.0,
+                        longitude = 1.0,
+                        altitude = 1.0,
+                        markerUri = "menma.png",
+                        isAcquired = true
+                    ),
+                    StampRallyEntity.Marker(
+                        markerId = 3,
+                        latitude = 1.0,
+                        longitude = 1.0,
+                        altitude = 1.0,
+                        markerUri = "tamago.png",
+                        isAcquired = true
+                    ),
+                    StampRallyEntity.Marker(
+                        markerId = 4,
+                        latitude = 1.0,
+                        longitude = 1.0,
+                        altitude = 1.0,
+                        markerUri = "shiraga_negi.png",
+                        isAcquired = true
                     )
                 )
             )
         )
-        list.add(
-            StampRallyEntity(
-                2, "ぴよぴよを探せ！！！", Date(), Date(), false, false, "wikitude/stamp-rally/assets/qr.png",
-                listOf(
-                    StampRallyEntity.Marker(
-                        1,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_red.png",
-                        false
-                    ),
-                    StampRallyEntity.Marker(
-                        2,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_blue.png",
-                        true
-                    ),
-                    StampRallyEntity.Marker(
-                        3,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_green.png",
-                        false
-                    )
-                )
-            )
-        )
-        list.add(
-            StampRallyEntity(
-                3, "ふーを探せ！！！", Date(), Date(), false, false, "wikitude/stamp-rally/assets/qr.png",
-                listOf(
-                    StampRallyEntity.Marker(
-                        1,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_red.png",
-                        true
-                    ),
-                    StampRallyEntity.Marker(
-                        2,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_blue.png",
-                        false
-                    ),
-                    StampRallyEntity.Marker(
-                        3,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_green.png",
-                        true
-                    )
-                )
-            )
-        )
-        list.add(
-            StampRallyEntity(
-                4, "ばーを探せ！！！", Date(), Date(), true, false, "wikitude/stamp-rally/assets/qr.png",
-                listOf(
-                    StampRallyEntity.Marker(
-                        1,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_red.png",
-                        true
-                    ),
-                    StampRallyEntity.Marker(
-                        2,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_blue.png",
-                        true
-                    ),
-                    StampRallyEntity.Marker(
-                        3,
-                        1.0,
-                        1.0,
-                        1.0,
-                        "stamp_green.png",
-                        true
-                    )
-                )
-            )
-        )
-        return list
     }
 }

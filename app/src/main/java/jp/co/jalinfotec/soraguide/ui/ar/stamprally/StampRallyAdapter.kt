@@ -35,7 +35,7 @@ class StampRallyAdapter(
      * リストの追加
      */
     // 複数追加
-    fun appendMembers(newList: ArrayList<StampRallyEntity>) {
+    fun appendMembers(newList: List<StampRallyEntity>) {
         val pos = dataList.size
         val range = newList.size
         for (d in newList) {

@@ -6,6 +6,7 @@ import java.util.*
 data class StampRallyEntity(
     val stampRallyId: Int,
     val stampRallyName: String,
+    val stampRallyImageUri: String,
     var startDate: Date,
     var endDate: Date,
     var isCompleted: Boolean,

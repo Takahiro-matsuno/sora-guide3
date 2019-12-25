@@ -68,7 +68,7 @@ class CouponDialog : BaseCallbackDialog<CouponDialog.CallbackListener>() {
 
         // クーポン名をViewに設定
         cpn_name.text = entity.stampRallyName
-
+        qr_image.setImageBitmap(BitmapFactory.decodeStream(resources.assets.open(entity.stampRallyImageUri)))
         // クーポンの有効期限をViewに設定
         cpn_expiry_date.text = resources.getString(
             R.string.limitStr, Constants.df.format(entity.startDate), Constants.df.format(entity.endDate))

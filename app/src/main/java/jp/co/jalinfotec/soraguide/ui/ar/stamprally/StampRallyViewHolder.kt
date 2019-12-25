@@ -2,6 +2,7 @@ package jp.co.jalinfotec.soraguide.ui.ar.stamprally
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun couponTapped(data: StampRallyEntity?)
     }
 
-    fun newInstance(context: Context, parent: ViewGroup, listener: StampRallyViewHolder.CallbackListener): StampRallyViewHolder {
+    fun newInstance(context: Context, parent: ViewGroup, listener: CallbackListener): StampRallyViewHolder {
         val viewHolder =  StampRallyViewHolder(LayoutInflater.from(parent.context).inflate(
                 R.layout.viewholder_stamp_rally,
                 parent,
@@ -35,30 +36,31 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     @SuppressLint("SetTextI18n")
     fun bindData(data: StampRallyEntity) {
         /* Viewのデータ設定 */
-        itemView.name_txt.text = data.stampRallyName
-        itemView.period_txt.text =
-            mContext.resources.getString(R.string.limitStr, Constants.df.format(data.startDate), Constants.df.format(data.endDate))
+        itemView.stampRallyImage.setImageBitmap(BitmapFactory.decodeStream(mContext.resources.assets.open(data.stampRallyImageUri)))
+        itemView.stampRallyNameText.text = data.stampRallyName
+        itemView.stampRallyPeriodText.text =
+            mContext.resources.getString(R.string.periodStr, Constants.df.format(data.startDate), Constants.df.format(data.endDate))
 
         // コンプリート済みかで表記を変更する
         val num = data.markers.size
         if (data.isCompleted) {
-            itemView.coupon_btn.isEnabled = true
-            itemView.achieve_txt.text = mContext.getString(R.string.stamp_rally_achieve, num, num)
+            itemView.couponBtn.isEnabled = true
+            itemView.stampRallyArchiveText.text = mContext.getString(R.string.stamp_rally_achieve, num, num)
         } else {
-            itemView.coupon_btn.isEnabled = false
-            itemView.achieve_txt.text = mContext.getString(R.string.stamp_rally_achieve, data.getAcquiredNum(), num)
+            itemView.couponBtn.isEnabled = false
+            itemView.stampRallyArchiveText.text = mContext.getString(R.string.stamp_rally_achieve, data.getAcquiredNum(), num)
 
         }
         // クーポン使用済みかで表記を変更する
         if (data.isCouponUsed) {
-            itemView.coupon_btn.isEnabled = false
-            itemView.coupon_btn.text = mContext.resources.getString(R.string.coupon_btn_used)
+            itemView.couponBtn.isEnabled = false
+            itemView.couponBtn.text = mContext.resources.getString(R.string.coupon_btn_used)
         } else {
-            itemView.coupon_btn.text = mContext.resources.getString(R.string.coupon_btn_not_used)
+            itemView.couponBtn.text = mContext.resources.getString(R.string.coupon_btn_not_used)
         }
 
         /* Viewのクリックイベント */
-        itemView.stamp_rally_layout.setOnClickListener { cListener.itemTapped(data) }
-        itemView.coupon_btn.setOnClickListener { cListener.couponTapped(data) }
+        itemView.stampRallyLayout.setOnClickListener { cListener.itemTapped(data) }
+        itemView.couponBtn.setOnClickListener { cListener.couponTapped(data) }
     }
 }

@@ -21,9 +21,10 @@
     <string name="price_colume">料金情報</string>
     <string name="overview_colume">概要</string>
     <!-- stamp rally -->
+    <string name="periodStr">期間:%1$s~%2$s</string>
     <string name="stamp_rally_achieve">達成度:%1$d/%2$d</string>
-    <string name="coupon_btn_used">クーポン使用済み</string>
-    <string name="coupon_btn_not_used">クーポンを確認する</string>
+    <string name="coupon_btn_used">クーポン使用済</string>
+    <string name="coupon_btn_not_used">クーポンを表示</string>
     <!-- クーポンダイアログ用 -->
     <string name="coupon_use_button">クーポンを使用する</string>
     <string name="limitStr">有効期限:%1$s~%2$s</string>
