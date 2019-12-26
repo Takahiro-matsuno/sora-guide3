@@ -22,6 +22,12 @@ class SightDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sight_detail)
 
+        setSupportActionBar(toolbar_detailview)
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setHomeButtonEnabled(true)
+        } ?: IllegalAccessException("Toolbar cannot be null")
+
         sight = if (savedInstanceState == null) {
             intent.getSerializableExtra(SIGHT_DATA) as SightPage.Sight
         } else {
@@ -52,7 +58,7 @@ class SightDetailActivity : AppCompatActivity() {
         val keido_notuse = sight.Longitude//mapで使用する経度
 
         //TODO:緯度経度がnullの場合もある？その場合の処理をここで記載する
-        setSupportActionBar(toolbar_detail)//
+//        setSupportActionBar(toolbar_detailview)
 
         //緯度、経度はAPIの生の値だと使えないので加工する
         val ido_front = ido_notuse?.substring(0..1)
@@ -70,6 +76,15 @@ class SightDetailActivity : AppCompatActivity() {
             Log.d("maplog","mapのurlは$uri")
             startActivity(intent)
         }
+    }
+    override fun onBackPressed() {
+        // Do something
+        super.onBackPressed()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun loadImage(url: String) {
