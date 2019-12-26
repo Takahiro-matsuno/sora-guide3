@@ -26,6 +26,19 @@
         app:layout_constraintStart_toStartOf="@id/sight_progressBar"
         app:layout_constraintEnd_toEndOf="@id/sight_progressBar"
         />
+    <TextView
+        android:id="@+id/sight_caution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="※初回検索時は結果表示に時間がかかる場合があります。"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="15dp"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/sight_progressText"
+        app:layout_constraintStart_toStartOf="@id/sight_progressText"
+        app:layout_constraintEnd_toEndOf="@id/sight_progressText"
+        />
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

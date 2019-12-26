@@ -93,9 +93,11 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
         if (isSearching) {
             sight_progressBar.visibility = View.VISIBLE
             sight_progressText.visibility = View.VISIBLE
+            sight_caution.visibility = View.VISIBLE
         } else {
             sight_progressBar.visibility = View.GONE
             sight_progressText.visibility = View.GONE
+            sight_caution.visibility = View.GONE
         }
     }
 
@@ -127,6 +129,8 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
             adapter.removeAllMember() // アダプターの要素を削除
             isSearching = true
             updateSightProgressView()
+
+            sightDefaultText.visibility = View.GONE
 
             rurubuRequest = rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, spring, summer, autumn, winter,inspiteOfRain,20, "json")
             rurubuRequest.enqueue(object : Callback<List<SightPage>> {
