@@ -34,6 +34,8 @@ class SightDetailActivity : AppCompatActivity() {
             savedInstanceState.getSerializable(SIGHT_DATA) as SightPage.Sight
         }
 
+        setTitle("観光案内")
+
         sight_name.text = sight.Title
         sight_address.text = sight.Address
         summary.text    = sight.Summary
