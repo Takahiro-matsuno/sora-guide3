@@ -1,5 +1,6 @@
 package jp.co.jalinfotec.soraguide.ui.sight
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.sight.RurubuService
 import jp.co.jalinfotec.soraguide.model.sight.SightPage
@@ -145,6 +148,7 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
                     }
                 }
                 // 通信成功
+                @SuppressLint("NewApi")
                 override fun onResponse(call: Call<List<SightPage>>, rurubuResponse: Response<List<SightPage>>) {
                     if (rurubuResponse.isSuccessful && rurubuResponse.body() != null) {
                         val data = rurubuResponse.body()!![0].SightList
@@ -153,6 +157,11 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
                             dialog.show(fragmentManager!!, errorDialogTag)
                         }
                         else{
+                            //リストの罫線作成
+                            val itemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+                            itemDecoration.setDrawable(context?.getDrawable(R.drawable.divider)!!)
+                            fragment_sightRecyclerView.addItemDecoration(itemDecoration)
+
                             adapter.appendMember(data)
                             Toast.makeText(context, "検索結果:${data.size}件", Toast.LENGTH_SHORT).show()
                         }
