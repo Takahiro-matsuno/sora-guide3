@@ -60,16 +60,15 @@ class SightDetailActivity : AppCompatActivity() {
         val keido_notuse = sight.Longitude//mapで使用する経度
 
         //TODO:緯度経度がnullの場合もある？その場合の処理をここで記載する
-//        setSupportActionBar(toolbar_detailview)
 
         //緯度、経度はAPIの生の値だと使えないので加工する
-        val ido_front = ido_notuse?.substring(0..1)
-        val ido_back = ido_notuse?.substring(2)
-        val ido = ido_front + "." + ido_back
+        val ido_front = ido_notuse.substring(0..1)
+        val ido_back = ido_notuse.substring(2)
+        val ido = "$ido_front.$ido_back"
 
-        val keido_front = keido_notuse?.substring(0..2)
-        val keido_back = keido_notuse?.substring(3)
-        val keido = keido_front + "." + keido_back
+        val keido_front = keido_notuse.substring(0..2)
+        val keido_back = keido_notuse.substring(3)
+        val keido = "$keido_front.$keido_back"
 
         //googlemap案内 いまは高松空港発で固定にしている
         route_button.setOnClickListener {

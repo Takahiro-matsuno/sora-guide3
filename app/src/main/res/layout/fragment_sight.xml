@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:text="検索中..."
         android:layout_marginTop="8dp"
-        android:textSize="25dp"
+        android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@+id/sight_progressBar"
         app:layout_constraintStart_toStartOf="@id/sight_progressBar"
         app:layout_constraintEnd_toEndOf="@id/sight_progressBar"
@@ -33,7 +33,7 @@
         android:text="※初回検索時は結果表示に時間がかかる場合があります。"
         android:layout_marginTop="8dp"
         android:textColor="@color/colorAccent"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/sight_progressText"
         app:layout_constraintStart_toStartOf="@id/sight_progressText"
@@ -63,16 +63,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-    <Button
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/search_button"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/search"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_search_24dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

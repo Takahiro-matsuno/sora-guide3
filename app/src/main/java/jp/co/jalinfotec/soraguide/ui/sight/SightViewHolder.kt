@@ -37,7 +37,7 @@ class SightViewHolder(itemview:View): androidx.recyclerview.widget.RecyclerView.
         }else{
             Glide.with(mContext)
                 .asBitmap()
-                .load("${Constants.RURUBU_URL}${Constants.RURUBU_STOAGE_URL}${data.PhotoList?.get(0)?.URL}")
+                .load("${Constants.RURUBU_URL}${Constants.RURUBU_STOAGE_URL}${data.PhotoList[0]?.URL}")
                 .apply(RequestOptions().centerCrop())
                 .into(itemView.sightImage)
         }
