@@ -1,4 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CCCCCC"
+>
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="10dp"
+            android:layout_margin="4dp"
+    >
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+        >
+            <TextView
+                    android:id="@+id/sightTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/green"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:maxLines="3"
+                    tools:text="タイトル"
+            />
+            <ImageView
+                    android:id="@+id/sightImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center_vertical"
+                    tools:src="@color/colorAccent"
+            />
+            <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+            >
+                <TableRow>
+                    <TextView
+                            android:id="@+id/row_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dp"
+                            android:padding="8dp"
+                            android:text="住所"
+                            android:textColor="@color/colorBlack"
+                    />
+                    <TextView
+                            android:id="@+id/sightAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:padding="8dp"
+                            android:textColor="@color/colorBlack"
+                            android:maxLines="3"
+                            tools:text="〒108-0023 東京都港区芝浦４丁目１５−３３〒108-0023 東京都港区芝浦４丁目１５−３３〒108-0023 東京都港区芝浦４丁目１５−３３〒108-0023 東京都港区芝浦４丁目１５−３３〒108-0023 東京都港区芝浦４丁目１５−３３"
+                    />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                            android:id="@+id/row_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dp"
+                            android:padding="8dp"
+                            android:text="営業時間"
+                            android:textColor="@color/colorBlack"
+                    />
+                    <TextView
+                            android:id="@+id/sightTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:layout_marginStart="5dp"
+                            android:textColor="@color/colorBlack"
+                            android:maxLines="3"
+                            tools:text="1F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:00"
+                    />
+                </TableRow>
+            </TableLayout>
+            <TextView
+                    android:id="@+id/view_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="詳しく見る"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/green"
+                    android:layout_gravity="center"
+            />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>
+<!--
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
@@ -93,3 +191,4 @@
         android:layout_height="10dp"
         />
 </LinearLayout>
+-->

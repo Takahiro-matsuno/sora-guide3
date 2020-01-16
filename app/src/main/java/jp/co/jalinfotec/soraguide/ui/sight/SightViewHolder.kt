@@ -12,7 +12,6 @@ import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.viewholder_sight.view.*
 
 class SightViewHolder(itemview:View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemview) {
-    val row = itemView.findViewById<View>(R.id.row)
     private lateinit var mContext: Context
     private val logTag = this::class.java.simpleName
 
