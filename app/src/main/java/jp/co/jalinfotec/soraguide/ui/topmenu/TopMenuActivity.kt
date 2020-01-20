@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -89,7 +90,7 @@ class TopMenuActivity :
 
     private fun loadTopics() {
 
-        var iv = ImageView(this)
+       var iv = ImageView(this)
 
         if (!isLoading) {
             isLoading = true
@@ -109,55 +110,30 @@ class TopMenuActivity :
                     //ImageViewに初期画像をセット
                     Glide.with(this@TopMenuActivity).load(topics[position].topicImage).into(iv)
 
-                    //period秒ごとにImageViewの表示画像を切り替える
-                    timer(period = 5000) {
-                        handler.post {
-                            if (isSlideshow) {
-
-                                //画像切り替えのメソッド呼び出し
-                                movePosition(1, topics,iv)
-                            }
+                    topics.forEach { new ->
+                        if (mTopicsList.find { local -> local.topicId == new.topicId } == null) { // 新しいTopicsの場合
+                            mTopicsList.add(new)
+                            // ImageViewの作成
+                             iv = ImageView(this@TopMenuActivity)
+                            Glide.with(this@TopMenuActivity).load(new.topicImage).into(iv)
+                            iv.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(new.topicUrl))) }
+                            viewFlipper.addView(iv)
                         }
                     }
-                    //画像タップされた時の動作
-                    iv.setOnClickListener {
-                       // Log.d("TAG", position.toString())
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        //topicsに設定されているURLのページへ遷移
-                        intent.data = Uri.parse(topics[position].topicUrl)
-                        startActivity(intent)
-                    }
-                    viewFlipper.addView(iv)
 
+                    viewFlipper.addView(iv)
                 }
 
                 override fun onFailure(
                     call: Call<Array<Topics>?>,
                     t: Throwable
                 ) {
-                    throw t
+                    Log.d(logTag,"通信エラー:$t")
                 }
-
             })
             viewFlipper.startFlipping()
         }
     }
-
-    //画像切り替えのメソッド
-    private fun movePosition(move: Int, topics : MutableList<Topics>,iv: ImageView){
-        position += move
-        //Positionが画像配列のサイズよりも大きい場合は0に戻す。
-        if(position >= topics.size){
-            position = 0
-            //positionが0以下になった場合
-        }else if(position < 0){
-            position = topics.size - 1
-        }
-
-        //ImageViewに画像をセットし直す
-         Glide.with(this).load(topics[position].topicImage).into(iv)
-    }
-
 
 
     /*
