@@ -34,9 +34,6 @@ class TopMenuActivity :
     private var isSlideshow = true
     private val handler = Handler()
 
-    //どの画像を表示しているかを保持する変数
-    private var position = 0
-
     //Topicsを格納する変数
     private var topics: MutableList<Topics> = mutableListOf()
     private lateinit var topicsService: TopicsService
@@ -90,7 +87,7 @@ class TopMenuActivity :
 
     private fun loadTopics() {
 
-       var iv = ImageView(this)
+     //  var iv = ImageView(this)
 
         if (!isLoading) {
             isLoading = true
@@ -107,21 +104,16 @@ class TopMenuActivity :
                         topics.add(topic)
                     }
 
-                    //ImageViewに初期画像をセット
-                    Glide.with(this@TopMenuActivity).load(topics[position].topicImage).into(iv)
-
                     topics.forEach { new ->
                         if (mTopicsList.find { local -> local.topicId == new.topicId } == null) { // 新しいTopicsの場合
                             mTopicsList.add(new)
                             // ImageViewの作成
-                             iv = ImageView(this@TopMenuActivity)
+                            val iv = ImageView(this@TopMenuActivity)
                             Glide.with(this@TopMenuActivity).load(new.topicImage).into(iv)
                             iv.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(new.topicUrl))) }
                             viewFlipper.addView(iv)
                         }
                     }
-
-                    viewFlipper.addView(iv)
                 }
 
                 override fun onFailure(
