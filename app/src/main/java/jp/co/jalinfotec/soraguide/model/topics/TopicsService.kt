@@ -4,6 +4,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface TopicsService {
-        @GET("index/getAllTopics")
+        @GET("soraguideapi/")
         fun getTopic(): Call<Array<Topics>>
 }
