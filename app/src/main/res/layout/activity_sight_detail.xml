@@ -45,12 +45,11 @@
             android:text="@string/kankouti_colume"
             android:textStyle="bold"
             android:layout_margin="15dp"
-            android:background="@drawable/frame_style2"
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="8dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorBlack"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/summary" />
 
@@ -68,12 +67,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/frame_style2"
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="8dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorBlack"
             app:layout_constraintTop_toBottomOf="@+id/sight_name"
             app:layout_constraintStart_toStartOf="parent"/>
         <TextView
@@ -91,12 +89,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/frame_style2"
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="8dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorBlack"
             app:layout_constraintTop_toBottomOf="@+id/sight_address"
             app:layout_constraintStart_toStartOf="parent"/>
         <TextView
@@ -114,12 +111,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/frame_style2"
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="8dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorBlack"
             app:layout_constraintTop_toBottomOf="@+id/time"
             app:layout_constraintStart_toStartOf="parent"/>
         <TextView
@@ -141,14 +137,12 @@
 
         <Button
             android:id="@+id/route_button"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="50dp"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="28dp"
             android:layout_marginBottom="32dp"
-            android:background="@drawable/frame_style3"
+            android:theme="@style/MapButtonStyle"
             android:text="map"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

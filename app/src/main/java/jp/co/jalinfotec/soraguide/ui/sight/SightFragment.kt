@@ -157,11 +157,6 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
                             dialog.show(fragmentManager!!, errorDialogTag)
                         }
                         else{
-                            //リストの罫線作成
-                            val itemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-                            itemDecoration.setDrawable(context?.getDrawable(R.drawable.divider)!!)
-                            //fragment_sightRecyclerView.addItemDecoration(itemDecoration)
-
                             adapter.appendMember(data)
                             Toast.makeText(context, "検索結果:${data.size}件", Toast.LENGTH_SHORT).show()
                         }

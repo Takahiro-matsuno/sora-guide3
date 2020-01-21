@@ -33,4 +33,19 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowBackground">@null</item>
     </style>
+
+    <style name="SightSearchButtonStyle" parent="Theme.AppCompat">
+        <!--ボタンの色-->
+        <item name="colorButtonNormal">#66cdaa</item>
+        <!--ボタンをプレスしている時、シークバーをプレスしている時の色-->
+        <item name="colorControlHighlight">#008577</item>
+    </style>
+
+    <style name="MapButtonStyle" parent="Theme.AppCompat">
+        <!--ボタンの色-->
+        <item name="colorButtonNormal">#ffa500</item>
+        <!--ボタンをプレスしている時、シークバーをプレスしている時の色-->
+        <item name="colorControlHighlight">#aa00bcd4</item>
+    </style>
+
 </resources>

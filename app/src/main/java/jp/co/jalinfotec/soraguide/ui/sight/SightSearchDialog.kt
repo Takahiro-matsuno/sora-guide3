@@ -6,10 +6,8 @@ import android.graphics.Point
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -79,15 +77,14 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
                 Toast.makeText(this.context, "検索条件が不正です", Toast.LENGTH_SHORT).show()
             }
         }
-        hideKeyboard()
-    }
-
-    //キーボード消すためのクラス。
-    private fun hideKeyboard() {
-        val view = activity?.currentFocus
-        if (view != null) {
-            val manager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            manager.hideSoftInputFromWindow(view.windowToken, 0)
+        //キーボードでエンター押された時のイベント
+        keywordText.setOnKeyListener { view, keyCode, keyEvent ->
+            (keyEvent!!.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER).apply{
+                //TODO:外出ししたsetOnClickListenerを呼び出す
+                dismiss()
+            }
         }
+        keywordText.isFocusableInTouchMode = true
+        keywordText.requestFocus()
     }
 }
