@@ -3,7 +3,6 @@ package jp.co.jalinfotec.soraguide.ui.topmenu
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.topics.Topics
-import jp.co.jalinfotec.soraguide.model.topics.TopicsRepository
 import jp.co.jalinfotec.soraguide.model.topics.TopicsService
 import jp.co.jalinfotec.soraguide.ui.NavigationActivity
 import kotlinx.android.synthetic.main.activity_top_menu.*
@@ -20,24 +18,17 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.concurrent.timer
 
 
 class TopMenuActivity :
     AppCompatActivity() {
     private val logTag = this::class.java.simpleName
-    private val topicsRepository = TopicsRepository()
     private val mTopicsList = ArrayList<Topics>()
     private var isLoading = false
-
-    //画像スライドショー初期設定
-    private var isSlideshow = true
-    private val handler = Handler()
 
     //Topicsを格納する変数
     private var topics: MutableList<Topics> = mutableListOf()
     private lateinit var topicsService: TopicsService
-    private val permissionRequestCode = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,8 +78,6 @@ class TopMenuActivity :
 
     private fun loadTopics() {
 
-     //  var iv = ImageView(this)
-
         if (!isLoading) {
             isLoading = true
             viewFlipper.stopFlipping()
@@ -110,7 +99,14 @@ class TopMenuActivity :
                             // ImageViewの作成
                             val iv = ImageView(this@TopMenuActivity)
                             Glide.with(this@TopMenuActivity).load(new.topicImage).into(iv)
-                            iv.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(new.topicUrl))) }
+                            iv.setOnClickListener {
+                                startActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(new.topicUrl)
+                                    )
+                                )
+                            }
                             viewFlipper.addView(iv)
                         }
                     }
@@ -120,47 +116,11 @@ class TopMenuActivity :
                     call: Call<Array<Topics>?>,
                     t: Throwable
                 ) {
-                    Log.d(logTag,"通信エラー:$t")
+                    Log.d(logTag, "通信エラー:$t")
                 }
             })
             viewFlipper.startFlipping()
         }
     }
 
-
-    /*
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray
-    ) {
-        when (requestCode) {
-            permissionRequestCode -> {
-                if (grantResults.contains(-1)) {
-                    // 権限が許可されなかった場合、注意メッセージを表示する
-                    val  builder =  AlertDialog.Builder(this)
-                    builder.setMessage(
-                        """
-                            アプリの権限により使用できる機能が制限されます。
-                            
-                            権限の追加は[設定]->[アプリ]->[そらガイド]->[権限]から行えます。
-                        """.trimIndent())
-                    builder.setPositiveButton("追加しない", DialogInterface.OnClickListener() { dialog, _ ->
-                        dialog.dismiss()
-                    })
-                    builder.setNegativeButton("追加する", DialogInterface.OnClickListener() { dialog, _ ->
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        intent.data = Uri.parse("package:jp.co.jalinfotec.soraguide")
-                        startActivity(intent)
-                        dialog.dismiss()
-                    })
-                    builder.show()
-                }
-            }
-            // Add other 'when' lines to check for other
-            // permissions this app might request.
-            else -> {} // Ignore all other requests.
-        }
-    }
-
-     */
 }
