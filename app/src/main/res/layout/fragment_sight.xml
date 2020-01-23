@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorWhite"
     >
     <ProgressBar
         android:id="@+id/sight_progressBar"
@@ -61,7 +62,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_sightRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
