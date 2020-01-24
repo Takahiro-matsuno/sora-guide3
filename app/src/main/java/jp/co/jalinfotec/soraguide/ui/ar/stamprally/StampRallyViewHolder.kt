@@ -49,8 +49,8 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         } else {
             itemView.couponBtn.isEnabled = false
             itemView.stampRallyArchiveText.text = mContext.getString(R.string.stamp_rally_achieve, data.getAcquiredNum(), num)
-
         }
+
         // クーポン使用済みかで表記を変更する
         if (data.isCouponUsed) {
             itemView.couponBtn.isEnabled = false
@@ -60,7 +60,8 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
         /* Viewのクリックイベント */
-        itemView.stampRallyLayout.setOnClickListener { cListener.itemTapped(data) }
+        //itemView.stampRallyLayout.setOnClickListener { cListener.itemTapped(data) }
         itemView.couponBtn.setOnClickListener { cListener.couponTapped(data) }
+
     }
 }

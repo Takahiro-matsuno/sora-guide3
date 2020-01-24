@@ -7,8 +7,13 @@
     <color name="actionbar_textColor">#008577</color>
     <color name="colorPalegreen">#98fb98</color>
     <color name="colorBlack">#000000</color>
-    <!-- navigation -->]
+    <!-- navigation -->
     <color name="white">#ffffff</color>
     <color name="green">#005000</color>
     <!-- taxi -->
+
+    <!-- common -->
+    <color name="colorDeepGreen">#005000</color>
+    <color name="colorPink">#ffc0cb</color>>
+
 </resources>
