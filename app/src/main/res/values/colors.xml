@@ -11,4 +11,6 @@
     <color name="white">#ffffff</color>
     <color name="green">#005000</color>
     <!-- taxi -->
+    <!-- common -->
+    <color name="colorDeepGreen">#005000</color>
 </resources>
