@@ -8,6 +8,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import jp.co.jalinfotec.soraguide.R
+import jp.co.jalinfotec.soraguide.model.airport.Shop
+import jp.co.jalinfotec.soraguide.ui.airport.ShopFragment
 import jp.co.jalinfotec.soraguide.ui.ar.stamprally.StampRallyFragment
 import jp.co.jalinfotec.soraguide.ui.sight.SightFragment
 import jp.co.jalinfotec.soraguide.ui.taxi.TaxiFragment
@@ -92,8 +94,8 @@ class NavigationActivity:
         val preFragment = supportFragmentManager.findFragmentById(R.id.main_content)
         val aftFragment = when (mNavigationType) {
             NavigationType.AIRPORT -> {
-                Toast.makeText(this, "coming soon", Toast.LENGTH_SHORT).show()
-                null
+                toolbar.title = resources.getString(R.string.airport_navigation)
+                if (preFragment is ShopFragment) null else ShopFragment().newInstance()
             }
             NavigationType.STAMP_RALLY -> {
                 toolbar.title = resources.getString(R.string.stamp_rally)
