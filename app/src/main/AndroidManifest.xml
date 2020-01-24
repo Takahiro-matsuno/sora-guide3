@@ -65,21 +65,6 @@
                 android:value="ca-app-pub-2003234893806822~5059310598"
         />
 
-
-
-        <!-- 使ってない -->
-
-        <activity
-                android:name=".ui.sight.SightSearchActivity"
-                android:theme="@style/AppTheme.NoActionBar"/> <!-- タクシー -->
-        <activity
-                android:name=".ui.TaxiActivity"
-                android:theme="@style/AppTheme.NoActionBar"/> <!-- AR -->
-        <activity
-                android:name=".ui.ar.stamprally.StampRallyActivity"
-                android:theme="@style/AppTheme.NoActionBar"/>
-         <!-- AdMobアプリIDの設定 -->
-
     </application>
 
 </manifest>

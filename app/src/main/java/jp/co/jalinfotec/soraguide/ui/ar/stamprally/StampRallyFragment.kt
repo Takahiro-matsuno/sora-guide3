@@ -16,7 +16,7 @@ import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
 import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyRepository
 import jp.co.jalinfotec.soraguide.ui.ar.ARCameraActivity
 import jp.co.jalinfotec.soraguide.utils.PermissionUtil
-import kotlinx.android.synthetic.main.activity_stamprally.*
+import kotlinx.android.synthetic.main.fragment_stamp_rally.*
 
 class StampRallyFragment:
     Fragment(),

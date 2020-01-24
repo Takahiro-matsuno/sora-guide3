@@ -17,7 +17,7 @@
         <!-- Toolbar タイトル文字色-->
         <item name="android:textColorPrimary">@color/colorDeepGreen</item>
         <!-- menu 文字色 -->
-        <item name="android:textColorSecondary">@color/colorWhite</item>
+        <item name="android:textColorSecondary">@color/colorDeepGreen</item> <!-- ここで横三本線 -->
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowBackground">@null</item>
     </style>
