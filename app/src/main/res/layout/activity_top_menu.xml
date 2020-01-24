@@ -19,16 +19,12 @@
     >
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-
-                android:title="@string/app_name"
-                android:textColor="@color/colorDeepGreen"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 android:theme="@style/MyAppTheme"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         />
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <ViewFlipper

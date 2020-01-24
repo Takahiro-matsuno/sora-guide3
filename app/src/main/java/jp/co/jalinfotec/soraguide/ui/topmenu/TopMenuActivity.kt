@@ -36,16 +36,12 @@ class TopMenuActivity :
         // https://github.com/android/sunflower/issues/295
         setContentView(R.layout.activity_top_menu)
 
+        toolbar.title = resources.getString(R.string.app_name)
         /**
          * 各画面への遷移
          */
-        airport.setOnClickListener {
-            /* TODO 施設案内に置き換える */ Toast.makeText(
-            this,
-            "coming soon",
-            Toast.LENGTH_SHORT
-        ).show()
-        }
+        /* TODO 施設案内に置き換える */
+        airport.setOnClickListener { Toast.makeText(this, "coming soon", Toast.LENGTH_SHORT).show() }
         stamp_rally.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.STAMP_RALLY) }
         taxi.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.TAXI) }
         sightseeing.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.SIGHT) }
