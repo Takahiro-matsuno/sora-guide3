@@ -10,14 +10,12 @@
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="10dp"
-            android:layout_margin="4dp"
-    >
+            card_view:cardCornerRadius="3dp"
+            android:layout_margin="4dp">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-        >
+                android:orientation="vertical">
             <TextView
                     android:id="@+id/sightTitle"
                     android:layout_width="wrap_content"
@@ -26,169 +24,79 @@
                     android:textColor="@color/green"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:maxLines="3"
-                    tools:text="タイトル"
-            />
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    tools:text="タイトルタイトルタイトルタイトルタイトルタイトルタイトル"/>
             <ImageView
                     android:id="@+id/sightImage"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:layout_gravity="center_vertical"
-                    tools:src="@color/colorAccent"
-            />
+                    tools:src="@color/colorAccent"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
             <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-            >
+                    android:layout_height="wrap_content"
+                    android:shrinkColumns="1"
+                    android:stretchColumns="1">
                 <TableRow>
                     <TextView
-                            android:id="@+id/row_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="4dp"
-                            android:padding="8dp"
-                            android:text="住所"
-                            android:textColor="@color/colorBlack"
-                    />
+                        android:id="@+id/row_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@string/address_colume"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold"
+                        android:layout_gravity="left"/>
                     <TextView
-                            android:id="@+id/sightAddress"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:padding="8dp"
-                            android:textColor="@color/colorBlack"
-                            android:maxLines="3"
-                            tools:text="〒108-0023 東京都港区芝浦４丁目１５−３３〒108-0023 東京都港区芝浦４丁目１５−３３〒108-0023 東京都港区芝浦４丁目１５−３３〒108-0023 東京都港区芝浦４丁目１５−３３〒108-0023 東京都港区芝浦４丁目１５−３３"
-                    />
+                        android:id="@+id/sightAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="6dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        tools:text="住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力" />
                 </TableRow>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
                 <TableRow>
                     <TextView
-                            android:id="@+id/row_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="4dp"
-                            android:padding="8dp"
-                            android:text="営業時間"
-                            android:textColor="@color/colorBlack"
-                    />
+                        android:id="@+id/row_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@string/open_end_colume"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold"
+                        android:layout_gravity="left"/>
                     <TextView
-                            android:id="@+id/sightTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:layout_marginStart="5dp"
-                            android:textColor="@color/colorBlack"
-                            android:maxLines="3"
-                            tools:text="1F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:001F レストラン街 11:00～22:00"
-                    />
+                        android:id="@+id/sightTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="6dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                       tools:text="営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力"/>
                 </TableRow>
             </TableLayout>
             <TextView
                     android:id="@+id/view_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="10sp"
                     android:text="詳しく見る"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="@color/green"
-                    android:layout_gravity="center"
-            />
+                    android:layout_gravity="center"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>
-<!--
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/row"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        />
-    <TextView
-        android:id="@+id/sightTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:textColor="@color/green"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:maxLines="3"/>
-    <ImageView
-            android:id="@+id/sightImage"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="center_vertical" />
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/row_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="住所"
-                android:textColor="@color/colorBlack"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="35dp"
-                android:paddingTop="8dp"
-                android:layout_marginStart="5dp"
-                android:maxLines="3"/>
-            <TextView
-                    android:id="@+id/sightAddress"
-                    android:textColor="@color/colorBlack"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/row_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="営業時間"
-                android:textColor="@color/colorBlack"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="8dp"
-                android:layout_marginStart="5dp"
-                android:maxLines="3"/>
-            <TextView
-                    android:id="@+id/sightTime"
-                    android:textColor="@color/colorBlack"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"/>
-            />
-        </LinearLayout>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/view_detail"
-        android:text="詳しく見る"
-        android:textColor="@color/green"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        />
-</LinearLayout>
--->

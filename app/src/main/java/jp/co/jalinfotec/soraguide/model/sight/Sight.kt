@@ -12,7 +12,7 @@ data class SightPage(
         val Title: String?,
         val PhotoList: List<Photo?>?,
     //    val Chiku: Chiku,
-    //    val Closed: String,
+        val Closed: String,
     //    val GenreList: List<ListGenre>,
     //    val HasCoupon: Int,
     //    val Homen: Homen,
@@ -26,7 +26,6 @@ data class SightPage(
     //    val LongitudeW10: String,
         val Mesh: Mesh,
     //    val Parking: Parking,
-    //
         val Price: String?,
     //    val Rank: String,
     //    val SightID: Int,
@@ -36,8 +35,8 @@ data class SightPage(
         val Summary: String,
     //    val Tel: String,
     //    val TelAnnotation: String,
-        val Time: String
-    //    val Traffic1: String,
+        val Time: String,
+        val Traffic1: String
     //    val Traffic2: String,
     //    val Tresure: String
     ): Serializable{

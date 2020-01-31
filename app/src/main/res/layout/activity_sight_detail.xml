@@ -1,141 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_detailview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         app:titleTextColor="@color/green"/>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        tools:context=".ui.sight.SightDetailActivity"
-        android:layout_weight="1">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        tools:context=".ui.sight.SightDetailActivity">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <ImageView
-                android:id="@+id/sightImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-            <TextView
-                android:id="@+id/summary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                tools:text="観光地サマリの表示テスト観光地サマリの表示テスト観光地サマリの表示テスト観光地サマリの表示テスト観光地サマリの表示テスト"
-                app:layout_constraintTop_toBottomOf="@+id/sightImage"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <TextView
-                android:id="@+id/kankouti_colume"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/kankouti_colume"
-                android:textStyle="bold"
-                android:padding="10sp"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintStart_toStartOf="parent"
-                android:background="@drawable/frame_style2"
-                app:layout_constraintTop_toBottomOf="@+id/summary"/>
             <TextView
                 android:id="@+id/sight_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="10sp"
-                android:paddingTop="5sp"
-                android:paddingEnd="10sp"
-                app:layout_constraintTop_toBottomOf="@+id/kankouti_colume"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="観光地名はここに出力観光地名はここに出力観光地名はここに出力"/>
-            <TextView
-                android:id="@+id/address_colume"
-                android:text="@string/address_colume"
+                android:layout_margin="5dp"
+                android:textColor="@color/green"
+                android:textSize="30sp"
                 android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10sp"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintTop_toBottomOf="@+id/sight_name"
-                android:background="@drawable/frame_style2"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="タイトルタイトルタイトルタイトルタイトルタイトルタイトル"/>
+            <ImageView
+                android:id="@+id/sightImage"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_gravity="center_vertical"/>
             <TextView
-                android:id="@+id/sight_address"
+                android:id="@+id/summary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="10sp"
-                android:paddingTop="5sp"
-                android:paddingEnd="10sp"
-                app:layout_constraintTop_toBottomOf="@+id/address_colume"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力"/>
-            <TextView
-                android:id="@+id/open_end_culume"
-                android:text="@string/open_end_colume"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                tools:text="観光地サマリの表示テスト観光地サマリの表示テスト観光地サマリの表示テスト観光地サマリの表示テスト観光地サマリの表示テスト" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+            <TableLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10sp"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintTop_toBottomOf="@+id/sight_address"
-                android:background="@drawable/frame_style2"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="10sp"
-                android:paddingTop="5sp"
-                android:paddingEnd="10sp"
-                app:layout_constraintTop_toBottomOf="@+id/open_end_culume"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="営業時間はここに出力営業時間はここに出力営業時間はここに出力"/>
-            <TextView
-                android:id="@+id/price_culume"
-                android:text="@string/price_colume"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10sp"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintTop_toBottomOf="@+id/time"
-                android:background="@drawable/frame_style2"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="10sp"
-                android:paddingTop="5sp"
-                android:paddingEnd="10sp"
-                app:layout_constraintTop_toBottomOf="@+id/price_culume"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="料金情報はここに出力料金情報はここに出力料金情報はここに出力"/>
-            <TextView
-                android:id="@+id/overview_culume"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10sp"
-                app:layout_constraintTop_toBottomOf="@+id/price"
-                app:layout_constraintStart_toStartOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:shrinkColumns="1"
+                android:stretchColumns="1">
+                <TableRow>
+                    <TextView
+                        android:id="@+id/address_colume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@string/address_colume"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/sight_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        tools:text="住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力住所はここに出力"/>
+                </TableRow>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+                <TableRow>
+                    <TextView
+                        android:id="@+id/open_end_culume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@string/open_end_colume"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        tools:text="営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力営業時間はここに出力"/>
+                </TableRow>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+                <TableRow>
+                    <TextView
+                        android:id="@+id/close_culume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@string/close_colume"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        tools:text="定休日情報はここに出力定休日情報はここに出力定休日情報はここに出力定休日情報はここに出力定休日情報はここに出力定休日情報はここに出力定休日情報はここに出力定休日情報はここに出力定休日情報はここに出力" />
+                </TableRow>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+                <TableRow>
+                    <TextView
+                        android:id="@+id/price_culume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@string/price_colume"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        tools:text="料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
     </ScrollView>
+    </LinearLayout>
+    android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/route_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
-                app:backgroundTint="#ffa500"
-                android:layout_gravity="right"
+                app:backgroundTint="#b0d600"
+                android:layout_gravity="end|bottom"
                 android:src="@android:drawable/ic_dialog_map"/>
-</LinearLayout>
+</FrameLayout>

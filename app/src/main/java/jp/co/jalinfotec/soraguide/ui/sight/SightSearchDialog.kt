@@ -19,9 +19,8 @@ import kotlinx.android.synthetic.main.dialog_sight_search.*
 
 class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>() {
     private val kenMap = mapOf(
-        "" to "",
-        "徳島県" to "36",
         "香川県" to "37",
+        "徳島県" to "36",
         "愛媛県" to "38",
         "高知県" to "39"
     )

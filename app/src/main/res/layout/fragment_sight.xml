@@ -74,7 +74,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="#b0d600"
         android:src="@drawable/ic_search_24dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

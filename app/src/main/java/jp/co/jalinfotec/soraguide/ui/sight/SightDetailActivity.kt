@@ -38,9 +38,10 @@ class SightDetailActivity : AppCompatActivity() {
 
         sight_name.text = sight.Title
         sight_address.text = sight.Address
-        summary.text    = sight.Summary
-        price.text      = sight.Price
-        time.text       = sight.Time
+        summary.text = sight.Summary
+        price.text = sight.Price
+        time.text = sight.Time
+        close.text = sight.Closed
 
         //API仕様上、値が空(nullではない)の補足処理
         if(price.text == ""){
@@ -48,6 +49,9 @@ class SightDetailActivity : AppCompatActivity() {
         }
         if(time.text == ""){
             time.text = "※営業時間は公開されておりません"
+        }
+        if(close.text == ""){
+            close.text = "※定休日は公開されておりません"
         }
         //API仕様上、値がnullのものの補足処理
         if (sight.PhotoList == null){

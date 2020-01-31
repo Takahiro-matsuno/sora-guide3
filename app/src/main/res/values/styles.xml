@@ -36,16 +36,16 @@
 
     <style name="SightSearchButtonStyle" parent="Theme.AppCompat">
         <!--ボタンの色-->
-        <item name="colorButtonNormal">#66cdaa</item>
+        <item name="colorButtonNormal">#b0d600</item>
         <!--ボタンをプレスしている時、シークバーをプレスしている時の色-->
         <item name="colorControlHighlight">#008577</item>
     </style>
 
     <style name="MapButtonStyle" parent="Theme.AppCompat">
         <!--ボタンの色-->
-        <item name="colorButtonNormal">#ffa500</item>
+        <item name="colorButtonNormal">#b0d600</item>
         <!--ボタンをプレスしている時、シークバーをプレスしている時の色-->
-        <item name="colorControlHighlight">#aa00bcd4</item>
+        <item name="colorControlHighlight">#008577</item>
     </style>
 
 </resources>

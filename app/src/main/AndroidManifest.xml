@@ -48,13 +48,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity> <!-- 観光案内 -->
+        </activity>
+        <!-- 観光案内 -->
         <activity
                 android:name=".ui.sight.SightDetailActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-                android:name=".ui.sight.SightSearchActivity"
-                android:theme="@style/AppTheme.NoActionBar"/> <!-- タクシー -->
+        <!-- タクシー -->
         <activity
                 android:name=".ui.TaxiActivity"
                 android:theme="@style/AppTheme.NoActionBar"/> <!-- AR -->
