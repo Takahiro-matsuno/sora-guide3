@@ -96,58 +96,14 @@ class StampRallyRepository(context: Context) {
                     )
                 )
             ),
-                StampRallyEntity(
-                stampRallyId = 3,
-                stampRallyName = "高松ラーメン素材探し",
-                stampRallyImageUri = "wikitude/stamp-rally/assets/ramen.png",
-                startDate = date,
-                endDate = date,
-                isCompleted = false,
-                isCouponUsed = false,
-                couponUri = "wikitude/stamp-rally/assets/qr.png",
-                markers = listOf(
-                StampRallyEntity.Marker(
-                    markerId = 1,
-                    latitude = 1.0,
-                    longitude = 1.0,
-                    altitude = 1.0,
-                    markerUri = "cha-syu.png",
-                    isAcquired = false
-                ),
-                StampRallyEntity.Marker(
-                    markerId = 2,
-                    latitude = 1.0,
-                    longitude = 1.0,
-                    altitude = 1.0,
-                    markerUri = "menma.png",
-                    isAcquired = false
-                ),
-                StampRallyEntity.Marker(
-                    markerId = 3,
-                    latitude = 1.0,
-                    longitude = 1.0,
-                    altitude = 1.0,
-                    markerUri = "tamago.png",
-                    isAcquired = false
-                ),
-                StampRallyEntity.Marker(
-                    markerId = 4,
-                    latitude = 1.0,
-                    longitude = 1.0,
-                    altitude = 1.0,
-                    markerUri = "shiraga_negi.png",
-                    isAcquired = false
-                )
-            )
-        ),
             StampRallyEntity(
-                stampRallyId = 4,
-                stampRallyName = "高松おみやげおみやげ",
-                stampRallyImageUri = "wikitude/stamp-rally/assets/omiyage.png",
+                stampRallyId = 3,
+                stampRallyName = "ダミー",
+                stampRallyImageUri = "wikitude/stamp-rally/assets/stampR.png",
                 startDate = date,
                 endDate = date,
                 isCompleted = true,
-                isCouponUsed = false,
+                isCouponUsed = true,
                 couponUri = "wikitude/stamp-rally/assets/qr.png",
                 markers = listOf(
                     StampRallyEntity.Marker(
@@ -156,7 +112,7 @@ class StampRallyRepository(context: Context) {
                         longitude = 1.0,
                         altitude = 1.0,
                         markerUri = "cha-syu.png",
-                        isAcquired = true
+                        isAcquired = false
                     ),
                     StampRallyEntity.Marker(
                         markerId = 2,
@@ -164,7 +120,7 @@ class StampRallyRepository(context: Context) {
                         longitude = 1.0,
                         altitude = 1.0,
                         markerUri = "menma.png",
-                        isAcquired = true
+                        isAcquired = false
                     ),
                     StampRallyEntity.Marker(
                         markerId = 3,
@@ -172,7 +128,7 @@ class StampRallyRepository(context: Context) {
                         longitude = 1.0,
                         altitude = 1.0,
                         markerUri = "tamago.png",
-                        isAcquired = true
+                        isAcquired = false
                     ),
                     StampRallyEntity.Marker(
                         markerId = 4,
@@ -180,18 +136,18 @@ class StampRallyRepository(context: Context) {
                         longitude = 1.0,
                         altitude = 1.0,
                         markerUri = "shiraga_negi.png",
-                        isAcquired = true
+                        isAcquired = false
                     )
                 )
             ),
             StampRallyEntity(
-                stampRallyId = 5,
-                stampRallyName = "高松ラーメン屋台さがし",
-                stampRallyImageUri = "wikitude/stamp-rally/assets/ramen.png",
+                stampRallyId = 4,
+                stampRallyName = "ダミー",
+                stampRallyImageUri = "wikitude/stamp-rally/assets/stampB.png",
                 startDate = date,
                 endDate = date,
-                isCompleted = false,
-                isCouponUsed = false,
+                isCompleted = true,
+                isCouponUsed = true,
                 couponUri = "wikitude/stamp-rally/assets/qr.png",
                 markers = listOf(
                     StampRallyEntity.Marker(
@@ -228,11 +184,6 @@ class StampRallyRepository(context: Context) {
                     )
                 )
             )
-
-
-
-
-
         )
     }
 }
