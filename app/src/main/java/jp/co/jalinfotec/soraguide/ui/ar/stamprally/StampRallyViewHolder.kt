@@ -3,6 +3,7 @@ package jp.co.jalinfotec.soraguide.ui.ar.stamprally
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,23 +42,40 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.stampRallyPeriodText.text =
             mContext.resources.getString(R.string.periodStr, Constants.df.format(data.startDate), Constants.df.format(data.endDate))
 
-        // コンプリート済みかで表記を変更する
+        // コンプリート済みか、使用済みかで表記を変更する
         val num = data.markers.size
         if (data.isCompleted) {
             itemView.couponBtn.isEnabled = true
             itemView.stampRallyArchiveText.text = mContext.getString(R.string.stamp_rally_achieve, num, num)
+            //クーポンが使用済みかで表記を変更する
+            if (data.isCouponUsed) {
+                //使用済み
+                itemView.couponBtn.isEnabled = false
+                itemView.couponBtn.text = mContext.resources.getString(R.string.coupon_btn_used)
+                itemView.couponBtn.setTextColor(Color.GRAY)
+            } else {
+                //未使用
+                itemView.couponBtn.text = mContext.resources.getString(R.string.coupon_btn_not_used)
+            }
         } else {
+            //未達成
             itemView.couponBtn.isEnabled = false
             itemView.stampRallyArchiveText.text = mContext.getString(R.string.stamp_rally_achieve, data.getAcquiredNum(), num)
+            itemView.couponBtn.text = mContext.resources.getString(R.string.coupon_btn_not_achieved)
+            itemView.couponBtn.setTextColor(Color.GRAY)
         }
 
         // クーポン使用済みかで表記を変更する
+
+        /*
         if (data.isCouponUsed) {
             itemView.couponBtn.isEnabled = false
             itemView.couponBtn.text = mContext.resources.getString(R.string.coupon_btn_used)
         } else {
             itemView.couponBtn.text = mContext.resources.getString(R.string.coupon_btn_not_used)
         }
+
+        */
 
         /* Viewのクリックイベント */
         //itemView.stampRallyLayout.setOnClickListener { cListener.itemTapped(data) }

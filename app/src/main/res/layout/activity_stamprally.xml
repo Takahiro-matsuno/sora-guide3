@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.ar.stamprally.StampRallyActivity"
+        android:background="#CCCCCC"
 >
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/stamp_rally_list"
@@ -16,5 +17,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:background="#CCCCCC"
     />
 </androidx.constraintlayout.widget.ConstraintLayout>
