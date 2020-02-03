@@ -60,28 +60,35 @@ class CouponDialog : BaseCallbackDialog<CouponDialog.CallbackListener>() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-         return  inflater.inflate(R.layout.dialog_coupon, container, false)
+        return  inflater.inflate(R.layout.dialog_coupon, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var qrOnDisplay: Boolean = false
+
         // クーポン名をViewに設定
         cpn_name.text = entity.stampRallyName
-        qr_image.setImageBitmap(BitmapFactory.decodeStream(resources.assets.open(entity.stampRallyImageUri)))
+        //qr_image.setImageBitmap(BitmapFactory.decodeStream(resources.assets.open(entity.stampRallyImageUri)))
+        qr_image.setImageResource(R.drawable.coupon)
         // クーポンの有効期限をViewに設定
         cpn_expiry_date.text = resources.getString(
             R.string.limitStr, Constants.df.format(entity.startDate), Constants.df.format(entity.endDate))
 
         cpn_use_btn.setOnClickListener {
-            if(!entity.isCouponUsed) {
-                //QRコードを表示
-                qr_image.setImageBitmap(BitmapFactory.decodeStream(resources.assets.open(entity.couponUri)))
-                getCallbackListener()?.useCoupon(entity)
+            if(qrOnDisplay){
+                this.dismiss()
+            } else {
+                if(!entity.isCouponUsed) {
+                    //QRコードを表示
+                    qr_image.setImageBitmap(BitmapFactory.decodeStream(resources.assets.open(entity.couponUri)))
+                    getCallbackListener()?.useCoupon(entity)
+                    qrOnDisplay = true
+                    cpn_use_btn.text = "閉じる"
+                }
             }
         }
         cpn_close_btn.setOnClickListener { this.dismiss() }
     }
 }
-
-
