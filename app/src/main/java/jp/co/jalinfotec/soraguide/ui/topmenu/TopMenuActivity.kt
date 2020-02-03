@@ -36,6 +36,8 @@ class TopMenuActivity :
         // https://github.com/android/sunflower/issues/295
         setContentView(R.layout.activity_top_menu)
 
+        toolbar.title = resources.getString(R.string.app_name)
+
         /**
          * 各画面への遷移
          */
