@@ -39,7 +39,13 @@ class TopMenuActivity :
         /**
          * 各画面への遷移
          */
-        airport.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.AIRPORT) }
+        airport.setOnClickListener {
+            /* TODO 施設案内に置き換える */ Toast.makeText(
+            this,
+            "coming soon",
+            Toast.LENGTH_SHORT
+        ).show()
+        }
         stamp_rally.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.STAMP_RALLY) }
         taxi.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.TAXI) }
         sightseeing.setOnClickListener { intentNavigationActivity(NavigationActivity.NavigationType.SIGHT) }
