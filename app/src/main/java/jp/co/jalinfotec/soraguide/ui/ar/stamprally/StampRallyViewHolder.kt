@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.jalinfotec.soraguide.R
 import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
@@ -65,6 +66,8 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             itemView.couponBtn.setTextColor(Color.GRAY)
         }
 
+
+
         // クーポン使用済みかで表記を変更する
 
         /*
@@ -80,6 +83,7 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         /* Viewのクリックイベント */
         //itemView.stampRallyLayout.setOnClickListener { cListener.itemTapped(data) }
         itemView.couponBtn.setOnClickListener { cListener.couponTapped(data) }
+        itemView.cardView.setOnClickListener { if (!data.isCompleted) { cListener.itemTapped(data) } }
 
     }
 }

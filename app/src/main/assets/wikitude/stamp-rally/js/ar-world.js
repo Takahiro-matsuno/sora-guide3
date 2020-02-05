@@ -38,7 +38,7 @@ var World = {
 		        }
 		        World.markerList.push(new Marker(singlePoi));
 		        // フッターに未取得アイコンを表示する
-		        $('#acquired-item').append('<img src="assets/stamp_gray.png" id="markerIcon' + res.markerId + '" />');
+		        $('#acquired-item').append('<img src="assets/question.jpg" id="markerIcon' + res.markerId + '" />');
 		    }
 		}
 
