@@ -48,7 +48,7 @@ class ShopFragment: Fragment() {
 
         // RecyclerViewにAdapterを設定
         shopRecyclerView.adapter = adapter
-
+/*
         shopRecyclerView.addOnItemTouchListener(
             RecyclerClickListener(
                 context,
@@ -56,11 +56,12 @@ class ShopFragment: Fragment() {
                     override fun onItemClick(view: View, position: Int) {
                         val data = adapter.getItem(position)
                         val intent = Intent(context, ShopDetailActivity::class.java)
-                        intent.putExtra(ShopDetailActivity.SHOP_DATA,data)
+                        intent.putExtra(ShopDetailActivity.SHOP_DATA, data)
                         startActivity(intent)
                     }
                 })
         )
+ */
 
     }
 
@@ -120,7 +121,7 @@ class ShopFragment: Fragment() {
         shopDataList.add(Shop(
             5,
             "エリエール",
-            ResourcesCompat.getDrawable(getResources(), R.drawable.shoperieru, null)!!,
+            ResourcesCompat.getDrawable(resources, R.drawable.shoperieru, null)!!,
             "6:15～19:50(Lo.19:20)",
             "飲食店",
             "087-814-3483",
@@ -132,7 +133,7 @@ class ShopFragment: Fragment() {
         shopDataList.add(Shop(
             6,
             "CafeBuono",
-            ResourcesCompat.getDrawable(getResources(), R.drawable.shopbuno, null)!!,
+            ResourcesCompat.getDrawable(resources, R.drawable.shopbuno, null)!!,
             "6:15〜19:50(Lo.19:20)",
             "飲食店",
             "087-814-3496",
@@ -144,7 +145,7 @@ class ShopFragment: Fragment() {
         shopDataList.add(Shop(
             2,
             "高松商運スカイショップ",
-            ResourcesCompat.getDrawable(getResources(), R.drawable.shopskyshop, null)!!,
+            ResourcesCompat.getDrawable(resources, R.drawable.shopskyshop, null)!!,
             "7:00～19:50",
             "土産店",
             "087-814-3489",
@@ -156,7 +157,7 @@ class ShopFragment: Fragment() {
         shopDataList.add(Shop(
             2,
             "skyJロビー店",
-            ResourcesCompat.getDrawable(getResources(), R.drawable.shopskyj, null)!!,
+            ResourcesCompat.getDrawable(resources, R.drawable.shopskyj, null)!!,
             "7:00～19:50",
             "空港売店",
             "087-814-3419",

@@ -3,7 +3,7 @@ package jp.co.jalinfotec.soraguide.model.stamprally
 import java.io.Serializable
 import java.util.*
 
-data class StampRallyEntity(
+data class StampRally(
     val stampRallyId: Int,
     val stampRallyName: String,
     val stampRallyImageUri: String,

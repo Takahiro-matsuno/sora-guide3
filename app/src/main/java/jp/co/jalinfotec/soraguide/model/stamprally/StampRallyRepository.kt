@@ -5,10 +5,10 @@ import java.util.*
 
 class StampRallyRepository(context: Context) {
 
-    fun getStampRallyData(): List<StampRallyEntity>? {
+    fun getStampRallyData(): List<StampRally>? {
         val date = Date()
         return listOf(
-            StampRallyEntity(
+            StampRally(
                 stampRallyId = 1,
                 stampRallyName = "高松ラーメン具材探し",
                 stampRallyImageUri = "wikitude/stamp-rally/assets/ramen.png",
@@ -18,7 +18,7 @@ class StampRallyRepository(context: Context) {
                 isCouponUsed = false,
                 couponUri = "wikitude/stamp-rally/assets/qr.png",
                 markers = listOf(
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 1,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -26,7 +26,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "cha-syu.png",
                         isAcquired = false
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 2,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -34,7 +34,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "menma.png",
                         isAcquired = false
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 3,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -42,7 +42,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "tamago.png",
                         isAcquired = false
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 4,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -52,7 +52,7 @@ class StampRallyRepository(context: Context) {
                     )
                 )
             ),
-            StampRallyEntity(
+            StampRally(
                 stampRallyId = 2,
                 stampRallyName = "高松お土産探し",
                 stampRallyImageUri = "wikitude/stamp-rally/assets/omiyage.png",
@@ -62,7 +62,7 @@ class StampRallyRepository(context: Context) {
                 isCouponUsed = false,
                 couponUri = "wikitude/stamp-rally/assets/qr.png",
                 markers = listOf(
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 1,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -70,7 +70,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "cha-syu.png",
                         isAcquired = true
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 2,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -78,7 +78,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "menma.png",
                         isAcquired = true
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 3,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -86,7 +86,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "tamago.png",
                         isAcquired = true
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 4,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -96,7 +96,7 @@ class StampRallyRepository(context: Context) {
                     )
                 )
             ),
-            StampRallyEntity(
+            StampRally(
                 stampRallyId = 3,
                 stampRallyName = "ダミー",
                 stampRallyImageUri = "wikitude/stamp-rally/assets/stampR.png",
@@ -106,7 +106,7 @@ class StampRallyRepository(context: Context) {
                 isCouponUsed = true,
                 couponUri = "wikitude/stamp-rally/assets/qr.png",
                 markers = listOf(
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 1,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -114,7 +114,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "cha-syu.png",
                         isAcquired = false
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 2,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -122,7 +122,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "menma.png",
                         isAcquired = false
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 3,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -130,7 +130,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "tamago.png",
                         isAcquired = false
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 4,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -140,7 +140,7 @@ class StampRallyRepository(context: Context) {
                     )
                 )
             ),
-            StampRallyEntity(
+            StampRally(
                 stampRallyId = 4,
                 stampRallyName = "ダミー",
                 stampRallyImageUri = "wikitude/stamp-rally/assets/stampB.png",
@@ -150,7 +150,7 @@ class StampRallyRepository(context: Context) {
                 isCouponUsed = true,
                 couponUri = "wikitude/stamp-rally/assets/qr.png",
                 markers = listOf(
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 1,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -158,7 +158,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "cha-syu.png",
                         isAcquired = false
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 2,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -166,7 +166,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "menma.png",
                         isAcquired = false
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 3,
                         latitude = 1.0,
                         longitude = 1.0,
@@ -174,7 +174,7 @@ class StampRallyRepository(context: Context) {
                         markerUri = "tamago.png",
                         isAcquired = false
                     ),
-                    StampRallyEntity.Marker(
+                    StampRally.Marker(
                         markerId = 4,
                         latitude = 1.0,
                         longitude = 1.0,

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import jp.co.jalinfotec.soraguide.R
-import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
+import jp.co.jalinfotec.soraguide.model.stamprally.StampRally
 import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyRepository
 import jp.co.jalinfotec.soraguide.ui.ar.ARCameraActivity
 import jp.co.jalinfotec.soraguide.utils.PermissionUtil
@@ -27,7 +27,7 @@ class StampRallyFragment:
     private lateinit var stampRallyRepository: StampRallyRepository
     private lateinit var stampRallyAdapter: StampRallyAdapter
     private val requestPermStampRally = 1
-    private var currentEntity: StampRallyEntity? = null
+    private var currentEntity: StampRally? = null
     private val stampRallyBackupKey = "STAMP_RALLY_BACK_UP"
     private val couponDialogTag = "COUPON_DIALOG"
 
@@ -64,7 +64,7 @@ class StampRallyFragment:
                 getStampRallyData()
             } else {
                 @Suppress("UNCHECKED_CAST")
-                stampRallyAdapter.appendMembers(backupData as ArrayList<StampRallyEntity>)
+                stampRallyAdapter.appendMembers(backupData as ArrayList<StampRally>)
             }
         }
     }
@@ -98,7 +98,7 @@ class StampRallyFragment:
      * RecyclerView内ItemのClickListener
      */
     // スタンプラリーレイアウトタップ時
-    override fun itemTapped(data: StampRallyEntity?) {
+    override fun itemTapped(data: StampRally?) {
         currentEntity = data // 権限チェックのコールバック後に画面遷移するのでグローバルに保存
         // 権限チェック
         val perms = PermissionUtil().requestPermission(this.context!!)
@@ -107,7 +107,7 @@ class StampRallyFragment:
         } else { startArContents() }
     }
     // クーポン確認タップ時
-    override fun couponTapped(data: StampRallyEntity?) {
+    override fun couponTapped(data: StampRally?) {
         data?.let { d -> showCouponDialog(d) }
     }
     // AR画面に遷移
@@ -123,12 +123,12 @@ class StampRallyFragment:
      * Coupon Dialog
      */
     // ダイアログ表示
-    private fun showCouponDialog(entity: StampRallyEntity) {
+    private fun showCouponDialog(entity: StampRally) {
         val dialogFragment: CouponDialog = CouponDialog().newInstance(this, entity)
         dialogFragment.show(fragmentManager!!, couponDialogTag)
     }
     // ダイアログコールバック
-    override fun useCoupon(entity : StampRallyEntity) {
+    override fun useCoupon(entity : StampRally) {
         stampRallyAdapter.usedCoupon(entity)
     }
 }

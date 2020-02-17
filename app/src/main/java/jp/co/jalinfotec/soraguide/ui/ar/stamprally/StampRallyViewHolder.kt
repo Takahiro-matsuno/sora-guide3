@@ -7,10 +7,9 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.jalinfotec.soraguide.R
-import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
+import jp.co.jalinfotec.soraguide.model.stamprally.StampRally
 import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.viewholder_stamp_rally.view.*
 
@@ -20,8 +19,8 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private lateinit var cListener: CallbackListener
 
     interface CallbackListener {
-        fun itemTapped(data: StampRallyEntity?)
-        fun couponTapped(data: StampRallyEntity?)
+        fun itemTapped(data: StampRally?)
+        fun couponTapped(data: StampRally?)
     }
 
     fun newInstance(context: Context, parent: ViewGroup, listener: CallbackListener): StampRallyViewHolder {
@@ -36,7 +35,7 @@ class StampRallyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     @SuppressLint("SetTextI18n")
-    fun bindData(data: StampRallyEntity) {
+    fun bindData(data: StampRally) {
         /* Viewのデータ設定 */
         itemView.stampRallyImage.setImageBitmap(BitmapFactory.decodeStream(mContext.resources.assets.open(data.stampRallyImageUri)))
         itemView.stampRallyNameText.text = data.stampRallyName

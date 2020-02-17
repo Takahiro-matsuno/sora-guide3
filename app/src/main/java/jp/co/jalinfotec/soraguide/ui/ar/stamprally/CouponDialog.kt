@@ -5,7 +5,7 @@ import jp.co.jalinfotec.soraguide.R
 import android.view.*
 import android.graphics.BitmapFactory
 import android.widget.Toast
-import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
+import jp.co.jalinfotec.soraguide.model.stamprally.StampRally
 import jp.co.jalinfotec.soraguide.ui.base.BaseCallbackDialog
 import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.dialog_coupon.*
@@ -14,19 +14,19 @@ import java.lang.Exception
 class CouponDialog : BaseCallbackDialog<CouponDialog.CallbackListener>() {
 
     private val dataKey = "ENTITY"
-    private lateinit var entity: StampRallyEntity
+    private lateinit var entity: StampRally
 
     /**
      * 呼び出し元(Activity, Fragment)で実装するCallbackMethodを定義
      */
     interface CallbackListener {
-        fun useCoupon(entity : StampRallyEntity)
+        fun useCoupon(entity : StampRally)
     }
 
     // インスタンスは必ず以下のクラスで生成
     fun newInstance(
         listener: CallbackListener,
-        entity: StampRallyEntity
+        entity: StampRally
     ): CouponDialog {
         val dialog = CouponDialog()
         dialog.setCallbackListener(listener)
@@ -41,10 +41,10 @@ class CouponDialog : BaseCallbackDialog<CouponDialog.CallbackListener>() {
         try {
             entity = if (savedInstanceState !== null) {
                 // savedInstanceStateでバックアップしたEntityを取得
-                savedInstanceState.getSerializable(dataKey) as? StampRallyEntity ?: throw Exception()
+                savedInstanceState.getSerializable(dataKey) as? StampRally ?: throw Exception()
             } else {
                 // newInstanceで設定したEntityを取得
-                arguments?.getSerializable(dataKey) as? StampRallyEntity ?: throw Exception()
+                arguments?.getSerializable(dataKey) as? StampRally ?: throw Exception()
             }
         } catch (ex: Exception) {
             //クーポンデータがnullならダイアログを閉じる

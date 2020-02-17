@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.wikitude.architect.ArchitectStartupConfiguration
 import com.wikitude.architect.ArchitectView
-import jp.co.jalinfotec.soraguide.model.stamprally.StampRallyEntity
+import jp.co.jalinfotec.soraguide.model.stamprally.StampRally
 import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.activity_ar.*
 import org.json.JSONObject
@@ -23,7 +23,7 @@ class ARCameraActivity : BaseARActivity() {
 
     private val logTag = this::class.java.simpleName
     // 遷移元取得データ
-    private lateinit var arObj: StampRallyEntity
+    private lateinit var arObj: StampRally
     private var arResource: String? = null
 
     /* AR 設定*/
@@ -44,7 +44,7 @@ class ARCameraActivity : BaseARActivity() {
 
         if (arResource != null) {
 
-            arObj = Gson().fromJson<StampRallyEntity>(arResource, StampRallyEntity::class.java)
+            arObj = Gson().fromJson<StampRally>(arResource, StampRally::class.java)
 
             // Wikitudeの初期設定
             val config = ArchitectStartupConfiguration()
