@@ -41,10 +41,6 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
         .readTimeout(30, TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS)
 
     // 検索項目用
-    private var spring = "0,1,2"
-    private var summer = "0,1,2"
-    private var autumn = "0,1,2"
-    private var winter = "0,1,2"
     private var inspiteOfRain = "0,1,2"
 
     fun newInstance(): SightFragment {
@@ -121,6 +117,11 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
     }
     // コールバック・検索開始
     override fun search(ken: String, keyword: String, tachiyori: String,season:String,rain:String) {
+        var spring = "0,1,2"
+        var summer = "0,1,2"
+        var autumn = "0,1,2"
+        var winter = "0,1,2"
+
         when(season){//検索時、季節に指定があれば検索パラメータを修正
             "春" -> spring = "0"
             "夏" -> summer = "0"
@@ -135,7 +136,7 @@ class SightFragment: Fragment(),SightSearchDialog.CallbackListener,SearchErrorDi
 
             sightDefaultText.visibility = View.GONE
 
-            rurubuRequest = rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, spring, summer, autumn, winter,inspiteOfRain,20, "json")
+            rurubuRequest = rurubuService.getResponse("jtzY6LZYK8226ibN", keyword, ken, tachiyori, spring, summer, autumn, winter,inspiteOfRain,100, "json")
             rurubuRequest.enqueue(object : Callback<List<SightPage>> {
                 // 通信失敗
                 override fun onFailure(call: Call<List<SightPage>>, t: Throwable) {

@@ -25,7 +25,7 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
         "高知県" to "39"
     )
     private val tachiyoriMap = mapOf(
-        "指定なし" to "0,1,2,3",
+        "---" to "0,1,2,3",
         "所要時間30分程度" to "0",
         "所要時間30～60分くらい" to "1",
         "所要時間60～90分くらい" to "2",
@@ -34,7 +34,7 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
     private val seasonspinner = arrayOf("", "春", "夏", "秋", "冬")
 
     private val RainMap = mapOf(
-        "指定なし" to "0,1,2",
+        "---" to "0,1,2",
         "天気が雨でも楽しめる" to "0",
         "天気が雨ならいまいち・・・" to "2"
     )
@@ -59,10 +59,13 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        kenSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, kenMap.keys.toTypedArray())
-        tachiyoriSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, tachiyoriMap.keys.toTypedArray())
-        seasonSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, seasonspinner)
-        rainSpinner.adapter = ArrayAdapter(this.context!!, android.R.layout.simple_spinner_item, RainMap.keys.toTypedArray())
+        kenSpinner.adapter = ArrayAdapter(this.context!!, R.layout.custom_spinner, kenMap.keys.toTypedArray())
+//        val kenadapter2 = ArrayAdapter(this.context!!, R.layout.custom_spinner, kenMap.keys.toTypedArray())
+//        kenadapter2.setDropDownViewResource()
+
+        tachiyoriSpinner.adapter = ArrayAdapter(this.context!!, R.layout.custom_spinner, tachiyoriMap.keys.toTypedArray())
+        seasonSpinner.adapter = ArrayAdapter(this.context!!, R.layout.custom_spinner, seasonspinner)
+        rainSpinner.adapter = ArrayAdapter(this.context!!, R.layout.custom_spinner, RainMap.keys.toTypedArray())
         searchBtn.setOnClickListener {
             val kenData = kenMap[(kenSpinner.selectedItem as String)]
             val keywordData = keywordText.text.toString()
@@ -75,6 +78,9 @@ class SightSearchDialog:BaseCallbackDialog<SightSearchDialog.CallbackListener>()
             } else {
                 Toast.makeText(this.context, "検索条件が不正です", Toast.LENGTH_SHORT).show()
             }
+        }
+        dismiss_button.setOnClickListener {
+            this.dismiss()
         }
         //キーボードでエンター押された時のイベント
         keywordText.setOnKeyListener { view, keyCode, keyEvent ->

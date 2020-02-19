@@ -45,6 +45,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:textSize="15sp"
                 android:layout_marginStart="6dp"
                 android:layout_marginEnd="6dp"
                 tools:text="観光地サマリの表示テスト観光地サマリの表示テスト観光地サマリの表示テスト観光地サマリの表示テスト観光地サマリの表示テスト" />
@@ -138,6 +140,9 @@
                         tools:text="料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力料金情報はここに出力" />
                 </TableRow>
             </TableLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
         </LinearLayout>
     </ScrollView>
     </LinearLayout>
@@ -151,5 +156,5 @@
                 android:layout_marginEnd="16dp"
                 app:backgroundTint="#b0d600"
                 android:layout_gravity="end|bottom"
-                android:src="@android:drawable/ic_dialog_map"/>
+                android:src="@android:drawable/ic_menu_directions"/>
 </FrameLayout>

@@ -20,6 +20,9 @@
     <string name="close_colume">定休日</string>
     <string name="price_colume">料金情報</string>
     <string name="overview_colume">概要</string>
+    <string name="searchtittle"><b>検索条件を入力して下さい</b></string>
+    <string name="searcharea">検索エリア<b><font color="#ffaa00">*</font></b></string>
+    <string name="notificate"><b><font color="#ffaa00">*</font>必須項目</b></string>
     <!-- stamp rally -->
     <string name="periodStr">期間:%1$s~%2$s</string>
     <string name="stamp_rally_achieve">達成度:%1$d/%2$d</string>
