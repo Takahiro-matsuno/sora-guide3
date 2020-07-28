@@ -6,5 +6,5 @@ import retrofit2.http.Path
 
 interface TopicService {
         @GET("airport/{airportCompanyId}/topic")
-        fun getTopic(@Path("airportCompanyId") airportCompanyId: Long): Call<Array<Topic>>
+        fun getTopic(@Path("airportCompanyId") airportCompanyId: Long): Call<List<Topic>>
 }

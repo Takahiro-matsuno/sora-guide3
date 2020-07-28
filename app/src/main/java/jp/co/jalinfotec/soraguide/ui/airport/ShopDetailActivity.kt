@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.google.android.gms.common.internal.ShowFirstParty
 import jp.co.jalinfotec.soraguide.R
 
+// todo ShopFragmentからの遷移を追加
 class ShopDetailActivity : AppCompatActivity() {
 
     companion object {

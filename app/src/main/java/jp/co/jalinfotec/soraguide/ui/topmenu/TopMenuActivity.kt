@@ -78,12 +78,9 @@ class TopMenuActivity :
             isLoading = true
             viewFlipper.stopFlipping()
 
-            topicService.getTopic(Constants.airportCompanyId).enqueue(object : Callback<Array<Topic>?> {
+            topicService.getTopic(Constants.airportCompanyId).enqueue(object : Callback<List<Topic>> {
 
-                override fun onResponse(
-                    call: Call<Array<Topic>?>,
-                    response: Response<Array<Topic>?>
-                ) {
+                override fun onResponse(call: Call<List<Topic>>, response: Response<List<Topic>>) {
                     //topicsにデータを格納
                     for (topic in response.body()!!) {
                         topics.add(topic)
@@ -108,10 +105,7 @@ class TopMenuActivity :
                     }
                 }
 
-                override fun onFailure(
-                    call: Call<Array<Topic>?>,
-                    t: Throwable
-                ) {
+                override fun onFailure(call: Call<List<Topic>>, t: Throwable) {
                     Log.d(logTag, "通信エラー:$t")
                 }
             })
