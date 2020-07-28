@@ -5,13 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import jp.co.jalinfotec.soraguide.R
-import jp.co.jalinfotec.soraguide.model.topics.Topics
-import jp.co.jalinfotec.soraguide.model.topics.TopicsService
+import jp.co.jalinfotec.soraguide.model.topics.Topic
+import jp.co.jalinfotec.soraguide.model.topics.TopicService
 import jp.co.jalinfotec.soraguide.ui.NavigationActivity
+import jp.co.jalinfotec.soraguide.utils.Constants
 import kotlinx.android.synthetic.main.activity_top_menu.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,12 +23,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 class TopMenuActivity :
     AppCompatActivity() {
     private val logTag = this::class.java.simpleName
-    private val mTopicsList = ArrayList<Topics>()
+    private val mTopicsList = ArrayList<Topic>()
     private var isLoading = false
 
     //Topicsを格納する変数
-    private var topics: MutableList<Topics> = mutableListOf()
-    private lateinit var topicsService: TopicsService
+    private var topics: MutableList<Topic> = mutableListOf()
+    private lateinit var topicService: TopicService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,10 +55,10 @@ class TopMenuActivity :
 
         // 通信設定
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://topicsapi.azurewebsites.net/")
+            .baseUrl(Constants.resourceApiUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        topicsService = retrofit.create(TopicsService::class.java)
+        topicService = retrofit.create(TopicService::class.java)
 
         viewFlipper.flipInterval = 5000
         // Topicsのロード
@@ -78,11 +78,11 @@ class TopMenuActivity :
             isLoading = true
             viewFlipper.stopFlipping()
 
-            topicsService.getTopic().enqueue(object : Callback<Array<Topics>?> {
+            topicService.getTopic(Constants.airportCompanyId).enqueue(object : Callback<Array<Topic>?> {
 
                 override fun onResponse(
-                    call: Call<Array<Topics>?>,
-                    response: Response<Array<Topics>?>
+                    call: Call<Array<Topic>?>,
+                    response: Response<Array<Topic>?>
                 ) {
                     //topicsにデータを格納
                     for (topic in response.body()!!) {
@@ -90,16 +90,16 @@ class TopMenuActivity :
                     }
 
                     topics.forEach { new ->
-                        if (mTopicsList.find { local -> local.topicId == new.topicId } == null) { // 新しいTopicsの場合
+                        if (mTopicsList.find { local -> local.id == new.id } == null) { // 新しいTopicsの場合
                             mTopicsList.add(new)
                             // ImageViewの作成
                             val iv = ImageView(this@TopMenuActivity)
-                            Glide.with(this@TopMenuActivity).load(new.topicImage).into(iv)
+                            Glide.with(this@TopMenuActivity).load(new.imageUrl).into(iv)
                             iv.setOnClickListener {
                                 startActivity(
                                     Intent(
                                         Intent.ACTION_VIEW,
-                                        Uri.parse(new.topicUrl)
+                                        Uri.parse(new.url)
                                     )
                                 )
                             }
@@ -109,7 +109,7 @@ class TopMenuActivity :
                 }
 
                 override fun onFailure(
-                    call: Call<Array<Topics>?>,
+                    call: Call<Array<Topic>?>,
                     t: Throwable
                 ) {
                     Log.d(logTag, "通信エラー:$t")
