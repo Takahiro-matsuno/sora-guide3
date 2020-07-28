@@ -7,6 +7,8 @@ import java.util.*
 
 object Constants {
 
+    const val airportCompanyId = 1L // todo 動的に取得するようにする
+
     /**
      * 共通
      */
@@ -19,17 +21,14 @@ object Constants {
     val df = SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN)
 
     /**
-     * トップメニュー
+     * 空港リソースAPI
      */
-    val topicsUrl = "https://topicsapi.azurewebsites.net/soraguideapi/"
-
+    const val resourceApiUrl = "https://soraguide-resource-api-develop.azurewebsites.net/"
 
     /**
      * タクシー予約
      */
-    val taxiUrl =
-        if (BuildConfig.DEBUG) "https://taxiapptest.azurewebsites.net/taxiReservation-0.1.2/app/registration"
-        else "https://taxiapptest.azurewebsites.net/taxiReservation-0.1.2/app/registration"
+    const val taxiUrl = "https://soraguide-taxi-reservation-develop.azurewebsites.net"
     const val taxiUserAgent = "sora-GuideApp"
 
     /**
@@ -44,5 +43,4 @@ object Constants {
     const val RURUBU_URL = "https://www.j-jti.com/"
     const val RURUBU_STOAGE_URL = "Storage/Image/Product/SightImage/S/"
     const val googleMap_URL="https://www.google.com/maps/dir/?api=1&origin=34.215207,134.018567&destination="
-
 }
