@@ -82,8 +82,10 @@ class TopMenuActivity :
 
                 override fun onResponse(call: Call<List<Topic>>, response: Response<List<Topic>>) {
                     //topicsにデータを格納
-                    for (topic in response.body()!!) {
-                        topics.add(topic)
+                    if (response.body() !=null && response.code() == 200){
+                        for (topic in response.body()!!) {
+                            topics.add(topic)
+                        }
                     }
 
                     topics.forEach { new ->
@@ -103,10 +105,12 @@ class TopMenuActivity :
                             viewFlipper.addView(iv)
                         }
                     }
+                    isLoading = false
                 }
 
                 override fun onFailure(call: Call<List<Topic>>, t: Throwable) {
                     Log.d(logTag, "通信エラー:$t")
+                    isLoading = false
                 }
             })
             viewFlipper.startFlipping()
